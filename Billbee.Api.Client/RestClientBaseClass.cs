@@ -1,30 +1,27 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
+using Billbee.Api.Client.Enums;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
-using RestSharp.Serializers;
-using BillBee.API.Client;
 using RestSharp.Authenticators;
 
-namespace BillBee.API.Client
+namespace Billbee.Api.Client
 {
-
     public abstract class RestClientBaseClass
     {
-
         protected ApiConfiguration config { get; set; }
         protected ILogger Logger { get; set; }
-        string BaseUrl { get { return config.BaseUrl; } }
+
+        string BaseUrl
+        {
+            get { return config.BaseUrl; }
+        }
 
         protected virtual Dictionary<string, string> AdditionalHeaders { get; set; }
 
@@ -76,9 +73,9 @@ namespace BillBee.API.Client
             var req = createRestRequest(resource, parameter);
             if (data != null)
             {
-
                 req.AddBody(data);
             }
+
             var response = c.Patch(req);
 
             throwWhenErrResponse(response, resource);
@@ -94,26 +91,30 @@ namespace BillBee.API.Client
             {
                 req.AddBody(data);
             }
+
             var response = c.Patch<T>(req);
 
             throwWhenErrResponse(response, resource);
             return response.Data;
         }
 
-        protected virtual string parseError(RestSharp.IRestResponse response)
+        protected virtual string parseError(IRestResponse response)
         {
             // Default handling. Works for inventorum, Debitoor and some other
             string errMsg = null;
             try
             {
                 var errResponse = JsonConvert.DeserializeObject<JObject>(response.Content);
-                errMsg = "HTTP Response: " + response.StatusCode + ": " + errResponse?["ErrorCode"]?.Value<string>() + " - " + errResponse?["ErrorMessage"]?.Value<string>();
+                errMsg = "HTTP Response: " + response.StatusCode + ": " + errResponse?["ErrorCode"]?.Value<string>() +
+                         " - " + errResponse?["ErrorMessage"]?.Value<string>();
 
                 // debitoor
                 var errArr = errResponse?["errors"];
                 if (errArr != null)
                 {
-                    errMsg += string.Join(", ", errArr.Select(e => $" prop: {e["property"]?.Value<string>()} msg: {e["message"]?.Value<string>()}"));
+                    errMsg += string.Join(", ", errArr.Select(e =>
+                        $" prop: {e["property"]?.Value<string>()} msg: {e["message"]?.Value<string>()}"
+                    ));
                 }
             }
             catch
@@ -125,7 +126,7 @@ namespace BillBee.API.Client
             return errMsg;
         }
 
-        protected virtual void throwWhenErrResponse(RestSharp.IRestResponse response, string resource)
+        protected virtual void throwWhenErrResponse(IRestResponse response, string resource)
         {
             if (response.StatusCode != HttpStatusCode.OK
                 && response.StatusCode != HttpStatusCode.Created
@@ -137,7 +138,7 @@ namespace BillBee.API.Client
                 Log($"Request to {resource} failed: " + errMsg, LogSeverity.Error);
                 Log($"Request to {resource} failed: " + response.Content, LogSeverity.Error);
 
-                if (config.errorHandlingBehaviour == Billbee.Api.Client.Enums.ErrorHandlingEnum.throwException)
+                if (config.errorHandlingBehaviour == ErrorHandlingEnum.throwException)
                     throw new Exception(errMsg);
             }
         }
@@ -150,7 +151,12 @@ namespace BillBee.API.Client
             public string ContentType { get; set; }
         }
 
-        protected async Task<string> postAsync(string resource, NameValueCollection parameter = null, List<FileParam> files = null, ParameterType paramType = ParameterType.QueryString, string acceptHeaderValue = "application/json")
+        protected async Task<string> postAsync(
+            string resource,
+            NameValueCollection parameter = null,
+            List<FileParam> files = null,
+            ParameterType paramType = ParameterType.QueryString,
+            string acceptHeaderValue = "application/json")
         {
             var c = createRestClient();
             var req = createRestRequest(resource, parameter, paramType, acceptHeaderValue);
@@ -168,7 +174,10 @@ namespace BillBee.API.Client
             return response.Content;
         }
 
-        protected void delete(string resource, NameValueCollection parameter = null, ParameterType paramType = ParameterType.QueryString)
+        protected void delete(
+            string resource,
+            NameValueCollection parameter = null,
+            ParameterType paramType = ParameterType.QueryString)
         {
             var c = createRestClient();
             var req = createRestRequest(resource, parameter, paramType);
@@ -176,7 +185,11 @@ namespace BillBee.API.Client
             throwWhenErrResponse(response, resource);
         }
 
-        protected string post(string resource, NameValueCollection parameter = null, List<FileParam> files = null, ParameterType paramType = ParameterType.QueryString)
+        protected string post(
+            string resource,
+            NameValueCollection parameter = null,
+            List<FileParam> files = null,
+            ParameterType paramType = ParameterType.QueryString)
         {
             var c = createRestClient();
             var req = createRestRequest(resource, parameter, paramType);
@@ -194,7 +207,11 @@ namespace BillBee.API.Client
             return response.Content;
         }
 
-        protected T post<T>(string resource, NameValueCollection parameter = null, List<FileParam> files = null, ParameterType paramType = ParameterType.QueryString)
+        protected T post<T>(
+            string resource,
+            NameValueCollection parameter = null,
+            List<FileParam> files = null,
+            ParameterType paramType = ParameterType.QueryString)
         {
             var resStr = post(resource, parameter, files, paramType);
             return JsonConvert.DeserializeObject<T>(resStr);
@@ -210,7 +227,11 @@ namespace BillBee.API.Client
             return response.Content;
         }
 
-        protected async Task<T> postAsync<T>(string resource, dynamic data, NameValueCollection parameter = null, ParameterType paramType = ParameterType.QueryString) where T : new()
+        protected async Task<T> postAsync<T>(
+            string resource,
+            dynamic data,
+            NameValueCollection parameter = null,
+            ParameterType paramType = ParameterType.QueryString) where T : new()
         {
             var c = createRestClient();
             var req = createRestRequest(resource, parameter);
@@ -234,16 +255,16 @@ namespace BillBee.API.Client
         protected T post<T>(string resource, dynamic data, NameValueCollection parameters = null) where T : new()
         {
             var c = createRestClient();
-            var req = parameters != null ? createRestRequest(resource, parameters, ParameterType.QueryString) : createRestRequest(resource, null);
+            var req = parameters != null
+                ? createRestRequest(resource, parameters, ParameterType.QueryString)
+                : createRestRequest(resource, null);
             req.AddBody(data);
             var response = c.Post<T>(req);
             throwWhenErrResponse(response, resource);
 
 
             return response.Data;
-
         }
-
 
 
         protected async Task<string> putAsync(string resource, NameValueCollection parameter = null)
@@ -292,7 +313,7 @@ namespace BillBee.API.Client
             {
                 response = action();
 
-                if ((int)response.StatusCode == 429)
+                if ((int) response.StatusCode == 429)
                 {
                     // Throttling
                     Thread.Sleep(sleepTimeMs);
@@ -303,6 +324,7 @@ namespace BillBee.API.Client
                     return response;
                 }
             }
+
             throwWhenErrResponse(response, resource);
             throw new Exception("Request is throttled");
         }
@@ -311,12 +333,15 @@ namespace BillBee.API.Client
         {
             var c = createRestClient();
             var req = createRestRequest(resource, null);
-            return c.Get(req).StatusCode ;
+            return c.Get(req).StatusCode;
         }
 
-        protected T requestResource<T>(string resource, NameValueCollection parameter = null, Action<IList<Parameter>> headerProcessor = null,
-            int sleepTimeMs = 1000, Action<IRestResponse<T>> preDeserializeHook = null, NameValueCollection headerParameter = null)
-            where T : new()
+        protected T requestResource<T>(
+            string resource,
+            NameValueCollection parameter = null,
+            Action<IList<Parameter>> headerProcessor = null,
+            int sleepTimeMs = 1000, Action<IRestResponse<T>> preDeserializeHook = null,
+            NameValueCollection headerParameter = null) where T : new()
         {
             var c = createRestClient();
             var req = createRestRequest(resource, parameter);
@@ -340,7 +365,11 @@ namespace BillBee.API.Client
             return data;
         }
 
-        protected RestRequest createRestRequest(string resource, NameValueCollection parameter, ParameterType paramType = ParameterType.QueryString, string acceptHeaderValue = "application/json")
+        protected RestRequest createRestRequest(
+            string resource,
+            NameValueCollection parameter,
+            ParameterType paramType = ParameterType.QueryString,
+            string acceptHeaderValue = "application/json")
         {
             RestRequest restreq = new RestRequest(resource);
             restreq.AddHeader("X-Billbee-Api-Key", config.ApiKey);
@@ -371,6 +400,7 @@ namespace BillBee.API.Client
                 {
                     rc.AddDefaultHeader(h.Key, h.Value);
                 }
+
             return rc;
         }
 

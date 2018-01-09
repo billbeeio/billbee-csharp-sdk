@@ -1,23 +1,18 @@
-﻿using Billbee.Api.Client.Enums;
-using Billbee.Api.Client.Model;
-using BillBee.API.Client;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Billbee.Api.Client.Enums;
+using Billbee.Api.Client.Model;
 
-namespace Billbee.Api.Client.Endpoint
+namespace Billbee.Api.Client.EndPoint
 {
     /// <summary>
-    /// Endpoint to access all product relevant methods.
+    /// EndPoint to access all product relevant methods.
     /// </summary>
     public class ProductEndPoint : RestClientBaseClass
     {
         internal ProductEndPoint(ApiConfiguration config, ILogger logger = null) : base(logger, config)
         {
-
         }
 
         /// <summary>

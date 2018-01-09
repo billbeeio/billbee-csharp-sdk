@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Billbee.Api.Client.Model
+﻿namespace Billbee.Api.Client.Model
 {
     /// <summary>
     /// Single entry result set for api requests
@@ -40,20 +34,18 @@ namespace Billbee.Api.Client.Model
         /// </summary>
         public bool Success
         {
-            get
-            {
-                return ErrorMessage == null && ErrorCode == ErrorCodeEnum.NoError;
-            }
+            get { return ErrorMessage == null && ErrorCode == ErrorCodeEnum.NoError; }
         }
 
         /// <summary>
         /// If a request failed, a detailed message can be found here.
         /// </summary>
         public string ErrorMessage { get; set; }
+
         /// <summary>
         /// If a request failed, the failure cause can be found here <<see cref="ErrorCodeEnum"/>
         /// </summary>
-        public ErrorCodeEnum ErrorCode { get; set;}
+        public ErrorCodeEnum ErrorCode { get; set; }
 
         /// <summary>
         /// Response content to a request.
@@ -76,14 +68,17 @@ namespace Billbee.Api.Client.Model
             /// Currently delivered page
             /// </summary>
             public int Page { get; set; }
+
             /// <summary>
             /// Total count of pages available with the given <see cref="PageSize"/>
             /// </summary>
             public int TotalPages { get; set; }
+
             /// <summary>
             /// Total count of available datasets.
             /// </summary>
             public int TotalRows { get; set; }
+
             /// <summary>
             /// Defines how many entries each page shoul contain
             /// </summary>

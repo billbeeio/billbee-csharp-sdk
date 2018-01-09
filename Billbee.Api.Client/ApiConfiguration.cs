@@ -1,9 +1,6 @@
 ﻿using Billbee.Api.Client.Enums;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace BillBee.API.Client
+namespace Billbee.Api.Client
 {
     /// <summary>
     /// Configuration parameters for the Billbee API client.
@@ -14,6 +11,7 @@ namespace BillBee.API.Client
         /// Username of the main user of your account.
         /// </summary>
         public string Username { get; set; }
+
         /// <summary>
         /// API password, could be set in Settings->Billbee API->General Settings
         /// </summary>

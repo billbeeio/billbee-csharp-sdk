@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Billbee.Api.Client.Model
 {
@@ -12,16 +8,15 @@ namespace Billbee.Api.Client.Model
         /// internal id of this provider
         /// </summary>
         public int id { get; set; }
+
         /// <summary>
         /// Name of this provider
         /// </summary>
         public string name { get; set; }
+
         /// <summary>
         /// Available products
         /// </summary>
         public List<ShippingProduct> products { get; set; }
     }
-
-
-
 }

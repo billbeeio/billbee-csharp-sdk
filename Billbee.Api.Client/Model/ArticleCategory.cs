@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Billbee.Api.Client.Model
+﻿namespace Billbee.Api.Client.Model
 {
     /// <summary>
     /// Information about a category of an article
@@ -15,6 +9,7 @@ namespace Billbee.Api.Client.Model
         /// The name of the category
         /// </summary>
         public string Name { get; set; }
+
         /// <summary>
         /// The internal id of the category
         /// </summary>

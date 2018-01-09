@@ -52,12 +52,13 @@
   <ItemGroup>
     <Compile Include="ApiClient.cs" />
     <Compile Include="ApiConfiguration.cs" />
-    <Compile Include="Endpoint\AutomaticProvisionEndPoint.cs" />
-    <Compile Include="Endpoint\EventEndPoint.cs" />
-    <Compile Include="Endpoint\OrderEndPoint.cs" />
-    <Compile Include="Endpoint\ProductEndPoint.cs" />
-    <Compile Include="Endpoint\ShipmentEndPoint.cs" />
+    <Compile Include="EndPoint\AutomaticProvisionEndPoint.cs" />
+    <Compile Include="EndPoint\EventEndPoint.cs" />
+    <Compile Include="EndPoint\OrderEndPoint.cs" />
+    <Compile Include="EndPoint\ProductEndPoint.cs" />
+    <Compile Include="EndPoint\ShipmentEndPoint.cs" />
     <Compile Include="Enums\ErrorHandlingEnum.cs" />
+    <Compile Include="Enums\EventTypeEnum.cs" />
     <Compile Include="Enums\OrderStateEnum.cs" />
     <Compile Include="Enums\PaymentTypeEnum.cs" />
     <Compile Include="Enums\ProductIdType.cs" />

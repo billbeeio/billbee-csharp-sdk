@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Billbee.Api.Client.Model
+﻿namespace Billbee.Api.Client.Model
 {
     public class OrderUser
     {
@@ -15,12 +9,10 @@ namespace Billbee.Api.Client.Model
         public string Nick { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+
         public string FullName
         {
-            get
-            {
-                return string.Format("{0} {1}", FirstName, LastName);
-            }
+            get { return string.Format("{0} {1}", FirstName, LastName).Trim(); }
         }
 
         public string Email { get; set; }

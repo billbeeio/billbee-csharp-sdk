@@ -1,11 +1,7 @@
-﻿using Billbee.Api.Client.Endpoint;
-using BillBee.API.Client.EndPoint;
-using RestSharp;
-using RestSharp.Authenticators;
-using System;
-using System.Collections.Specialized;
+﻿using System;
+using Billbee.Api.Client.EndPoint;
 
-namespace BillBee.API.Client
+namespace Billbee.Api.Client
 {
     /// <summary>
     /// Client for the Billbee API
@@ -14,6 +10,7 @@ namespace BillBee.API.Client
     public class ApiClient
     {
         #region external methods/ properties
+
         /// <summary>
         /// Configuration, used to connect to the API <see cref="ApiConfiguration"/>.
         /// </summary>
@@ -31,58 +28,43 @@ namespace BillBee.API.Client
         }
 
         /// <summary>
-        /// Endpoint to access events
+        /// EndPoint to access events
         /// </summary>
         public EventEndPoint Events
         {
-            get
-            {
-                return new EventEndPoint(Configuration, logger);
-            }
+            get { return new EventEndPoint(Configuration, logger); }
         }
 
         /// <summary>
-        /// Endpoint to access order independent shipments
+        /// EndPoint to access order independent shipments
         /// </summary>
         public ShipmentEndPoint Shipment
         {
-            get
-            {
-                return new ShipmentEndPoint(Configuration, logger);
-            }
+            get { return new ShipmentEndPoint(Configuration, logger); }
         }
 
         /// <summary>
-        /// Endpoint to access Products
+        /// EndPoint to access Products
         /// </summary>
         public ProductEndPoint Products
         {
-            get
-            {
-                return new ProductEndPoint(Configuration, logger);
-            }
+            get { return new ProductEndPoint(Configuration, logger); }
         }
 
         /// <summary>
-        /// Endpoint to allow automatic user creation
+        /// EndPoint to allow automatic user creation
         /// </summary>
         public AutomaticProvisionEndPoint AutomaticProvision
         {
-            get
-            {
-                return new AutomaticProvisionEndPoint(Configuration, logger);
-            }
+            get { return new AutomaticProvisionEndPoint(Configuration, logger); }
         }
 
         /// <summary>
-        /// Endpoint to access orders
+        /// EndPoint to access orders
         /// </summary>
         public OrderEndPoint Orders
         {
-            get
-            {
-                return new OrderEndPoint(Configuration, logger);
-            }
+            get { return new OrderEndPoint(Configuration, logger); }
         }
 
         /// <summary>
@@ -93,19 +75,20 @@ namespace BillBee.API.Client
         {
             try
             {
-                return this.Shipment.Ping();
+                return Shipment.Ping();
             }
-                catch(Exception ex) // If user selectes to throw exceptions on server side errors, or other errors occurs.
+            catch (Exception ex) // If user selectes to throw exceptions on server side errors, or other errors occurs.
             {
                 return false;
             }
-
         }
 
         #endregion
 
         #region internal+private methods/ properties
+
         ILogger logger { get; set; }
+
         #endregion
     }
 }

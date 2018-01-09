@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BillBee.API.Client
+﻿namespace Billbee.Api.Client
 {
     public enum LogSeverity
     {

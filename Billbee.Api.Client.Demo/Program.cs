@@ -1,10 +1,7 @@
-﻿using Billbee.Api.Client.Model;
-using BillBee.API.Client;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Billbee.Api.Client.Enums;
+using Billbee.Api.Client.Model;
 
 namespace Billbee.Api.Client.Demo
 {
@@ -15,10 +12,10 @@ namespace Billbee.Api.Client.Demo
     /// </summary>
     class Program
     {
-        static int Main(string[] args)
+        static int Main()
         {
-
             #region Initialization
+
             // Creating an individual logger, that implements ILogger
             ILogger logger = new Logger();
 
@@ -44,9 +41,11 @@ namespace Billbee.Api.Client.Demo
                 Console.ReadKey();
                 return 1;
             }
+
             #endregion
 
             #region Example calls
+
             // Getting events for this account
             var events = client.Events.GetEvents();
 
@@ -54,35 +53,51 @@ namespace Billbee.Api.Client.Demo
             var shippingProvider = client.Shipment.GetShippingProvider();
 
             // Doing some stock manipulations
-            Console.WriteLine("Please enter one SKU of an article to update it's stock. Be aware, that these changes are permanent, so better use a demo article. Leave blank to skip.");
+            Console.WriteLine(
+                "Please enter one SKU of an article to update it's stock. Be aware, that these changes are permanent, so better use a demo article. Leave blank to skip.");
             var sku = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(sku))
             {
-                var updateStockCodeResult = client.Products.UpdateStockCode(new Billbee.Api.Client.Model.UpdateStockCode { Sku = sku, StockCode = "Testlager" });
-                var updateStockResult = client.Products.UpdateStock(new Billbee.Api.Client.Model.UpdateStock { Sku = sku, NewQuantity = 15, Reason = "Change due to api tests." });
-                var updateStockMultipleResult = client.Products.UpdateStockMultiple(new List<Billbee.Api.Client.Model.UpdateStock> { new Billbee.Api.Client.Model.UpdateStock { Sku = sku, NewQuantity = 15 }, new Billbee.Api.Client.Model.UpdateStock { Sku = "4712", NewQuantity = 23 } });
+                var updateStockCodeResult =
+                    client.Products.UpdateStockCode(
+                        new UpdateStockCode {Sku = sku, StockCode = "Testlager"});
+                var updateStockResult = client.Products.UpdateStock(
+                    new UpdateStock
+                    {
+                        Sku = sku,
+                        NewQuantity = 15,
+                        Reason = "Change due to api tests."
+                    });
+                var updateStockMultipleResult = client.Products.UpdateStockMultiple(
+                    new List<UpdateStock>
+                    {
+                        new UpdateStock {Sku = sku, NewQuantity = 15},
+                        new UpdateStock {Sku = "4712", NewQuantity = 23}
+                    });
             }
 
             // Requesting the urls of the terms and conditions for the usage of billbee.
             var termsAndConditions = client.AutomaticProvision.TermsInfo();
 
             // Getting a list of all orders with order state 'confirmed'
-            var orders = client.Orders.GetOrderList(page: 1, pageSize: 20, orderStateId: new List<int> { 2 });
+            var orders = client.Orders.GetOrderList(page: 1, pageSize: 20,
+                orderStateId: new List<OrderStateEnum> {OrderStateEnum.Bestaetigt});
             // var x = client.Orders.GetInvoiceList();
 
             // Example to create a new order. Please create a complete order object for usage.
             // var createOrderResult = client.Orders.PostNewOrder(new Billbee.Api.Client.Model.Order() { });
 
-            Console.WriteLine("Please enter one order number for further test manipulations. Be aware, that these changes are permanent. Please use an demo order. Leave blank to skip.");
+            Console.WriteLine(
+                "Please enter one order number for further test manipulations. Be aware, that these changes are permanent. Please use an demo order. Leave blank to skip.");
             var orderId = Console.ReadLine();
             int orderIdInt;
             if (!string.IsNullOrWhiteSpace(orderId) && int.TryParse(orderId, out orderIdInt))
             {
                 // Remove all old tags and add the given ones.
-                var updateTagsResult = client.Orders.UpdateTags(new List<string>() { "Test C", "Test D" }, orderIdInt);
+                var updateTagsResult = client.Orders.UpdateTags(new List<string>() {"Test C", "Test D"}, orderIdInt);
 
                 // Add new tags.
-                var addTagsResult = client.Orders.AddTags(new List<string>() { "Test A", "Test B" }, orderIdInt);
+                var addTagsResult = client.Orders.AddTags(new List<string>() {"Test A", "Test B"}, orderIdInt);
 
                 // Add a shipment to an order. Please fill in the following and uncomment. the last line.
                 string shippingId = "0815";

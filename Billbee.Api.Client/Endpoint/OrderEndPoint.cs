@@ -1,23 +1,18 @@
-﻿using Billbee.Api.Client.Enums;
-using Billbee.Api.Client.Model;
-using BillBee.API.Client;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Billbee.Api.Client.Enums;
+using Billbee.Api.Client.Model;
 
-namespace Billbee.Api.Client.Endpoint
+namespace Billbee.Api.Client.EndPoint
 {
     /// <summary>
-    /// Endpoint to access order functions
+    /// EndPoint to access order functions
     /// </summary>
     public class OrderEndPoint : RestClientBaseClass
     {
         internal OrderEndPoint(ApiConfiguration config, ILogger logger = null) : base(logger, config)
         {
-
         }
 
         /// <summary>
@@ -46,7 +41,7 @@ namespace Billbee.Api.Client.Endpoint
         /// <param name="partner">If set, this is the internal partner name, this order should be searched at.</param>
         /// <param name="id">The external id, that should be used for selection</param>
         /// <returns>Details of the order</returns>
-        public ApiResult<Order> GetOrderByExternalReferenceAndPartner(string partner, string id)
+        public ApiResult<Order> GetOrderByExternalIdAndPartner(string partner, string id)
         {
             return requestResource<ApiResult<Order>>($"/orders/find/{id}/{partner}");
         }
@@ -67,7 +62,7 @@ namespace Billbee.Api.Client.Endpoint
         /// <returns></returns>
         public ApiResult<List<Order>> GetOrderList(DateTime? minOrderDate = null, DateTime? maxOrderDate = null,
             int page = 1, int pageSize = 50, List<int> shopId = null,
-            List<int> orderStateId = null, List<string> tag = null, int? minimumBillBeeOrderId = null,
+            List<OrderStateEnum> orderStateId = null, List<string> tag = null, int? minimumBillBeeOrderId = null,
             DateTime? modifiedAtMin = null, DateTime? modifiedAtMax = null)
         {
             NameValueCollection parameters = new NameValueCollection();
@@ -106,7 +101,7 @@ namespace Billbee.Api.Client.Endpoint
                 int i = 0;
                 foreach (var id in orderStateId)
                 {
-                    parameters.Add($"orderStateId[{i++}]", id.ToString());
+                    parameters.Add($"orderStateId[{i++}]", ((int) id).ToString());
                 }
             }
 
@@ -130,7 +125,9 @@ namespace Billbee.Api.Client.Endpoint
         /// <param name="maxPayDate">Maximum date, where the payment occured</param>
         /// <param name="includePositions">Should the invoice data contain all invoice positions?</param>
         /// <returns></returns>
-        public ApiResult<List<InvoiceDetail>> GetInvoiceList(DateTime? minInvoiceDate = null, DateTime? maxInvoiceDate = null,
+        public ApiResult<List<InvoiceDetail>> GetInvoiceList(
+            DateTime? minInvoiceDate = null,
+            DateTime? maxInvoiceDate = null,
             int page = 1, int pageSize = 50, List<int> shopId = null,
             List<int> orderStateId = null,
             List<string> tag = null,
@@ -180,8 +177,8 @@ namespace Billbee.Api.Client.Endpoint
             parameters.Add("includePositions", includePositions.ToString());
             parameters.Add("page", page.ToString());
             parameters.Add("pageSize", pageSize.ToString());
-            return requestResource<ApiResult<List<InvoiceDetail>>>("/orders/invoices", parameters);
 
+            return requestResource<ApiResult<List<InvoiceDetail>>>("/orders/invoices", parameters);
         }
 
         /// <summary>
@@ -190,15 +187,12 @@ namespace Billbee.Api.Client.Endpoint
         /// <param name="order">An order object, to create in billbee</param>
         /// <param name="shopId">The id of the shop. Neccessary, to attach an order directly to a shop connection</param>
         /// <returns></returns>
-        public ApiResult<OrderResult> PostNewOrder(Order order, int? shopId = null)
+        public ApiResult<OrderResult> PostNewOrder(Order order, int shopId)
         {
             NameValueCollection parameters = new NameValueCollection();
-            if (shopId.HasValue)
-            {
-                parameters.Add("shopId", shopId.ToString());
-            }
+            parameters.Add("shopId", shopId.ToString());
 
-            return post<ApiResult<OrderResult>>("/orders", order, parameters.Count > 0 ? parameters: null);
+            return post<ApiResult<OrderResult>>("/orders", order, parameters);
         }
 
         /// <summary>
@@ -210,7 +204,7 @@ namespace Billbee.Api.Client.Endpoint
         /// <returns>ApiResult with the result of the update operation</returns>
         public ApiResult<dynamic> AddTags(List<string> tags, int orderId)
         {
-            return post<ApiResult<dynamic>>($"/orders/{orderId}/tags", new { Tags = tags });
+            return post<ApiResult<dynamic>>($"/orders/{orderId}/tags", new {Tags = tags});
         }
 
         /// <summary>
@@ -222,7 +216,7 @@ namespace Billbee.Api.Client.Endpoint
         /// <returns>ApiResult with the result of the update operation</returns>
         public ApiResult<dynamic> UpdateTags(List<string> tags, int orderId)
         {
-            return put<ApiResult<dynamic>>($"/orders/{orderId}/tags", new { Tags = tags });
+            return put<ApiResult<dynamic>>($"/orders/{orderId}/tags", new {Tags = tags});
         }
 
         /// <summary>
@@ -244,8 +238,8 @@ namespace Billbee.Api.Client.Endpoint
         {
             NameValueCollection parameters = new NameValueCollection();
             parameters.Add("includePdf", includePdf.ToString());
-            return post<ApiResult<DeliveryNote>>($"/orders/CreateDeliveryNote/{orderId}", parameters);
 
+            return post<ApiResult<DeliveryNote>>($"/orders/CreateDeliveryNote/{orderId}", parameters);
         }
 
         /// <summary>
@@ -258,8 +252,18 @@ namespace Billbee.Api.Client.Endpoint
         {
             NameValueCollection parameters = new NameValueCollection();
             parameters.Add("includeInvoicePdf", includePdf.ToString());
-            return post<ApiResult<Invoice>>($"/orders/CreateInvoice/{orderId}", parameters);
 
+            return post<ApiResult<Invoice>>($"/orders/CreateInvoice/{orderId}", parameters);
+        }
+
+        /// <summary>
+        /// Changes the main state of a single order
+        /// </summary>
+        /// <param name="id">The internal id of the order</param>
+        /// <param name="state">The data used to change the state</param>
+        public void ChangeOrderState(int id, OrderStateEnum state)
+        {
+            put<object>($"/orders/{id}/orderstate", new {NewStateId = (int) state}, null);
         }
     }
 }

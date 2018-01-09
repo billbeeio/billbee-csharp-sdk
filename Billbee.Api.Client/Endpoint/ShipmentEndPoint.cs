@@ -1,22 +1,17 @@
-﻿using Billbee.Api.Client.Model;
+﻿using System.Collections.Generic;
+using System.Net;
+using Billbee.Api.Client.Model;
 using Billbee.Api.Client.Model.Rechnungsdruck.WebApp.Model.Api;
-using BillBee.API.Client;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Billbee.Api.Client.Endpoint
+namespace Billbee.Api.Client.EndPoint
 {
     /// <summary>
-    /// Endpoint for generation of shipments
+    /// EndPoint for generation of shipments
     /// </summary>
     public class ShipmentEndPoint : RestClientBaseClass
     {
         internal ShipmentEndPoint(ApiConfiguration config, ILogger logger) : base(logger, config)
         {
-
         }
 
         /// <summary>
@@ -47,9 +42,9 @@ namespace Billbee.Api.Client.Endpoint
             var result = get("/shipment/ping");
             switch (result)
             {
-                case System.Net.HttpStatusCode.OK:
-                case System.Net.HttpStatusCode.Accepted:
-                case System.Net.HttpStatusCode.Created:
+                case HttpStatusCode.OK:
+                case HttpStatusCode.Accepted:
+                case HttpStatusCode.Created:
                     return true;
                 default:
                     return false;

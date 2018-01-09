@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace BillBee.API.Client.Model
+namespace Billbee.Api.Client.Model
 {
     public class Event
     {

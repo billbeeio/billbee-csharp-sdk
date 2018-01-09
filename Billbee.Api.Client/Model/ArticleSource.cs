@@ -1,13 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Billbee.Api.Client.Model
 {
-
     /// <summary>
     /// Defines the sources in external systems, to which this article is attached to
     /// </summary>
@@ -17,18 +11,22 @@ namespace Billbee.Api.Client.Model
         /// Name of the source
         /// </summary>
         public string Source { get; set; }
+
         /// <summary>
         /// The id on the source
         /// </summary>
         public string SourceId { get; set; }
+
         /// <summary>
         /// The internal id of this article source definition
         /// </summary>
         public int Id { get; set; }
+
         /// <summary>
         /// Name of the api account, this source belongs to
         /// </summary>
         public string ApiAccountName { get; set; }
+
         /// <summary>
         /// Id of the api account, this source belongs to 
         /// </summary>
@@ -43,6 +41,4 @@ namespace Billbee.Api.Client.Model
 
         public JObject Custom { get; set; }
     }
-
-
 }

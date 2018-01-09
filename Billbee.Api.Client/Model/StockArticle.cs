@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Billbee.Api.Client.Model
+﻿namespace Billbee.Api.Client.Model
 {
     public class StockArticle
     {
@@ -16,5 +10,4 @@ namespace Billbee.Api.Client.Model
         public decimal? UnfulfilledAmount { get; set; }
         public decimal? StockDesired { get; set; }
     }
-   
 }

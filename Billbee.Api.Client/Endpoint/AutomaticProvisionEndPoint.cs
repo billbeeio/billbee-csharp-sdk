@@ -1,21 +1,14 @@
 ﻿using Billbee.Api.Client.Model;
-using BillBee.API.Client;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Billbee.Api.Client.Endpoint
+namespace Billbee.Api.Client.EndPoint
 {
     /// <summary>
-    /// Endpoint to access functions for auto provisioning
+    /// EndPoint to access functions for auto provisioning
     /// </summary>
     public class AutomaticProvisionEndPoint : RestClientBaseClass
     {
         internal AutomaticProvisionEndPoint(ApiConfiguration config, ILogger logger = null) : base(logger, config)
         {
-
         }
 
         /// <summary>

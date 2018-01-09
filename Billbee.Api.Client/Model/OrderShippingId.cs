@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Billbee.Api.Client.Model
 {
@@ -15,10 +11,12 @@ namespace Billbee.Api.Client.Model
         /// Id if the shipment
         /// </summary>
         public string ShippingId { get; set; }
+
         /// <summary>
         /// The name of the shipping provider
         /// </summary>
         public string Shipper { get; set; }
+
         /// <summary>
         /// The date, this shipment was created
         /// </summary>
