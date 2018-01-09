@@ -1,0 +1,10 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/packages
+/.vs/BillBeeApiSDK/v15
+/Billbee.Api.Client/bin/Debug
+/Billbee.Api.Client/obj/Debug
+/Billbee.Api.Client.Demo/bin/Debug
+/Billbee.Api.Client.Demo/obj/Debug
