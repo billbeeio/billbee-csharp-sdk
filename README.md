@@ -21,9 +21,9 @@ Simply open the solution in your Visual Studio or other C# IDE.
 
 Then open the Billbee.Api.Client.Demo project and take a look at the examples in Program.cs
 
-##Demo
+## Demo
 
-###Initialization
+### Initialization
 
 ```bash
 // Creating an individual logger, that implements ILogger
@@ -50,7 +50,7 @@ else
 }
 ```
 
-###Demo Calls
+### Demo Calls
 ```bash
 // Getting events for this account
 var events = client.Events.GetEvents();
