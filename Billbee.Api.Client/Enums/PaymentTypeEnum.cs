@@ -14,8 +14,17 @@ namespace Billbee.Api.Client.Enums
         Barzahlung = 4,
         Gutschein = 6,
         Sofortüberweisung = 19,
-        MoneyOrder = 20, // etsy
-        Check = 21, // etsy ck
+        /// <summary>
+        /// etsy
+        /// </summary>
+        MoneyOrder = 20, 
+        /// <summary>
+        /// etsy ck
+        /// </summary>
+        Check = 21,
+        /// <summary>
+        /// Other
+        /// </summary>
         Andere = 22,
         Lastschrift = 23,
         Moneybookers = 24,
@@ -68,7 +77,7 @@ namespace Billbee.Api.Client.Enums
         WireCard_PayPal = 71,
         Micropayment = 72,
         Ratenkauf = 73,
-        Wayfair = 74, // baranski
+        Wayfair = 74, 
         MangoPay_PayPal = 75,
         MangoPay_Sofortueberweisung = 76,
         MangoPay_Kreditkarte = 77,

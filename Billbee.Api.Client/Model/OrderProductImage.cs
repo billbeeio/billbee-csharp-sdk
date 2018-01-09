@@ -20,7 +20,7 @@ namespace Billbee.Api.Client.Model
         /// </summary>
         public bool IsDefaultImage { get; set; }
         /// <summary>
-        ///                    If more than one image was supplied, the position defines the order
+        /// If more than one image was supplied, the position defines the order
         /// </summary>
         public byte? Position { get; set; }
         /// <summary>

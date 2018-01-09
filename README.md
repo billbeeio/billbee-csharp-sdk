@@ -10,7 +10,7 @@ To get an API key, send a mail to [support@billbee.de](mailto:support@billbee.de
 
 ## Install
 Download this package and decompress the solution to a place of your choice.
-For faster approach use our NuGet package.
+If you don't want to compile by yourself, feel free, to use our NuGet package.
 
 ## Official API Documentation
 [https://app01.billbee.de/swagger/ui/index](https://app01.billbee.de/swagger/ui/index)

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Billbee.Api.Client.Model
 {
-                 /// <summary>
-                 /// Defines a product/ article in billbee
-                 /// </summary>
+    /// <summary>
+    /// Defines a product/ article in billbee
+    /// </summary>
     public class Product
     {
         /// <summary>
@@ -90,7 +90,7 @@ namespace Billbee.Api.Client.Model
         /// <summary>
         /// The new weight of this article
         /// </summary>
-        public int? WeightNet { get; set;}
+        public int? WeightNet { get; set; }
         /// <summary>
         /// The stock code, where this article is stored
         /// </summary>
