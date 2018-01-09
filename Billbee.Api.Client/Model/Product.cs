@@ -107,7 +107,6 @@ namespace Billbee.Api.Client.Model
         /// The new weight of this article
         /// </summary>
         public int? WeightNet { get; set; }
-
         /// <summary>
         /// The stock code, where this article is stored
         /// </summary>
