@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using Billbee.Api.Client.Enums;
 using Billbee.Api.Client.Model;
+using Newtonsoft.Json.Linq;
 
 namespace Billbee.Api.Client.EndPoint
 {
@@ -19,10 +20,40 @@ namespace Billbee.Api.Client.EndPoint
         /// Selects an order by it's id
         /// </summary>
         /// <param name="id">id to search for</param>
+        /// <param name="articleTitleSource">The source field for the article title. 0 = Order Position (default), 1 = Article Title, 2 = Article Invoice Text</param>
         /// <returns>Details of the order</returns>
-        public ApiResult<Order> GetOrder(string id)
+        public ApiResult<Order> GetOrder(string id, int articleTitleSource = 0)
         {
-            return requestResource<ApiResult<Order>>($"/orders/{id}");
+            return requestResource<ApiResult<Order>>($"/orders/{id}?articleTitleSource={articleTitleSource}");
+        }
+
+        /// <summary>
+        /// Gets a list of all fileds, that can be patched at an order.
+        /// </summary>
+        /// <returns>List of patchable fields.</returns>
+        public ApiResult<List<string>> GetPatchableFields()
+        {
+            return requestResource<ApiResult<List<string>>>("/orders/PatchableFields");
+        }
+
+        /// <summary>
+        /// Patches one or more fields of an order.
+        /// </summary>
+        /// <param name="id">The id of the order to patch.</param>
+        /// <param name="FieldsToPatch"></param>
+        /// <returns></returns>
+        public ApiResult<object> PatchOrder(int id, Dictionary<string, object> FieldsToPatch)
+        {
+            JObject obj = new JObject();
+            foreach (var keyElement in FieldsToPatch)
+            {
+
+                JProperty prop = new JProperty(keyElement.Key, keyElement.Value);
+                obj.Add(prop);
+            }
+
+
+            return patch<ApiResult<object>>($"/orders/{id}", null, obj);
         }
 
         /// <summary>
@@ -101,7 +132,7 @@ namespace Billbee.Api.Client.EndPoint
                 int i = 0;
                 foreach (var id in orderStateId)
                 {
-                    parameters.Add($"orderStateId[{i++}]", ((int) id).ToString());
+                    parameters.Add($"orderStateId[{i++}]", ((int)id).ToString());
                 }
             }
 
@@ -204,7 +235,7 @@ namespace Billbee.Api.Client.EndPoint
         /// <returns>ApiResult with the result of the update operation</returns>
         public ApiResult<dynamic> AddTags(List<string> tags, int orderId)
         {
-            return post<ApiResult<dynamic>>($"/orders/{orderId}/tags", new {Tags = tags});
+            return post<ApiResult<dynamic>>($"/orders/{orderId}/tags", new { Tags = tags });
         }
 
         /// <summary>
@@ -216,7 +247,7 @@ namespace Billbee.Api.Client.EndPoint
         /// <returns>ApiResult with the result of the update operation</returns>
         public ApiResult<dynamic> UpdateTags(List<string> tags, int orderId)
         {
-            return put<ApiResult<dynamic>>($"/orders/{orderId}/tags", new {Tags = tags});
+            return put<ApiResult<dynamic>>($"/orders/{orderId}/tags", new { Tags = tags });
         }
 
         /// <summary>
@@ -263,7 +294,7 @@ namespace Billbee.Api.Client.EndPoint
         /// <param name="state">The data used to change the state</param>
         public void ChangeOrderState(int id, OrderStateEnum state)
         {
-            put<object>($"/orders/{id}/orderstate", new {NewStateId = (int) state}, null);
+            put<object>($"/orders/{id}/orderstate", new { NewStateId = (int)state }, null);
         }
     }
 }

@@ -26,12 +26,18 @@ namespace Billbee.Api.Client.EndPoint
         /// <summary>
         /// Creates a new shipment.
         /// </summary>
-        /// <param name="shipment">The shipment specification, that shoul be created.</param>
+        /// <param name="shipment">The shipment specification, that should be created.</param>
         /// <returns>The result of the shipment <see cref="ShipmentResult"/></returns>
         public ShipmentResult PostShipment(PostShipment shipment)
         {
             return post<ShipmentResult>("/shipment/shipment", shipment);
         }
+
+        public ApiResult<ShipmentWithLabelResult> ShipOrderWithLabel(ShipmentWithLabel shipmentRequest)
+        {
+            return post<ApiResult<ShipmentWithLabelResult>>("/shipment/shipment", shipmentRequest);
+        }
+
 
         /// <summary>
         /// Creates a test request to the api

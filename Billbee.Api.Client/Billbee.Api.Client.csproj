@@ -69,6 +69,7 @@
     <Compile Include="Enums\VatModeEnum.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="Model\Address.cs" />
+    <Compile Include="Model\GetReservedAmountResult.cs" />
     <Compile Include="Model\Order.cs" />
     <Compile Include="Model\OrderItem.cs" />
     <Compile Include="Model\OrderItemAttribute.cs" />
@@ -95,7 +96,10 @@
     <Compile Include="Model\Shipment.cs" />
     <Compile Include="Model\Product.cs" />
     <Compile Include="Model\ShipmentAddress.cs" />
+    <Compile Include="Model\ShipmentDimensions.cs" />
     <Compile Include="Model\ShipmentResult.cs" />
+    <Compile Include="Model\ShipmentWithLabel.cs" />
+    <Compile Include="Model\ShipmentWithLabelResult.cs" />
     <Compile Include="Model\ShippingProduct.cs" />
     <Compile Include="Model\ShippingProvider.cs" />
     <Compile Include="Model\StockArticle.cs" />

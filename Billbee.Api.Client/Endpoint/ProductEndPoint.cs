@@ -36,6 +36,25 @@ namespace Billbee.Api.Client.EndPoint
         }
 
         /// <summary>
+        /// Queries the reserved amount for a single article by id or by sku
+        /// </summary>
+        /// <param name="id">The id or the sku of the article to query</param>
+        /// <param name="lookupBy">Either the value id or the value sku to specify the meaning of the id parameter</param>
+        /// <param name="stockId">Optional the stock id if the multi stock feature is enabled</param>
+        /// <returns></returns>
+        public ApiResult<GetReservedAmountResult> GetReservedAmount(string id, string lookupBy = "id", int? stockId = null)
+        {
+            NameValueCollection parameters = new NameValueCollection();
+            parameters.Add("id", id);
+            parameters.Add("lookupBy", lookupBy);
+            if (stockId != null)
+                parameters.Add("stockId", stockId.Value.ToString());
+
+            return requestResource<ApiResult<GetReservedAmountResult>>($"/products/reservedamount", parameters);
+        }
+
+
+        /// <summary>
         /// Updates the stock code / stock location of the article
         /// </summary>
         /// <param name="updateStockCodeModel">Details, which article should be changed to which location.</param>
