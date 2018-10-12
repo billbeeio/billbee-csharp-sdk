@@ -60,6 +60,7 @@
     <Compile Include="EndPoint\OrderEndPoint.cs" />
     <Compile Include="EndPoint\ProductEndPoint.cs" />
     <Compile Include="EndPoint\ShipmentEndPoint.cs" />
+    <Compile Include="EndPoint\WebhookEndPoint.cs" />
     <Compile Include="Enums\ErrorHandlingEnum.cs" />
     <Compile Include="Enums\EventTypeEnum.cs" />
     <Compile Include="Enums\OrderStateEnum.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="Enums\ShippingCarrier.cs" />
     <Compile Include="Enums\VatModeEnum.cs" />
     <Compile Include="ILogger.cs" />
+    <Compile Include="InvalidValueException.cs" />
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\GetReservedAmountResult.cs" />
     <Compile Include="Model\Order.cs" />
@@ -106,6 +108,8 @@
     <Compile Include="Model\TermsResult.cs" />
     <Compile Include="Model\UpdateStock.cs" />
     <Compile Include="Model\UpdateStockCode.cs" />
+    <Compile Include="Model\Webhook.cs" />
+    <Compile Include="Model\WebhookFilter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RestClientBaseClass.cs" />
   </ItemGroup>

@@ -44,6 +44,18 @@ namespace Billbee.Api.Client
             return response.Content;
         }
 
+        protected string put(string resource, dynamic data, NameValueCollection parameter = null)
+        {
+            var c = createRestClient();
+            var req = createRestRequest(resource, parameter);
+            if (data != null)
+                req.AddBody(data);
+            var response = c.Put(req);
+
+            throwWhenErrResponse(response, resource);
+            return response.Content;
+        }
+
         protected T put<T>(string resource, NameValueCollection parameter = null) where T : new()
         {
             var c = createRestClient();
@@ -65,7 +77,6 @@ namespace Billbee.Api.Client
             throwWhenErrResponse(response, resource);
             return response.Data;
         }
-
 
         protected string patch(string resource, NameValueCollection parameter = null, dynamic data = null)
         {
@@ -106,16 +117,8 @@ namespace Billbee.Api.Client
             {
                 var errResponse = JsonConvert.DeserializeObject<JObject>(response.Content);
                 errMsg = "HTTP Response: " + response.StatusCode + ": " + errResponse?["ErrorCode"]?.Value<string>() +
-                         " - " + errResponse?["ErrorMessage"]?.Value<string>();
+                         " - " + errResponse?["ErrorMessage"]?.Value<string>() + errResponse?["Message"]?.Value<string>();
 
-                // debitoor
-                var errArr = errResponse?["errors"];
-                if (errArr != null)
-                {
-                    errMsg += string.Join(", ", errArr.Select(e =>
-                        $" prop: {e["property"]?.Value<string>()} msg: {e["message"]?.Value<string>()}"
-                    ));
-                }
             }
             catch
             {

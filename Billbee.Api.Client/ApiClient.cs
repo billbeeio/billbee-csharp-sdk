@@ -43,6 +43,11 @@ namespace Billbee.Api.Client
             get { return new ShipmentEndPoint(Configuration, logger); }
         }
 
+        public WebhookEndPoint Webhooks
+        {
+            get { return new WebhookEndPoint(Configuration, logger); }
+        }
+
         /// <summary>
         /// EndPoint to access Products
         /// </summary>
