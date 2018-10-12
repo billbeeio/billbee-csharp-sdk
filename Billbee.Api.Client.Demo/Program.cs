@@ -24,11 +24,11 @@ namespace Billbee.Api.Client.Demo
             ApiClient client = new ApiClient(logger: logger);
 
             // Enter your api key here. If you don't have an api key. Please contact support@billbee.de with a description on what you would like to do, to get one.
-            client.Configuration.ApiKey = "2829bb8c-9a1e-45b6-82b8-c8a8fb4e8a2f";
+            client.Configuration.ApiKey = "";
             // Enter the username of your main account here.
-            client.Configuration.Username = "aljoscha@billbee.de";
+            client.Configuration.Username = "";
             // Enter the password of your api here.
-            client.Configuration.Password = "Hallo%123";
+            client.Configuration.Password = "";
 
             // Test the configuration
             if (client.TestConfiguration())
