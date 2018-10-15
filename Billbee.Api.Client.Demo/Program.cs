@@ -143,6 +143,12 @@ namespace Billbee.Api.Client.Demo
             // Artificial brake to prevent throttling
             Thread.Sleep(1000);
 
+            client.Search.SearchTerm(new Search { Term = "4711", Type = new List<string> { "order", "product", "customer" } });
+
+
+            // Artificial brake to prevent throttling
+            Thread.Sleep(1000);
+
             // Getting events for this account
             var events = client.Events.GetEvents();
 

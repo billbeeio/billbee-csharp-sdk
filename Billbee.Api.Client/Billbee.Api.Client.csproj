@@ -60,6 +60,7 @@
     <Compile Include="EndPoint\EventEndPoint.cs" />
     <Compile Include="EndPoint\OrderEndPoint.cs" />
     <Compile Include="EndPoint\ProductEndPoint.cs" />
+    <Compile Include="EndPoint\SearchEndPoint.cs" />
     <Compile Include="EndPoint\ShipmentEndPoint.cs" />
     <Compile Include="EndPoint\WebhookEndPoint.cs" />
     <Compile Include="Enums\ErrorHandlingEnum.cs" />
@@ -77,10 +78,12 @@
     <Compile Include="Model\AtticleCustomFieldValue.cs" />
     <Compile Include="Model\CustomerAddress.cs" />
     <Compile Include="Model\CustomerForCreation.cs" />
+    <Compile Include="Model\CustomerSearchResult.cs" />
     <Compile Include="Model\GetReservedAmountResult.cs" />
     <Compile Include="Model\Order.cs" />
     <Compile Include="Model\OrderItem.cs" />
     <Compile Include="Model\OrderItemAttribute.cs" />
+    <Compile Include="Model\OrderSearchResult.cs" />
     <Compile Include="Model\OrderUser.cs" />
     <Compile Include="Model\OrderProductImage.cs" />
     <Compile Include="Model\ApiResult.cs" />
@@ -101,6 +104,9 @@
     <Compile Include="Model\InvoicePosition.cs" />
     <Compile Include="Model\InvoiceDetail.cs" />
     <Compile Include="Model\MultiLanguageString.cs" />
+    <Compile Include="Model\ProductSearchResult.cs" />
+    <Compile Include="Model\Search.cs" />
+    <Compile Include="Model\SearchResult.cs" />
     <Compile Include="Model\Shipment.cs" />
     <Compile Include="Model\Product.cs" />
     <Compile Include="Model\ShipmentAddress.cs" />
