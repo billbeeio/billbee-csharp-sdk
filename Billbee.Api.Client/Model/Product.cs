@@ -140,5 +140,7 @@ namespace Billbee.Api.Client.Model
         public string CountryOfOrigin { get; set; }
         public string ExportDescription { get; set; }
         public string TaricNumber { get; set; }
+
+        public List<AtticleCustomFieldValue> CustomFields { get; set; } = new List<AtticleCustomFieldValue>();
     }
 }
