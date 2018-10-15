@@ -96,5 +96,48 @@ namespace Billbee.Api.Client.EndPoint
 
             return requestResource<ApiResult<Product>>($"/products/{id}", parameters);
         }
+
+        /// <summary>
+        /// Requests a list of all custom fields, usable in products
+        /// </summary>
+        /// <returns>List of CustomFields</returns>
+        public ApiPagedResult<List<ArticleCustomFieldDefinition>> GetCustomFields(int page, int pageSize)
+        {
+            NameValueCollection parameters = new NameValueCollection();
+            parameters.Add("page", page.ToString());
+            parameters.Add("pageSize", pageSize.ToString());
+
+            return requestResource<ApiPagedResult<List<ArticleCustomFieldDefinition>>>($"/products/custom-fields", parameters);
+        }
+
+        /// <summary>
+        /// Requests the definition of a custom field by using it's id
+        /// </summary>
+        /// <param name="id">Id of the definition to get information about</param>
+        /// <returns>The definition of the entry with the given id</returns>
+        public ApiResult<ArticleCustomFieldDefinition> GetCustomField(int id)
+        {
+            return requestResource<ApiResult<ArticleCustomFieldDefinition>>($"/products/custom-fields/{id}");
+        }
+
+        /// <summary>
+        /// Supplies a list of all fields, that can be patched using the PatchArticle- method
+        /// </summary>
+        /// <returns>List of fieldnames</returns>
+        public ApiResult<List<string>> GetPatchableProductFields()
+        {
+            return requestResource<ApiResult<List<string>>>($"/products/PatchableFields");
+        }
+
+        /// <summary>
+        /// Patches given fields of an product
+        /// </summary>
+        /// <param name="id">Id of the product to patch</param>
+        /// <param name="fieldsToPatch">Dictionary which uses the fieldname as key and the new value as value.</param>
+        /// <returns></returns>
+        public ApiResult<Product> PatchArticle(int id, Dictionary<string,string> fieldsToPatch)
+        {
+            return patch<ApiResult<Product>>($"/products/{id}", data: fieldsToPatch);
+        }
     }
 }
