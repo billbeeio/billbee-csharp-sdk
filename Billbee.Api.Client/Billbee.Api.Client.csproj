@@ -56,6 +56,7 @@
     <Compile Include="ApiClient.cs" />
     <Compile Include="ApiConfiguration.cs" />
     <Compile Include="EndPoint\AutomaticProvisionEndPoint.cs" />
+    <Compile Include="EndPoint\CustomerEndPoint.cs" />
     <Compile Include="EndPoint\EventEndPoint.cs" />
     <Compile Include="EndPoint\OrderEndPoint.cs" />
     <Compile Include="EndPoint\ProductEndPoint.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="ILogger.cs" />
     <Compile Include="InvalidValueException.cs" />
     <Compile Include="Model\Address.cs" />
+    <Compile Include="Model\Customer.cs" />
     <Compile Include="Model\GetReservedAmountResult.cs" />
     <Compile Include="Model\Order.cs" />
     <Compile Include="Model\OrderItem.cs" />
