@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Billbee.Api.Client.Enums;
 using Billbee.Api.Client.Model;
+using Newtonsoft.Json;
 
 namespace Billbee.Api.Client.Demo
 {
@@ -21,14 +23,26 @@ namespace Billbee.Api.Client.Demo
             ILogger logger = new Logger();
 
             // Creating new instance of ApiClient           
-            ApiClient client = new ApiClient(logger: logger);
+            string configPath = "config.json";
+            ApiClient client = null;
 
-            // Enter your api key here. If you don't have an api key. Please contact support@billbee.de with a description on what you would like to do, to get one.
-            client.Configuration.ApiKey = "";
-            // Enter the username of your main account here.
-            client.Configuration.Username = "";
-            // Enter the password of your api here.
-            client.Configuration.Password = "";
+            if (File.Exists(configPath))
+            {
+                // From config file
+                client = new ApiClient("config.json", logger: logger);
+            }
+            else
+            {
+                // from naual given config        
+                client = new ApiClient(logger: logger);
+
+                // Enter your api key here. If you don't have an api key. Please contact support@billbee.de with a description on what you would like to do, to get one.
+                client.Configuration.ApiKey = "";
+                // Enter the username of your main account here.
+                client.Configuration.Username = "";
+                // Enter the password of your api here.
+                client.Configuration.Password = "";
+            }
 
             // Test the configuration
             if (client.TestConfiguration())

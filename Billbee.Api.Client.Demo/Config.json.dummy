@@ -1,0 +1,7 @@
+{
+  "Username": "",
+  "Password": "",
+  "ApiKey": "",
+  "BaseUrl": "https: //app.billbee.io/api/v1",
+  "errorHandlingBehaviour": 0
+}
