@@ -73,6 +73,8 @@
     <Compile Include="InvalidValueException.cs" />
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\Customer.cs" />
+    <Compile Include="Model\ArticleCustomFieldDefinition.cs" />
+    <Compile Include="Model\AtticleCustomFieldValue.cs" />
     <Compile Include="Model\GetReservedAmountResult.cs" />
     <Compile Include="Model\Order.cs" />
     <Compile Include="Model\OrderItem.cs" />

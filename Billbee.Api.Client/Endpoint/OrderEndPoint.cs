@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using Billbee.Api.Client.Enums;
+﻿using Billbee.Api.Client.Enums;
 using Billbee.Api.Client.Model;
 using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
 
 namespace Billbee.Api.Client.EndPoint
 {
@@ -90,24 +90,46 @@ namespace Billbee.Api.Client.EndPoint
         /// <param name="minimumBillBeeOrderId">Minimum internal id of the order. As ids are in squence, this can be used to get only orders, not already imported.</param>
         /// <param name="modifiedAtMin">Minimum date of last modification</param>
         /// <param name="modifiedAtMax">Maximum date of last modification</param>
+        /// <param name="excludeTags">Defines, that no tags should be supplied</param>
         /// <returns></returns>
-        public ApiResult<List<Order>> GetOrderList(DateTime? minOrderDate = null, DateTime? maxOrderDate = null,
-            int page = 1, int pageSize = 50, List<int> shopId = null,
-            List<OrderStateEnum> orderStateId = null, List<string> tag = null, int? minimumBillBeeOrderId = null,
-            DateTime? modifiedAtMin = null, DateTime? modifiedAtMax = null)
+        public ApiResult<List<Order>> GetOrderList(DateTime? minOrderDate = null,
+            DateTime? maxOrderDate = null,
+            int page = 1,
+            int pageSize = 50,
+            List<int> shopId = null,
+            List<OrderStateEnum> orderStateId = null,
+            List<string> tag = null,
+            int? minimumBillBeeOrderId = null,
+            DateTime? modifiedAtMin = null,
+            DateTime? modifiedAtMax = null,
+            bool excludeTags = false)
         {
             NameValueCollection parameters = new NameValueCollection();
 
             if (minOrderDate != null)
+            {
                 parameters.Add("minOrderDate", minOrderDate.Value.ToString("yyyy-MM-dd HH:mm"));
+            }
+
             if (maxOrderDate != null)
+            {
                 parameters.Add("maxOrderDate", maxOrderDate.Value.ToString("yyyy-MM-dd HH:mm"));
+            }
+
             if (modifiedAtMin != null)
+            {
                 parameters.Add("modifiedAtMin", modifiedAtMax.Value.ToString("yyyy-MM-dd HH:mm"));
+            }
+
             if (modifiedAtMax != null)
+            {
                 parameters.Add("modifiedAtMax", modifiedAtMax.Value.ToString("yyyy-MM-dd HH:mm"));
+            }
+
             if (minimumBillBeeOrderId != null)
+            {
                 parameters.Add("minimumBillBeeOrderId", minimumBillBeeOrderId.ToString());
+            }
 
             if (shopId != null)
             {
@@ -138,6 +160,7 @@ namespace Billbee.Api.Client.EndPoint
 
             parameters.Add("page", page.ToString());
             parameters.Add("pageSize", pageSize.ToString());
+            parameters.Add("excludeTags", excludeTags.ToString());
 
             return requestResource<ApiResult<List<Order>>>("/orders", parameters);
         }
@@ -155,27 +178,41 @@ namespace Billbee.Api.Client.EndPoint
         /// <param name="minPayDate">Minimum date, where the payment occured</param>
         /// <param name="maxPayDate">Maximum date, where the payment occured</param>
         /// <param name="includePositions">Should the invoice data contain all invoice positions?</param>
+        /// <param name="excludeTags">Defines, that no tags should be supplied</param>
         /// <returns></returns>
         public ApiResult<List<InvoiceDetail>> GetInvoiceList(
             DateTime? minInvoiceDate = null,
             DateTime? maxInvoiceDate = null,
-            int page = 1, int pageSize = 50, List<int> shopId = null,
+            int page = 1, int pageSize = 50,
+            List<int> shopId = null,
             List<int> orderStateId = null,
             List<string> tag = null,
-            DateTime? minPayDate = null, DateTime? maxPayDate = null,
-            bool includePositions = false)
+            DateTime? minPayDate = null,
+            DateTime? maxPayDate = null,
+            bool includePositions = false,
+            bool excludeTags = false)
         {
             NameValueCollection parameters = new NameValueCollection();
 
             if (minInvoiceDate != null)
+            {
                 parameters.Add("minInvoiceDate", minInvoiceDate.Value.ToString("yyyy-MM-dd HH:mm"));
-            if (maxInvoiceDate != null)
-                parameters.Add("maxInvoiceDate", maxInvoiceDate.Value.ToString("yyyy-MM-dd HH:mm"));
-            if (minPayDate != null)
-                parameters.Add("minPayDate", minPayDate.Value.ToString("yyyy-MM-dd HH:mm"));
-            if (maxPayDate != null)
-                parameters.Add("maxPayDate", maxPayDate.Value.ToString("yyyy-MM-dd HH:mm"));
+            }
 
+            if (maxInvoiceDate != null)
+            {
+                parameters.Add("maxInvoiceDate", maxInvoiceDate.Value.ToString("yyyy-MM-dd HH:mm"));
+            }
+
+            if (minPayDate != null)
+            {
+                parameters.Add("minPayDate", minPayDate.Value.ToString("yyyy-MM-dd HH:mm"));
+            }
+
+            if (maxPayDate != null)
+            {
+                parameters.Add("maxPayDate", maxPayDate.Value.ToString("yyyy-MM-dd HH:mm"));
+            }
 
             if (shopId != null)
             {
@@ -208,6 +245,7 @@ namespace Billbee.Api.Client.EndPoint
             parameters.Add("includePositions", includePositions.ToString());
             parameters.Add("page", page.ToString());
             parameters.Add("pageSize", pageSize.ToString());
+            parameters.Add("excludeTags", excludeTags.ToString());
 
             return requestResource<ApiResult<List<InvoiceDetail>>>("/orders/invoices", parameters);
         }

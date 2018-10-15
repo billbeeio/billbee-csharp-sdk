@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using Billbee.Api.Client.Enums;
 using Billbee.Api.Client.Model;
 using Newtonsoft.Json;
@@ -29,7 +30,7 @@ namespace Billbee.Api.Client.Demo
             if (File.Exists(configPath))
             {
                 // From config file
-                client = new ApiClient("config.json", logger: logger);
+                client = new ApiClient(configPath, logger: logger);
             }
             else
             {
@@ -88,11 +89,35 @@ namespace Billbee.Api.Client.Demo
             webhook.IsPaused = false;
             client.Webhooks.UpdateWebhook(webhook);
 
+            // Artificial brake to prevent throttling
+            Thread.Sleep(1000);
+
             // Deleting webhook
             client.Webhooks.Deletewebhook(webhook.Id);
 
             // Deleting all webhooks
             client.Webhooks.DeleteAllWebhooks();
+
+            // Artificial brake to prevent throttling
+            Thread.Sleep(1000);
+
+            // Requesting Custom Product fields
+            var customFields = client.Products.GetCustomFields(1,50);
+
+            if (customFields.Data.Count > 0)
+            {
+                var firstCustomField = client.Products.GetCustomField(customFields.Data.First().Id.Value);
+            }
+
+            // Artificial brake to prevent throttling
+            Thread.Sleep(1000);
+
+            var patchableFields = client.Products.GetPatchableProductFields();
+
+            var patchedProduct = client.Products.PatchArticle(5617463, new Dictionary<string, string> { { "EAN", "0815" } });
+
+            // Artificial brake to prevent throttling
+            Thread.Sleep(1000);
 
             // Getting events for this account
             var events = client.Events.GetEvents();
