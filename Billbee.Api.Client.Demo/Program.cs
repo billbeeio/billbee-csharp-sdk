@@ -1,11 +1,10 @@
+using Billbee.Api.Client.Enums;
+using Billbee.Api.Client.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using Billbee.Api.Client.Enums;
-using Billbee.Api.Client.Model;
-using Newtonsoft.Json;
 
 namespace Billbee.Api.Client.Demo
 {
@@ -14,9 +13,9 @@ namespace Billbee.Api.Client.Demo
     /// 
     /// To use this demo, you have to enable the API in your account. Please refer to https://www.billbee.de/api/ for further information.
     /// </summary>
-    class Program
+    internal class Program
     {
-        static int Main()
+        private static int Main()
         {
             #region Initialization
 
@@ -74,7 +73,7 @@ namespace Billbee.Api.Client.Demo
                 Description = "A simple description",
                 IsPaused = true,
                 Filters = new List<string> { "order.created" },
-                Headers = new Dictionary<string, string> { { "TestHeader", "TestHeaderValue" }, { "Another Testheader", "Another Value"} },
+                Headers = new Dictionary<string, string> { { "TestHeader", "TestHeaderValue" }, { "Another Testheader", "Another Value" } },
                 Properties = new Dictionary<string, object>()
             });
 
@@ -102,7 +101,7 @@ namespace Billbee.Api.Client.Demo
             Thread.Sleep(1000);
 
             // Requesting Custom Product fields
-            var customFields = client.Products.GetCustomFields(1,50);
+            var customFields = client.Products.GetCustomFields(1, 50);
 
             if (customFields.Data.Count > 0)
             {
@@ -119,9 +118,34 @@ namespace Billbee.Api.Client.Demo
             // Artificial brake to prevent throttling
             Thread.Sleep(1000);
 
+            var customers = client.Customer.GetCustomerList(1, 50);
+
+            client.Customer.AddCustomer(new CustomerForCreation { Name = "Max Mustermann", Email = "max@mustermann.de", Address = new CustomerAddress { FirstName = "Max", LastName = "Mustermann", Street = "Mustergasse", Housenumber = "1", Zip = "12345", City = "Musterhausen", AddressType = 1, CountryCode = "DE" } });
+
+            // Artificial brake to prevent throttling
+            Thread.Sleep(1000);
+
+            if (customers.Data.Count > 0)
+            {
+                var customer = client.Customer.GetCustomer(customers.Data.First().Id.Value);
+
+                customer.Data.Name = "Tobias Tester";
+
+                customer = client.Customer.UpdateCustomer(customer.Data);
+
+                // Artificial brake to prevent throttling
+                Thread.Sleep(1000);
+
+                var customerOrder = client.Customer.GetOrdersForCustomer(customer.Data.Id.Value, 1, 50);
+                var customerAddresses = client.Customer.GetAddressesForCustomer(customer.Data.Id.Value, 1, 50);
+            }
+
+            // Artificial brake to prevent throttling
+            Thread.Sleep(1000);
+
             // Getting events for this account
             var events = client.Events.GetEvents();
-                        
+
             // Getting my shipping providers
             var shippingProvider = client.Shipment.GetShippingProvider();
 
@@ -133,7 +157,7 @@ namespace Billbee.Api.Client.Demo
             {
                 var updateStockCodeResult =
                     client.Products.UpdateStockCode(
-                        new UpdateStockCode {Sku = sku, StockCode = "Testlager"});
+                        new UpdateStockCode { Sku = sku, StockCode = "Testlager" });
                 var updateStockResult = client.Products.UpdateStock(
                     new UpdateStock
                     {
@@ -154,7 +178,7 @@ namespace Billbee.Api.Client.Demo
 
             // Getting a list of all orders with order state 'confirmed'
             var orders = client.Orders.GetOrderList(page: 1, pageSize: 20,
-                orderStateId: new List<OrderStateEnum> {OrderStateEnum.Bestaetigt});
+                orderStateId: new List<OrderStateEnum> { OrderStateEnum.Bestaetigt });
             // var x = client.Orders.GetInvoiceList();
 
             // Example to create a new order. Please create a complete order object for usage.
@@ -167,15 +191,10 @@ namespace Billbee.Api.Client.Demo
             if (!string.IsNullOrWhiteSpace(orderId) && int.TryParse(orderId, out orderIdInt))
             {
                 // Remove all old tags and add the given ones.
-                var updateTagsResult = client.Orders.UpdateTags(new List<string>() {"Test C", "Test D"}, orderIdInt);
+                var updateTagsResult = client.Orders.UpdateTags(new List<string>() { "Test C", "Test D" }, orderIdInt);
 
                 // Add new tags.
-                var addTagsResult = client.Orders.AddTags(new List<string>() {"Test A", "Test B"}, orderIdInt);
-
-                // Add a shipment to an order. Please fill in the following and uncomment. the last line.
-                string shippingId = "0815";
-                int providerId = 0;
-                int productId = 0;
+                var addTagsResult = client.Orders.AddTags(new List<string>() { "Test A", "Test B" }, orderIdInt);
                 // client.Orders.AddShipment(new OrderShipment { Comment = "Test", OrderId = orderIdInt, ShippingId = shippingId, ShippingProviderId = providerId, ShippingProviderProductId = productId });
 
                 // Getting documents

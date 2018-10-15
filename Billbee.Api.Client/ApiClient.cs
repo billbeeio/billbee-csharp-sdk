@@ -97,6 +97,14 @@ namespace Billbee.Api.Client
         }
 
         /// <summary>
+        /// EndPoint to access customer base data
+        /// </summary>
+        public CustomerEndPoint Customer
+        {
+            get { return new CustomerEndPoint(Configuration, logger); }
+        }
+
+        /// <summary>
         /// EndPoint to access orders
         /// </summary>
         public OrderEndPoint Orders
