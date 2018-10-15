@@ -29,7 +29,7 @@ namespace Billbee.Api.Client.Demo
             if (File.Exists(configPath))
             {
                 // From config file
-                client = new ApiClient("config.json", logger: logger);
+                client = new ApiClient(configPath, logger: logger);
             }
             else
             {
