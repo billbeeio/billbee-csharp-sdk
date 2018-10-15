@@ -105,6 +105,14 @@ namespace Billbee.Api.Client
         }
 
         /// <summary>
+        /// EndPoint for searches in customers, orders and products
+        /// </summary>
+        public SearchEndPoint Search
+        {
+            get { return new SearchEndPoint(Configuration, logger); }
+        }
+
+        /// <summary>
         /// EndPoint to access orders
         /// </summary>
         public OrderEndPoint Orders
