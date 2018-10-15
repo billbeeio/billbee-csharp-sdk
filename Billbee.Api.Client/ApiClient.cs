@@ -1,11 +1,14 @@
 ﻿using System;
+using System.IO;
+using System.Reflection;
 using Billbee.Api.Client.EndPoint;
+using Newtonsoft.Json;
 
 namespace Billbee.Api.Client
 {
     /// <summary>
     /// Client for the Billbee API
-    /// see https://app01.billbee.de/swagger/ui/index or https://www.billbee.de/api/ for further information
+    /// see https://app.billbee.io/swagger/ui/index or https://www.billbee.de/api/ for further information
     /// </summary>
     public class ApiClient
     {
@@ -25,6 +28,35 @@ namespace Billbee.Api.Client
         {
             this.Configuration = configuration ?? new ApiConfiguration();
             this.logger = logger;
+        }
+
+        public ApiClient(string ConfigurationPath, ILogger logger = null)
+        {
+            this.logger = logger;
+            this.LoadConfigFromFile(ConfigurationPath);
+        }
+
+        private void LoadConfigFromFile(string path = null)
+        {
+            if (string.IsNullOrWhiteSpace(path))
+            {
+                path = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            }
+
+            if (!path.ToLower().EndsWith(".json"))
+            {
+                path += ".json";
+            }
+
+            if (!File.Exists(path))
+            {
+                throw new FileNotFoundException($"The config file {path} could not be found.");
+            }
+            
+            string configStr = System.IO.File.ReadAllText(path);
+
+            this.Configuration = JsonConvert.DeserializeObject<ApiConfiguration>(configStr);
+
         }
 
         /// <summary>
