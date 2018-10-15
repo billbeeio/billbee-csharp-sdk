@@ -79,6 +79,7 @@
     <Compile Include="Model\CustomerAddress.cs" />
     <Compile Include="Model\CustomerForCreation.cs" />
     <Compile Include="Model\CustomerSearchResult.cs" />
+    <Compile Include="Model\DeletedImages.cs" />
     <Compile Include="Model\GetReservedAmountResult.cs" />
     <Compile Include="Model\Order.cs" />
     <Compile Include="Model\OrderItem.cs" />

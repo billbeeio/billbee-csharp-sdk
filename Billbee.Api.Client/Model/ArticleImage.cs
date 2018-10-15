@@ -15,10 +15,13 @@
         /// </summary>
         public int Id { get; set; }
 
+        /// <summary>
+        /// Path of external thumbnail, will be ignored, if posting to billbee.
+        /// </summary>
         public string ThumbPathExt { get; set; }
 
         /// <summary>
-        /// Url of the thumbail
+        /// Url of the thumbail, will be ignored, if posting to billbee.
         /// </summary>
         public string ThumbUrl { get; set; }
 
@@ -31,5 +34,10 @@
         /// Defines, wether this is default image, or not.
         /// </summary>
         public bool? IsDefault { get; set; }
+
+        /// <summary>
+        /// The id of the article, this image belongs to.
+        /// </summary>
+        public int ArticleId { get; set; }
     }
 }
