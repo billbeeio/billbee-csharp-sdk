@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Billbee.Api.Client.Enums;
+using Billbee.Api.Client.Model;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using Billbee.Api.Client.Enums;
-using Billbee.Api.Client.Model;
 
 namespace Billbee.Api.Client.EndPoint
 {
@@ -48,7 +48,9 @@ namespace Billbee.Api.Client.EndPoint
             parameters.Add("id", id);
             parameters.Add("lookupBy", lookupBy);
             if (stockId != null)
+            {
                 parameters.Add("stockId", stockId.Value.ToString());
+            }
 
             return requestResource<ApiResult<GetReservedAmountResult>>($"/products/reservedamount", parameters);
         }
@@ -77,7 +79,9 @@ namespace Billbee.Api.Client.EndPoint
             parameters.Add("page", page.ToString());
             parameters.Add("pageSize", pageSize.ToString());
             if (minCreatedAt != null)
+            {
                 parameters.Add("minCreatedAt", minCreatedAt.Value.ToString("yyyy-MM-dd"));
+            }
 
             return requestResource<ApiPagedResult<List<Product>>>($"/products", parameters);
         }
@@ -135,9 +139,114 @@ namespace Billbee.Api.Client.EndPoint
         /// <param name="id">Id of the product to patch</param>
         /// <param name="fieldsToPatch">Dictionary which uses the fieldname as key and the new value as value.</param>
         /// <returns></returns>
-        public ApiResult<Product> PatchArticle(int id, Dictionary<string,string> fieldsToPatch)
+        public ApiResult<Product> PatchArticle(int id, Dictionary<string, string> fieldsToPatch)
         {
             return patch<ApiResult<Product>>($"/products/{id}", data: fieldsToPatch);
         }
+
+        /// <summary>
+        /// Collects all images of a specific article
+        /// </summary>
+        /// <param name="id">Id of the article to get the images.</param>
+        /// <returns>List if Images.</returns>
+        public ApiResult<List<ArticleImage>> GetArticleImages(int id)
+        {
+            return requestResource<ApiResult<List<ArticleImage>>>($"/products/{id}/images");
+        }
+
+        /// <summary>
+        /// Gets a specific image object
+        /// </summary>
+        /// <param name="imageId">Id of the image to gather</param>
+        /// <returns>The image object.</returns>
+        /// <param name="articleId">If of the article, this image belongs to.</param>
+        public ApiResult<ArticleImage> GetArticleImage(int articleId, int imageId)
+        {
+            return requestResource<ApiResult<ArticleImage>>($"/products/{articleId}/images/{imageId}");
+        }
+
+        /// <summary>
+        /// Gets a specific image object
+        /// </summary>
+        /// <param name="imageId">Id of the image to gather</param>
+        /// <returns>The image object.</returns>
+        public ApiResult<ArticleImage> GetArticleImage(int imageId)
+        {
+            return requestResource<ApiResult<ArticleImage>>($"/products/images/{imageId}");
+        }
+
+        /// <summary>
+        /// Creates a new image
+        /// </summary>
+        /// <param name="image">The image defintion to add</param>
+        /// <returns>The added image object.</returns>
+        public ApiResult<ArticleImage> AddArticleImage(ArticleImage image)
+        {
+            if (image.Id != 0)
+            {
+                throw new InvalidValueException("To add a new image, only 0 as Id is allowed.");
+            }
+
+            return put<ApiResult<ArticleImage>>($"/products/{image.ArticleId}/images/{image.Id}", image);
+        }
+
+        /// <summary>
+        /// Updates an existing image
+        /// </summary>
+        /// <param name="image">Definition of the image to update.</param>
+        /// <returns>The updated image object.</returns>
+        public ApiResult<ArticleImage> UpdateArticleImage(ArticleImage image)
+        {
+            if (image.Id == 0)
+            {
+                throw new InvalidValueException("To update an image, the Id must not be 0.");
+            }
+
+            return put<ApiResult<ArticleImage>>($"/products/{image.ArticleId}/images/{image.Id}", image);
+        }
+
+        /// <summary>
+        /// Adds muiltiple images to a specific article id.
+        /// </summary>
+        /// <param name="articleId">Id of the article to attach the images to.</param>
+        /// <param name="images">List of images</param>
+        /// <param name="replace">If true, existing images will be overwritten.</param>
+        /// <returns></returns>
+        public ApiResult<List<ArticleImage>> AddMultipleArticleImages(int articleId, List<ArticleImage> images, bool replace = false)
+        {
+            NameValueCollection parameters = new NameValueCollection();
+            parameters.Add("replace", replace.ToString());
+            return put<ApiResult<List<ArticleImage>>>($"/products/{articleId}/images", images, parameters);
+        }
+
+        /// <summary>
+        /// Deletes a single image of a specified article
+        /// </summary>
+        /// <param name="articleId">Id of article</param>
+        /// <param name="imageId">Id of the image to delete</param>
+        public void DeleteArticleImage(int articleId, int imageId)
+        {
+            delete($"/products/{articleId}/images/{imageId}");
+        }
+
+        /// <summary>
+        /// Deletes a single image
+        /// </summary>
+        /// <param name="imageId">id of the image</param>
+        public void DeleteArticleImage(int imageId)
+        {
+            delete($"/products/images/{imageId}");
+        }
+
+        /// <summary>
+        /// Deletes multiple images
+        /// </summary>
+        /// <param name="imageIds">List of image ids to delete</param>
+        /// <returns>Result of deletion</returns>
+        public ApiResult<DeletedImages> DeleteMultipleArticleImages(List<int> imageIds)
+        {
+            return post<ApiResult<DeletedImages>>($"/products/images/delete", imageIds);
+        }
+
     }
 }
