@@ -25,7 +25,7 @@ namespace Billbee.Api.Client
         /// <summary>
         /// The base url of the Billbee API. Typically, this sticks unchanged.
         /// </summary>
-        public string BaseUrl { get; set; } = "https://app01.billbee.de/api/v1";
+        public string BaseUrl { get; set; } = "https://app.billbee.io/api/v1";
 
         /// <summary>
         /// How should the api treat server side errors

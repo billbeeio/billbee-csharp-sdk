@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Billbee.Api.Client.Enums;
 using Billbee.Api.Client.Model;
 
@@ -46,9 +47,42 @@ namespace Billbee.Api.Client.Demo
 
             #region Example calls
 
+            // Getting all available webhook filters
+            var webhookFilters = client.Webhooks.GetFilters();
+
+            // Registering a webhook for a new order
+            client.Webhooks.CreateWebhook(new Webhook
+            {
+                Id = null,
+                WebHookUri = "https://webhook.site/5290627f-b5e3-4123-a715-26a721054617?noecho",
+                Secret = "4e4451af-63c5-44f4-a3c5-1dcf8617fc5c",
+                Description = "A simple description",
+                IsPaused = true,
+                Filters = new List<string> { "order.created" },
+                Headers = new Dictionary<string, string> { { "TestHeader", "TestHeaderValue" }, { "Another Testheader", "Another Value"} },
+                Properties = new Dictionary<string, object>()
+            });
+
+
+            // Requesting webhooks
+            var webHooks = client.Webhooks.GetWebhooks();
+
+            // Requesting a specific webhook
+            var webhook = client.Webhooks.GetWebhook(webHooks.FirstOrDefault().Id);
+
+            // Updating webhook
+            webhook.IsPaused = false;
+            client.Webhooks.UpdateWebhook(webhook);
+
+            // Deleting webhook
+            client.Webhooks.Deletewebhook(webhook.Id);
+
+            // Deleting all webhooks
+            client.Webhooks.DeleteAllWebhooks();
+
             // Getting events for this account
             var events = client.Events.GetEvents();
-
+                        
             // Getting my shipping providers
             var shippingProvider = client.Shipment.GetShippingProvider();
 
