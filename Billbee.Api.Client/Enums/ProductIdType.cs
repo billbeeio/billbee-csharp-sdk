@@ -3,6 +3,7 @@
     public enum ProductIdType
     {
         id,
-        sku
+        sku,
+        ean
     }
 }
