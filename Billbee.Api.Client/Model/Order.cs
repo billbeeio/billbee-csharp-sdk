@@ -168,6 +168,27 @@ namespace Billbee.Api.Client.Model
         /// </summary>
         public string ShippingProfileName { get; set; }
 
+
+        /// <summary>
+        /// Internal Id for the used shipping provider
+        /// </summary>
+        public int? ShippingProviderId { get; set; }
+
+        /// <summary>
+        /// Internal Id for the used shipping product
+        /// </summary>
+        public int? ShippingProviderProductId { get; set; }
+
+        /// <summary>
+        /// The Name for of used shipping provider
+        /// </summary>
+        public string ShippingProviderName { get; set; }
+
+        /// <summary>
+        /// The Name of the used shipping product
+        /// </summary>
+        public string ShippingProviderProductName { get; set; }
+
         /// <summary>
         /// A textfield optionaly filled with a payment instruction text for printout on the invoice (z.B. Ebay Kauf auf Rechnung)
         /// </summary>
