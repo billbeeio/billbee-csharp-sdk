@@ -23,13 +23,15 @@ namespace Billbee.Api.Client.EndPoint
         /// <param name="page">The page, selected</param>
         /// <param name="pageSize">The events per page</param>
         /// <param name="typeIds">Defines, which types if events should be listet</param>
+        /// <param name="orderId">If given, only events of this order will be supplied.</param>
         /// <returns>List of the events, mathcing the search criteria.</returns>
         public ApiPagedResult<List<Event>> GetEvents(
             DateTime? minDate = null,
             DateTime? maxDate = null,
             int page = 1,
             int pageSize = 50,
-            List<EventTypeEnum> typeIds = null)
+            List<EventTypeEnum> typeIds = null,
+            int? orderId = null)
         {
             NameValueCollection parameters = new NameValueCollection();
 
@@ -45,6 +47,13 @@ namespace Billbee.Api.Client.EndPoint
 
             parameters.Add("page", page.ToString());
             parameters.Add("pageSize", pageSize.ToString());
+
+            
+            if (orderId != null)
+            {
+                parameters.Add("orderId", orderId.ToString());
+            }
+
             int index = 0;
             if (typeIds != null)
             {
