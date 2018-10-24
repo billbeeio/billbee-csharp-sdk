@@ -108,6 +108,7 @@
     <Compile Include="Model\ProductSearchResult.cs" />
     <Compile Include="Model\Search.cs" />
     <Compile Include="Model\SearchResult.cs" />
+    <Compile Include="Model\SendMessage.cs" />
     <Compile Include="Model\Shipment.cs" />
     <Compile Include="Model\Product.cs" />
     <Compile Include="Model\ShipmentAddress.cs" />
