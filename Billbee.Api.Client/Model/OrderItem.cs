@@ -41,7 +41,17 @@ namespace Billbee.Api.Client.Model
         /// <remarks>This is used for amazon refunds</remarks>
         public bool DontAdjustStock { get; set; }
 
+        /// <summary>
+        /// Internal Id of billbee
+        /// </summary>
         public int? BillbeeId { get; set; }
+
         public bool IsDiscount { get; set; }
+
+        /// <summary>Is just used for the billbee api</summary>
+        public decimal UnrebatedTotalPrice { get; set; }
+
+        /// <summary>Contains the used serial number</summary>
+        public string SerialNumber { get; set; }
     }
 }

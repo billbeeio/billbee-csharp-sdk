@@ -334,5 +334,15 @@ namespace Billbee.Api.Client.EndPoint
         {
             put<object>($"/orders/{id}/orderstate", new { NewStateId = (int)state }, null);
         }
+
+        /// <summary>
+        /// Sends a message to a customer of a specific order.
+        /// </summary>
+        /// <param name="orderId">Id of the order, this message should be attached to.</param>
+        /// <param name="message">The contsnt of the message</param>
+        public void SendMailForOrder(int orderId, SendMessage message)
+        {
+            post($"/orders/{orderId}/send-message", message);
+        }
     }
 }
