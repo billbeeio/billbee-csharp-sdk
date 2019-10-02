@@ -38,6 +38,15 @@ namespace Billbee.Api.Client.EndPoint
             return post<ApiResult<ShipmentWithLabelResult>>("/shipment/shipment", shipmentRequest);
         }
 
+        /// <summary>
+        /// Delivers a list of all registered shipping carriers
+        /// </summary>
+        /// <returns>List of available shipping carriers</returns>
+        public List<ShippingCarrier> GetShippingCarriers()
+        {
+            return requestResource<List<ShippingCarrier>>("/shipment/shippingcarriers");
+        }
+
 
         /// <summary>
         /// Creates a test request to the api

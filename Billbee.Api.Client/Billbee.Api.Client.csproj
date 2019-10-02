@@ -68,7 +68,6 @@
     <Compile Include="Enums\OrderStateEnum.cs" />
     <Compile Include="Enums\PaymentTypeEnum.cs" />
     <Compile Include="Enums\ProductIdType.cs" />
-    <Compile Include="Enums\ShippingCarrier.cs" />
     <Compile Include="Enums\VatModeEnum.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="InvalidValueException.cs" />
@@ -116,6 +115,7 @@
     <Compile Include="Model\ShipmentResult.cs" />
     <Compile Include="Model\ShipmentWithLabel.cs" />
     <Compile Include="Model\ShipmentWithLabelResult.cs" />
+    <Compile Include="Model\ShippingCarrier.cs" />
     <Compile Include="Model\ShippingProduct.cs" />
     <Compile Include="Model\ShippingProvider.cs" />
     <Compile Include="Model\StockArticle.cs" />
