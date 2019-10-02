@@ -302,11 +302,15 @@ namespace Billbee.Api.Client.EndPoint
         /// </summary>
         /// <param name="orderId">Id of the order</param>
         /// <param name="includePdf">Should the pdf file be included in the response?</param>
+        /// /// <param name="sendToCloudId">If set, the document will be uploaded to the given cloud storage after creation</param>
         /// <returns>The delivery note information, if the the order was found and an delivery note was already created.</returns>
-        public ApiResult<DeliveryNote> CreateDeliveryNote(int orderId, bool includePdf = false)
+        public ApiResult<DeliveryNote> CreateDeliveryNote(int orderId, bool includePdf = false, int? sendToCloudId = null)
         {
             NameValueCollection parameters = new NameValueCollection();
             parameters.Add("includePdf", includePdf.ToString());
+
+            if (sendToCloudId.HasValue)
+                parameters.Add("sendToCloudId", sendToCloudId.ToString());
 
             return post<ApiResult<DeliveryNote>>($"/orders/CreateDeliveryNote/{orderId}", parameters);
         }
@@ -316,11 +320,19 @@ namespace Billbee.Api.Client.EndPoint
         /// </summary>
         /// <param name="orderId">Id of the order</param>
         /// <param name="includePdf">Should the pdf file be included in the response?</param>
+        /// <param name="sendToCloudId">If set, the invoice will be uploaded to the given cloud storage after creation</param>
+        /// <param name="templateId">Id set, the given template will be used for creation</param>
         /// <returns>The invoice data, if the the order was found and an invoice was already created.</returns>
-        public ApiResult<Invoice> CreateInvoice(int orderId, bool includePdf = false)
+        public ApiResult<Invoice> CreateInvoice(int orderId, bool includePdf = false, int? templateId = null, int? sendToCloudId = null)
         {
             NameValueCollection parameters = new NameValueCollection();
             parameters.Add("includeInvoicePdf", includePdf.ToString());
+
+            if (sendToCloudId.HasValue)
+                parameters.Add("sendToCloudId", sendToCloudId.ToString());
+
+            if (templateId.HasValue)
+                parameters.Add("templateId", templateId.ToString());
 
             return post<ApiResult<Invoice>>($"/orders/CreateInvoice/{orderId}", parameters);
         }
