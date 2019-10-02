@@ -120,6 +120,7 @@
     <Compile Include="Model\ShippingProvider.cs" />
     <Compile Include="Model\StockArticle.cs" />
     <Compile Include="Model\TermsResult.cs" />
+    <Compile Include="Model\TriggerEventContainer.cs" />
     <Compile Include="Model\UpdateStock.cs" />
     <Compile Include="Model\UpdateStockCode.cs" />
     <Compile Include="Model\Webhook.cs" />

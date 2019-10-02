@@ -344,5 +344,22 @@ namespace Billbee.Api.Client.EndPoint
         {
             post($"/orders/{orderId}/send-message", message);
         }
+
+        /// <summary>
+        /// Triggers a rule event
+        /// </summary>
+        /// <param name="orderId">Order to trigger the event for</param>
+        /// <param name="eventName">Name of the event to trigger</param>
+        /// <param name="delayInMinutes">If set, the trigger will by delayed for the given number of minutes</param>
+        public void CreateEventAtOrder(int orderId, string eventName, uint delayInMinutes = 0)
+        {
+            var model = new TriggerEventContainer
+            {
+                DelayInMinutes = delayInMinutes,
+                Name = eventName
+            };
+
+            post($"/orders/{orderId}/trigger-event", model);
+        }
     }
 }
