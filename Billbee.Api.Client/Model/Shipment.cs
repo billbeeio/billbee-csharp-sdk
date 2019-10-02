@@ -72,9 +72,9 @@ namespace Billbee.Api.Client.Model
             public DateTime? ShipDate { get; set; }
 
             /// <summary>
-            /// The carrier, the parcel will be send with.
+            /// The Id of the carrier, the parcel will be send with
             /// </summary>
-            public ShippingCarrier shippingCarrier { get; set; }
+            public byte shippingCarrier { get; set; }
         }
     }
 }
