@@ -11,18 +11,15 @@
         /// <summary>
         /// etsy
         /// </summary>
-        MoneyOrder = 20, 
+        MoneyOrder = 20, // etsy
         /// <summary>
         /// etsy ck
         /// </summary>
-        Check = 21,
-        /// <summary>
-        /// Other
-        /// </summary>
+        Check = 21, // etsy ck
         Andere = 22,
         Lastschrift = 23,
         Moneybookers = 24,
-        KLARNA = 25,
+        KLARNA_Invoice = 25,
         Rechnung = 26,
         Moneybookers_Kreditkarte = 27,
         Moneybookers_Lastschrift = 28,
@@ -71,7 +68,7 @@
         WireCard_PayPal = 71,
         Micropayment = 72,
         Ratenkauf = 73,
-        Wayfair = 74, 
+        Wayfair = 74, // baranski
         MangoPay_PayPal = 75,
         MangoPay_Sofortueberweisung = 76,
         MangoPay_Kreditkarte = 77,
@@ -82,6 +79,32 @@
         Wish = 82,
         Bancontact_Mister_Cash = 83,
         Belfius_Direct_Net = 84,
-        KBC_CBC_Betaalknop = 85
+        KBC_CBC_Betaalknop = 85,
+        Novalnet_Przelewy24 = 86,
+        Novalnet_Vorkasse = 87,
+        Novalnet_Instantbank = 88,
+        Novalnet_IDEAL = 89,
+        Novalnet_EPS = 90,
+        Novalnet_GiroPay = 91,
+        Novalnet_Barzahlen = 92,
+        Real = 93,
+        Fruugo = 94,
+        Cdiscount = 95,
+        PayDirekt = 96,
+        EtsyPayments = 97,
+        KLARNA = 98,
+        limango = 99,
+        SantanderRatenkauf = 100,
+        SantanderRechnungskauf = 101,
+        Cashpresso = 102,
+        Tipser = 103,
+        Ebay = 104,
+        Mollie = 105,
+        MollieInvoice = 106,
+        MollieCreditCard = 107,
+        MollieSofort = 108,
+        MollieGiroPay = 109,
+        MollieMaestro = 110,
+        MollieKlarnaPayLater = 111,
     }
 }
