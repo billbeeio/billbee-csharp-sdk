@@ -56,6 +56,7 @@
     <Compile Include="ApiClient.cs" />
     <Compile Include="ApiConfiguration.cs" />
     <Compile Include="EndPoint\AutomaticProvisionEndPoint.cs" />
+    <Compile Include="EndPoint\CloudStoragesEndPoint.cs" />
     <Compile Include="EndPoint\CustomerEndPoint.cs" />
     <Compile Include="EndPoint\EventEndPoint.cs" />
     <Compile Include="EndPoint\OrderEndPoint.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="ILogger.cs" />
     <Compile Include="InvalidValueException.cs" />
     <Compile Include="Model\Address.cs" />
+    <Compile Include="Model\CloudStorage.cs" />
     <Compile Include="Model\Customer.cs" />
     <Compile Include="Model\ArticleCustomFieldDefinition.cs" />
     <Compile Include="Model\AtticleCustomFieldValue.cs" />

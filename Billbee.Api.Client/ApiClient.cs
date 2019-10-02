@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Billbee.Api.Client.EndPoint;
+using Newtonsoft.Json;
+using System;
 using System.IO;
 using System.Reflection;
-using Billbee.Api.Client.EndPoint;
-using Newtonsoft.Json;
 
 namespace Billbee.Api.Client
 {
@@ -26,14 +26,14 @@ namespace Billbee.Api.Client
         /// <param name="configuration">Gives a individual configuration. If empty, a default configuration will be created.</param>
         public ApiClient(ApiConfiguration configuration = null, ILogger logger = null)
         {
-            this.Configuration = configuration ?? new ApiConfiguration();
+            Configuration = configuration ?? new ApiConfiguration();
             this.logger = logger;
         }
 
         public ApiClient(string ConfigurationPath, ILogger logger = null)
         {
             this.logger = logger;
-            this.LoadConfigFromFile(ConfigurationPath);
+            LoadConfigFromFile(ConfigurationPath);
         }
 
         private void LoadConfigFromFile(string path = null)
@@ -52,73 +52,54 @@ namespace Billbee.Api.Client
             {
                 throw new FileNotFoundException($"The config file {path} could not be found.");
             }
-            
+
             string configStr = System.IO.File.ReadAllText(path);
 
-            this.Configuration = JsonConvert.DeserializeObject<ApiConfiguration>(configStr);
+            Configuration = JsonConvert.DeserializeObject<ApiConfiguration>(configStr);
 
         }
 
         /// <summary>
         /// EndPoint to access events
         /// </summary>
-        public EventEndPoint Events
-        {
-            get { return new EventEndPoint(Configuration, logger); }
-        }
+        public EventEndPoint Events => new EventEndPoint(Configuration, logger);
 
         /// <summary>
         /// EndPoint to access order independent shipments
         /// </summary>
-        public ShipmentEndPoint Shipment
-        {
-            get { return new ShipmentEndPoint(Configuration, logger); }
-        }
+        public ShipmentEndPoint Shipment => new ShipmentEndPoint(Configuration, logger);
 
-        public WebhookEndPoint Webhooks
-        {
-            get { return new WebhookEndPoint(Configuration, logger); }
-        }
+        public WebhookEndPoint Webhooks => new WebhookEndPoint(Configuration, logger);
 
         /// <summary>
         /// EndPoint to access Products
         /// </summary>
-        public ProductEndPoint Products
-        {
-            get { return new ProductEndPoint(Configuration, logger); }
-        }
+        public ProductEndPoint Products => new ProductEndPoint(Configuration, logger);
 
         /// <summary>
         /// EndPoint to allow automatic user creation
         /// </summary>
-        public AutomaticProvisionEndPoint AutomaticProvision
-        {
-            get { return new AutomaticProvisionEndPoint(Configuration, logger); }
-        }
+        public AutomaticProvisionEndPoint AutomaticProvision => new AutomaticProvisionEndPoint(Configuration, logger);
 
         /// <summary>
         /// EndPoint to access customer base data
         /// </summary>
-        public CustomerEndPoint Customer
-        {
-            get { return new CustomerEndPoint(Configuration, logger); }
-        }
+        public CustomerEndPoint Customer => new CustomerEndPoint(Configuration, logger);
 
         /// <summary>
         /// EndPoint for searches in customers, orders and products
         /// </summary>
-        public SearchEndPoint Search
-        {
-            get { return new SearchEndPoint(Configuration, logger); }
-        }
+        public SearchEndPoint Search => new SearchEndPoint(Configuration, logger);
 
         /// <summary>
         /// EndPoint to access orders
         /// </summary>
-        public OrderEndPoint Orders
-        {
-            get { return new OrderEndPoint(Configuration, logger); }
-        }
+        public OrderEndPoint Orders => new OrderEndPoint(Configuration, logger);
+
+        /// <summary>
+        /// EndPoint to access cloud storages
+        /// </summary>
+        public CloudStoragesEndPoint CloudStorages => new CloudStoragesEndPoint(Configuration, logger);
 
         /// <summary>
         /// Validates, that access to the api is possible with the given configuration
@@ -130,7 +111,7 @@ namespace Billbee.Api.Client
             {
                 return Shipment.Ping();
             }
-            catch (Exception ex) // If user selectes to throw exceptions on server side errors, or other errors occurs.
+            catch (Exception) // If user selectes to throw exceptions on server side errors, or other errors occurs.
             {
                 return false;
             }
@@ -140,7 +121,7 @@ namespace Billbee.Api.Client
 
         #region internal+private methods/ properties
 
-        ILogger logger { get; set; }
+        private ILogger logger { get; set; }
 
         #endregion
     }
