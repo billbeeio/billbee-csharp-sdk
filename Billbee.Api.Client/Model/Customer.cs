@@ -17,5 +17,10 @@ namespace Billbee.Api.Client.Model
         public int? PriceGroupId { get; set; }
         public int? LanguageId { get; set; }
         public string VatId { get; set; }
+
+        /// <summary>
+        /// If set, the type of the customer can be set. 0 = Endcustomer, 1 = Businesscustomer
+        /// </summary>
+        public byte? Type { get; set; }
     }
 }
