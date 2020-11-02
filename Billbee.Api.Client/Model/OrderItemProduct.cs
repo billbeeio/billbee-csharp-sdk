@@ -38,6 +38,6 @@ namespace Billbee.Api.Client.Model
 
         public string TARICCode { get; set; }
         public string CountryOfOrigin { get; set; }
-        public int? BillbeeId { get; set; }
+        public long? BillbeeId { get; set; }
     }
 }

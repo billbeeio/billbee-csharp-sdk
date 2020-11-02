@@ -20,7 +20,7 @@ namespace Billbee.Api.Client.Model
         /// <summary>
         /// Internal if of this product
         /// </summary>
-        public int? Id { get; set; }
+        public long? Id { get; set; }
 
         /// <summary>
         /// Name of the product
@@ -130,7 +130,7 @@ namespace Billbee.Api.Client.Model
         /// <summary>
         /// If this article is bundled with a specific shipping product
         /// </summary>
-        public int? ShippingProductId { get; set; }
+        public long? ShippingProductId { get; set; }
 
         public bool IsDigital { get; set; }
         public bool IsCustomizable { get; set; }

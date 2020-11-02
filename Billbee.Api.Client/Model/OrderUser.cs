@@ -4,7 +4,7 @@
     {
         public string Platform { get; set; }
         public string BillbeeShopName { get; set; }
-        public int? BillbeeShopId { get; set; }
+        public long? BillbeeShopId { get; set; }
         public string Id { get; set; }
         public string Nick { get; set; }
         public string FirstName { get; set; }

@@ -14,15 +14,15 @@ namespace Billbee.Api.Client.Model
         /// <summary>
         /// Billbee internal id of the order, that should be shipped.
         /// </summary>
-        public int OrderId { get; set; }
+        public long OrderId { get; set; }
         /// <summary>
         /// Billbee internal id of the provider, that should be used for shipping
         /// </summary>
-        public int ProviderId { get; set; }
+        public long ProviderId { get; set; }
         /// <summary>
         /// Billbee internal id of the product, that should be used for shipping
         /// </summary>
-        public int ProductId { get; set; }
+        public long ProductId { get; set; }
         /// <summary>
         /// Optional. If set to true, the state of the given order is set to send, after creation of label. Default value is true.
         /// </summary>

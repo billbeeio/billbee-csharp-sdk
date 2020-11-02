@@ -7,7 +7,7 @@ namespace Billbee.Api.Client.Model
         /// <summary>
         /// internal id of this provider
         /// </summary>
-        public int id { get; set; }
+        public long id { get; set; }
 
         /// <summary>
         /// Name of this provider

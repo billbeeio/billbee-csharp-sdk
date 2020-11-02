@@ -3,7 +3,7 @@
     public class StockArticle
     {
         public string Name { get; set; }
-        public int StockId { get; set; }
+        public long StockId { get; set; }
         public decimal? StockCurrent { get; set; }
         public decimal? StockWarning { get; set; }
         public string StockCode { get; set; }

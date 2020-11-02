@@ -20,7 +20,7 @@ namespace Billbee.Api.Client.Model
         /// <summary>
         /// The internal id of this article source definition
         /// </summary>
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// Name of the api account, this source belongs to
@@ -28,9 +28,9 @@ namespace Billbee.Api.Client.Model
         public string ApiAccountName { get; set; }
 
         /// <summary>
-        /// Id of the api account, this source belongs to 
+        /// Id of the api account, this source belongs to
         /// </summary>
-        public int? ApiAccountId { get; set; }
+        public long? ApiAccountId { get; set; }
 
         public decimal? ExportFactor { get; set; }
 

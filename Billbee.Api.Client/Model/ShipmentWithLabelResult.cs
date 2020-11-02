@@ -11,7 +11,7 @@ namespace Billbee.Api.Client.Model
         /// <summary>
         /// Id of the order, that was shipped
         /// </summary>
-        public int OrderId { get; set; }
+        public long OrderId { get; set; }
         /// <summary>
         /// Reference number of the carrier or provider
         /// </summary>

@@ -47,13 +47,13 @@ namespace Billbee.Api.Client.EndPoint
         /// </summary>
         /// <param name="id">Id of the customer</param>
         /// <returns>Customer object.</returns>
-        public ApiResult<Customer> GetCustomer(int id)
+        public ApiResult<Customer> GetCustomer(long id)
         {
             return requestResource<ApiResult<Customer>>($"/customers/{id}");
         }
 
         /// <summary>
-        /// Updates a customer 
+        /// Updates a customer
         /// </summary>
         /// <param name="customer">Updated customer object</param>
         /// <returns>The customer object after update.</returns>
@@ -74,7 +74,7 @@ namespace Billbee.Api.Client.EndPoint
         /// <param name="page">Page number</param>
         /// <param name="pageSize">Count of entries per page</param>
         /// <returns>Resultset of the queried page of orders.</returns>
-        public ApiPagedResult<List<Order>> GetOrdersForCustomer(int id, int page, int pageSize)
+        public ApiPagedResult<List<Order>> GetOrdersForCustomer(long id, int page, int pageSize)
         {
             NameValueCollection parameters = new NameValueCollection();
             parameters.Add("page", page.ToString());
@@ -89,7 +89,7 @@ namespace Billbee.Api.Client.EndPoint
         /// <param name="page">Page number</param>
         /// <param name="pageSize">Count of entries per page</param>
         /// <returns>Resultset of the queried page of addresses.</returns>
-        public ApiPagedResult<List<CustomerAddress>> GetAddressesForCustomer(int id, int page, int pageSize)
+        public ApiPagedResult<List<CustomerAddress>> GetAddressesForCustomer(long id, int page, int pageSize)
         {
             NameValueCollection parameters = new NameValueCollection();
             parameters.Add("page", page.ToString());

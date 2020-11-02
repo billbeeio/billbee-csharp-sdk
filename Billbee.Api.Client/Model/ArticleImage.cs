@@ -13,7 +13,7 @@
         /// <summary>
         /// The id of this image
         /// </summary>
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// Path of external thumbnail, will be ignored, if posting to billbee.
@@ -38,6 +38,6 @@
         /// <summary>
         /// The id of the article, this image belongs to.
         /// </summary>
-        public int ArticleId { get; set; }
+        public long ArticleId { get; set; }
     }
 }

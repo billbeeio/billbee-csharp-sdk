@@ -30,6 +30,6 @@ namespace Billbee.Api.Client.Model
         /// <summary>
         /// The internal id of this comment
         /// </summary>
-        public int Id { get; set; }
+        public long Id { get; set; }
     }
 }

@@ -42,7 +42,7 @@ namespace Billbee.Api.Client.EndPoint
         /// <param name="id">The id of the order to patch.</param>
         /// <param name="FieldsToPatch"></param>
         /// <returns></returns>
-        public ApiResult<object> PatchOrder(int id, Dictionary<string, object> FieldsToPatch)
+        public ApiResult<object> PatchOrder(long id, Dictionary<string, object> FieldsToPatch)
         {
             JObject obj = new JObject();
             foreach (var keyElement in FieldsToPatch)
@@ -96,10 +96,10 @@ namespace Billbee.Api.Client.EndPoint
             DateTime? maxOrderDate = null,
             int page = 1,
             int pageSize = 50,
-            List<int> shopId = null,
+            List<long> shopId = null,
             List<OrderStateEnum> orderStateId = null,
             List<string> tag = null,
-            int? minimumBillBeeOrderId = null,
+            long? minimumBillBeeOrderId = null,
             DateTime? modifiedAtMin = null,
             DateTime? modifiedAtMax = null,
             bool excludeTags = false)
@@ -184,7 +184,7 @@ namespace Billbee.Api.Client.EndPoint
             DateTime? minInvoiceDate = null,
             DateTime? maxInvoiceDate = null,
             int page = 1, int pageSize = 50,
-            List<int> shopId = null,
+            List<long> shopId = null,
             List<int> orderStateId = null,
             List<string> tag = null,
             DateTime? minPayDate = null,
@@ -256,7 +256,7 @@ namespace Billbee.Api.Client.EndPoint
         /// <param name="order">An order object, to create in billbee</param>
         /// <param name="shopId">The id of the shop. Neccessary, to attach an order directly to a shop connection</param>
         /// <returns></returns>
-        public ApiResult<OrderResult> PostNewOrder(Order order, int shopId)
+        public ApiResult<OrderResult> PostNewOrder(Order order, long shopId)
         {
             NameValueCollection parameters = new NameValueCollection();
             parameters.Add("shopId", shopId.ToString());
@@ -271,7 +271,7 @@ namespace Billbee.Api.Client.EndPoint
         /// <param name="tags">Tasg to add</param>
         /// <param name="orderId">Id of the order, where the tags should be edited.</param>
         /// <returns>ApiResult with the result of the update operation</returns>
-        public ApiResult<dynamic> AddTags(List<string> tags, int orderId)
+        public ApiResult<dynamic> AddTags(List<string> tags, long orderId)
         {
             return post<ApiResult<dynamic>>($"/orders/{orderId}/tags", new { Tags = tags });
         }
@@ -283,7 +283,7 @@ namespace Billbee.Api.Client.EndPoint
         /// <param name="tags">Tasg to add</param>
         /// <param name="orderId">Id of the order, where the tags should be edited.</param>
         /// <returns>ApiResult with the result of the update operation</returns>
-        public ApiResult<dynamic> UpdateTags(List<string> tags, int orderId)
+        public ApiResult<dynamic> UpdateTags(List<string> tags, long orderId)
         {
             return put<ApiResult<dynamic>>($"/orders/{orderId}/tags", new { Tags = tags });
         }
@@ -304,7 +304,7 @@ namespace Billbee.Api.Client.EndPoint
         /// <param name="includePdf">Should the pdf file be included in the response?</param>
         /// /// <param name="sendToCloudId">If set, the document will be uploaded to the given cloud storage after creation</param>
         /// <returns>The delivery note information, if the the order was found and an delivery note was already created.</returns>
-        public ApiResult<DeliveryNote> CreateDeliveryNote(int orderId, bool includePdf = false, int? sendToCloudId = null)
+        public ApiResult<DeliveryNote> CreateDeliveryNote(long orderId, bool includePdf = false, long? sendToCloudId = null)
         {
             NameValueCollection parameters = new NameValueCollection();
             parameters.Add("includePdf", includePdf.ToString());
@@ -323,7 +323,7 @@ namespace Billbee.Api.Client.EndPoint
         /// <param name="sendToCloudId">If set, the invoice will be uploaded to the given cloud storage after creation</param>
         /// <param name="templateId">Id set, the given template will be used for creation</param>
         /// <returns>The invoice data, if the the order was found and an invoice was already created.</returns>
-        public ApiResult<Invoice> CreateInvoice(int orderId, bool includePdf = false, int? templateId = null, int? sendToCloudId = null)
+        public ApiResult<Invoice> CreateInvoice(long orderId, bool includePdf = false, long? templateId = null, long? sendToCloudId = null)
         {
             NameValueCollection parameters = new NameValueCollection();
             parameters.Add("includeInvoicePdf", includePdf.ToString());
@@ -342,7 +342,7 @@ namespace Billbee.Api.Client.EndPoint
         /// </summary>
         /// <param name="id">The internal id of the order</param>
         /// <param name="state">The data used to change the state</param>
-        public void ChangeOrderState(int id, OrderStateEnum state)
+        public void ChangeOrderState(long id, OrderStateEnum state)
         {
             put<object>($"/orders/{id}/orderstate", new { NewStateId = (int)state }, null);
         }
@@ -352,7 +352,7 @@ namespace Billbee.Api.Client.EndPoint
         /// </summary>
         /// <param name="orderId">Id of the order, this message should be attached to.</param>
         /// <param name="message">The contsnt of the message</param>
-        public void SendMailForOrder(int orderId, SendMessage message)
+        public void SendMailForOrder(long orderId, SendMessage message)
         {
             post($"/orders/{orderId}/send-message", message);
         }
@@ -363,7 +363,7 @@ namespace Billbee.Api.Client.EndPoint
         /// <param name="orderId">Order to trigger the event for</param>
         /// <param name="eventName">Name of the event to trigger</param>
         /// <param name="delayInMinutes">If set, the trigger will by delayed for the given number of minutes</param>
-        public void CreateEventAtOrder(int orderId, string eventName, uint delayInMinutes = 0)
+        public void CreateEventAtOrder(long orderId, string eventName, uint delayInMinutes = 0)
         {
             var model = new TriggerEventContainer
             {

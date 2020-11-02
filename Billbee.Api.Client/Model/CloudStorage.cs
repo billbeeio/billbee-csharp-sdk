@@ -8,7 +8,7 @@ namespace Billbee.Api.Client.Model
 {
     public class CloudStorage
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }
         public bool UsedAsPrinter { get; set; }

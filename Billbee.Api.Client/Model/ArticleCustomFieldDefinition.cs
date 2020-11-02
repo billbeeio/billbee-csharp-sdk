@@ -16,7 +16,7 @@ namespace Billbee.Api.Client.Model
 
     public class ArticleCustomFieldDefinition
     {
-        public int? Id;
+        public long? Id;
 
         public string Name;
 

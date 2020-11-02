@@ -8,13 +8,13 @@ namespace Billbee.Api.Client.Model
 {
     public class AtticleCustomFieldValue
     {
-        public int? Id;
+        public long? Id;
 
-        public int? DefinitionId;
+        public long? DefinitionId;
 
         public ArticleCustomFieldDefinition Definition;
 
-        public int? ArticleId;
+        public long? ArticleId;
 
         public object Value;
     }
