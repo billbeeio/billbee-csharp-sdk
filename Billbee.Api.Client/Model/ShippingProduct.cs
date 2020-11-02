@@ -5,7 +5,7 @@
         /// <summary>
         /// Id of this shipping product
         /// </summary>
-        public int id { get; set; }
+        public long id { get; set; }
 
         /// <summary>
         /// Human readable name of this shippingproduct

@@ -13,6 +13,6 @@
         /// <summary>
         /// The internal id of the category
         /// </summary>
-        public int? Id { get; set; }
+        public long? Id { get; set; }
     }
 }

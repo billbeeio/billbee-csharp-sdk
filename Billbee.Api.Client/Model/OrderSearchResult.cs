@@ -8,7 +8,7 @@ namespace Billbee.Api.Client.Model
 {
     public class OrderSearchResult
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public string ExternalReference { get; set; }
         public string BuyerName { get; set; }
         public string InvoiceNumber { get; set; }

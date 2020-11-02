@@ -9,7 +9,7 @@
         /// <summary>
         /// Optional the stock id if the feature multi stock is activated
         /// </summary>
-        public int? StockId { get; set; }
+        public long? StockId { get; set; }
         /// <summary>
         /// Optional a reason text for the stock update
         /// </summary>

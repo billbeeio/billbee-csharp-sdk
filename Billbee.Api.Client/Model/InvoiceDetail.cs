@@ -107,6 +107,6 @@ namespace Billbee.Api.Client.Model
         /// <summary>
         /// The unique internal id of this invoice
         /// </summary>
-        public int BillbeeId { get; set; }
+        public long BillbeeId { get; set; }
     }
 }

@@ -22,12 +22,12 @@ namespace Billbee.Api.Client.Model
         /// <summary>
         /// Internal id of this event
         /// </summary>
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// Internal id of the employee, that initiated this event, if applicable
         /// </summary>
-        public int? EmployeeId { get; set; }
+        public long? EmployeeId { get; set; }
 
         /// <summary>
         /// Name of the employee, that initiated this event, if applicable
@@ -37,6 +37,6 @@ namespace Billbee.Api.Client.Model
         /// <summary>
         /// Internal id of the order, this event is based on, if applicable
         /// </summary>
-        public int? OrderId { get; set; }
+        public long? OrderId { get; set; }
     }
 }

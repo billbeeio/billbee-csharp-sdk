@@ -10,7 +10,7 @@ namespace Billbee.Api.Client.Demo
 {
     /// <summary>
     /// Demo project to show the basic functionality of the Billbee .NET API SDK
-    /// 
+    ///
     /// To use this demo, you have to enable the API in your account. Please refer to https://www.billbee.de/api/ for further information.
     /// </summary>
     internal class Program
@@ -27,7 +27,7 @@ namespace Billbee.Api.Client.Demo
             // Creating an individual logger, that implements ILogger
             ILogger logger = new Logger();
 
-            // Creating new instance of ApiClient           
+            // Creating new instance of ApiClient
             string configPath = "config.json";
             ApiClient client = null;
 
@@ -38,7 +38,7 @@ namespace Billbee.Api.Client.Demo
             }
             else
             {
-                // from naual given config        
+                // from naual given config
                 client = new ApiClient(logger: logger);
 
                 // Enter your api key here. If you don't have an api key. Please contact support@billbee.de with a description on what you would like to do, to get one.
@@ -187,7 +187,7 @@ namespace Billbee.Api.Client.Demo
                 if (articleImages.Data.Count > 0)
                 {
                     var imageId = articleImages.Data.First().Id;
-                    
+
 
 
                     var articleImage = client.Products.GetArticleImage(articleId, imageId);
@@ -270,7 +270,7 @@ namespace Billbee.Api.Client.Demo
 
             // Artificial brake to prevent throttling
             Thread.Sleep(1000);
-            #endregion 
+            #endregion
 
             #region orders
 
@@ -285,8 +285,8 @@ namespace Billbee.Api.Client.Demo
             Console.WriteLine(
                 "Please enter one order number for further test manipulations. Be aware, that these changes are permanent. Please use an demo order. Leave blank to skip.");
             var orderId = Console.ReadLine();
-            int orderIdInt;
-            if (!string.IsNullOrWhiteSpace(orderId) && int.TryParse(orderId, out orderIdInt))
+            long orderIdInt;
+            if (!string.IsNullOrWhiteSpace(orderId) && long.TryParse(orderId, out orderIdInt))
             {
                 // Remove all old tags and add the given ones.
                 var updateTagsResult = client.Orders.UpdateTags(new List<string>() { "Test C", "Test D" }, orderIdInt);

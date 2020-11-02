@@ -44,7 +44,7 @@ namespace Billbee.Api.Client.Model
         /// <summary>
         /// Internal Id of billbee
         /// </summary>
-        public int? BillbeeId { get; set; }
+        public long? BillbeeId { get; set; }
 
         public bool IsDiscount { get; set; }
 

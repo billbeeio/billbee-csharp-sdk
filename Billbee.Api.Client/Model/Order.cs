@@ -131,12 +131,12 @@ namespace Billbee.Api.Client.Model
         /// <summary>
         /// The Order.Id from the Billbee database if available in the external system
         /// </summary>
-        public int? BillBeeOrderId { get; set; }
+        public long? BillBeeOrderId { get; set; }
 
-        public int? BillBeeParentOrderId { get; set; }
+        public long? BillBeeParentOrderId { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public string VatId { get; set; }
 
@@ -172,12 +172,12 @@ namespace Billbee.Api.Client.Model
         /// <summary>
         /// Internal Id for the used shipping provider
         /// </summary>
-        public int? ShippingProviderId { get; set; }
+        public long? ShippingProviderId { get; set; }
 
         /// <summary>
         /// Internal Id for the used shipping product
         /// </summary>
-        public int? ShippingProviderProductId { get; set; }
+        public long? ShippingProviderProductId { get; set; }
 
         /// <summary>
         /// The Name for of used shipping provider

@@ -9,13 +9,13 @@ namespace Billbee.Api.Client.Model
     public class CustomerAddress
     {
 
-        public int? Id { get; set; }
+        public long? Id { get; set; }
         /// <summary>
         /// 1 = Invoiceaddress
         /// 2 = Shippingaddress
         /// </summary>
         public int AddressType { get; set; }
-        public int? CustomerId { get; set; }
+        public long? CustomerId { get; set; }
         public string Company { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

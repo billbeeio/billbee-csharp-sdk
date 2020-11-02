@@ -31,7 +31,7 @@ namespace Billbee.Api.Client.EndPoint
             int page = 1,
             int pageSize = 50,
             List<EventTypeEnum> typeIds = null,
-            int? orderId = null)
+            long? orderId = null)
         {
             NameValueCollection parameters = new NameValueCollection();
 
@@ -48,7 +48,7 @@ namespace Billbee.Api.Client.EndPoint
             parameters.Add("page", page.ToString());
             parameters.Add("pageSize", pageSize.ToString());
 
-            
+
             if (orderId != null)
             {
                 parameters.Add("orderId", orderId.ToString());

@@ -42,7 +42,7 @@ namespace Billbee.Api.Client.EndPoint
         /// <param name="lookupBy">Either the value id or the value sku to specify the meaning of the id parameter</param>
         /// <param name="stockId">Optional the stock id if the multi stock feature is enabled</param>
         /// <returns></returns>
-        public ApiResult<GetReservedAmountResult> GetReservedAmount(string id, string lookupBy = "id", int? stockId = null)
+        public ApiResult<GetReservedAmountResult> GetReservedAmount(string id, string lookupBy = "id", long? stockId = null)
         {
             NameValueCollection parameters = new NameValueCollection();
             parameters.Add("id", id);
@@ -119,7 +119,7 @@ namespace Billbee.Api.Client.EndPoint
         /// </summary>
         /// <param name="id">Id of the definition to get information about</param>
         /// <returns>The definition of the entry with the given id</returns>
-        public ApiResult<ArticleCustomFieldDefinition> GetCustomField(int id)
+        public ApiResult<ArticleCustomFieldDefinition> GetCustomField(long id)
         {
             return requestResource<ApiResult<ArticleCustomFieldDefinition>>($"/products/custom-fields/{id}");
         }
@@ -139,7 +139,7 @@ namespace Billbee.Api.Client.EndPoint
         /// <param name="id">Id of the product to patch</param>
         /// <param name="fieldsToPatch">Dictionary which uses the fieldname as key and the new value as value.</param>
         /// <returns></returns>
-        public ApiResult<Product> PatchArticle(int id, Dictionary<string, string> fieldsToPatch)
+        public ApiResult<Product> PatchArticle(long id, Dictionary<string, string> fieldsToPatch)
         {
             return patch<ApiResult<Product>>($"/products/{id}", data: fieldsToPatch);
         }
@@ -149,7 +149,7 @@ namespace Billbee.Api.Client.EndPoint
         /// </summary>
         /// <param name="id">Id of the article to get the images.</param>
         /// <returns>List if Images.</returns>
-        public ApiResult<List<ArticleImage>> GetArticleImages(int id)
+        public ApiResult<List<ArticleImage>> GetArticleImages(long id)
         {
             return requestResource<ApiResult<List<ArticleImage>>>($"/products/{id}/images");
         }
@@ -160,7 +160,7 @@ namespace Billbee.Api.Client.EndPoint
         /// <param name="imageId">Id of the image to gather</param>
         /// <returns>The image object.</returns>
         /// <param name="articleId">If of the article, this image belongs to.</param>
-        public ApiResult<ArticleImage> GetArticleImage(int articleId, int imageId)
+        public ApiResult<ArticleImage> GetArticleImage(long articleId, long imageId)
         {
             return requestResource<ApiResult<ArticleImage>>($"/products/{articleId}/images/{imageId}");
         }
@@ -170,7 +170,7 @@ namespace Billbee.Api.Client.EndPoint
         /// </summary>
         /// <param name="imageId">Id of the image to gather</param>
         /// <returns>The image object.</returns>
-        public ApiResult<ArticleImage> GetArticleImage(int imageId)
+        public ApiResult<ArticleImage> GetArticleImage(long imageId)
         {
             return requestResource<ApiResult<ArticleImage>>($"/products/images/{imageId}");
         }
@@ -212,7 +212,7 @@ namespace Billbee.Api.Client.EndPoint
         /// <param name="images">List of images</param>
         /// <param name="replace">If true, existing images will be overwritten.</param>
         /// <returns></returns>
-        public ApiResult<List<ArticleImage>> AddMultipleArticleImages(int articleId, List<ArticleImage> images, bool replace = false)
+        public ApiResult<List<ArticleImage>> AddMultipleArticleImages(long articleId, List<ArticleImage> images, bool replace = false)
         {
             NameValueCollection parameters = new NameValueCollection();
             parameters.Add("replace", replace.ToString());
@@ -224,7 +224,7 @@ namespace Billbee.Api.Client.EndPoint
         /// </summary>
         /// <param name="articleId">Id of article</param>
         /// <param name="imageId">Id of the image to delete</param>
-        public void DeleteArticleImage(int articleId, int imageId)
+        public void DeleteArticleImage(long articleId, long imageId)
         {
             delete($"/products/{articleId}/images/{imageId}");
         }
@@ -233,7 +233,7 @@ namespace Billbee.Api.Client.EndPoint
         /// Deletes a single image
         /// </summary>
         /// <param name="imageId">id of the image</param>
-        public void DeleteArticleImage(int imageId)
+        public void DeleteArticleImage(long imageId)
         {
             delete($"/products/images/{imageId}");
         }
@@ -243,7 +243,7 @@ namespace Billbee.Api.Client.EndPoint
         /// </summary>
         /// <param name="imageIds">List of image ids to delete</param>
         /// <returns>Result of deletion</returns>
-        public ApiResult<DeletedImages> DeleteMultipleArticleImages(List<int> imageIds)
+        public ApiResult<DeletedImages> DeleteMultipleArticleImages(List<long> imageIds)
         {
             return post<ApiResult<DeletedImages>>($"/products/images/delete", imageIds);
         }

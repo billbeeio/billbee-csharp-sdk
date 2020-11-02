@@ -43,7 +43,7 @@
         /// <summary>
         /// Internal id of the referenced article
         /// </summary>
-        public int? ArticleBillbeeId { get; set; }
+        public long? ArticleBillbeeId { get; set; }
 
         /// <summary>
         /// The sku of the article of this position
@@ -58,6 +58,6 @@
         /// <summary>
         /// The unique internal id of this position
         /// </summary>
-        public int BillbeeId { get; set; }
+        public long BillbeeId { get; set; }
     }
 }
