@@ -7,6 +7,7 @@
     <Owners>Billbee GmbH</Owners>
     <Title>Billbee.Api.Client</Title>
     <Description>Client SDK for the Billbee API</Description>
+    <ApplicationIcon>favicon_32.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
