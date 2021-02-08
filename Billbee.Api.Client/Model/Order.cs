@@ -212,5 +212,11 @@ namespace Billbee.Api.Client.Model
         public string CustomInvoiceNote { get; set; }
 
         public string CustomerNumber { get; set; }
+
+        /// <summary>
+        /// Customer related to the order
+        /// </summary>
+        /// <remarks>Customer.Id is important for getting further informations with the /Customer endpoint</remarks>
+        public Customer Customer { get; set; }
     }
 }
