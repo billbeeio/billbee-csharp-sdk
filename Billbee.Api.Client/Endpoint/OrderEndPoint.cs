@@ -118,7 +118,7 @@ namespace Billbee.Api.Client.EndPoint
 
             if (modifiedAtMin != null)
             {
-                parameters.Add("modifiedAtMin", modifiedAtMax.Value.ToString("yyyy-MM-dd HH:mm"));
+                parameters.Add("modifiedAtMin", modifiedAtMin.Value.ToString("yyyy-MM-dd HH:mm"));
             }
 
             if (modifiedAtMax != null)
