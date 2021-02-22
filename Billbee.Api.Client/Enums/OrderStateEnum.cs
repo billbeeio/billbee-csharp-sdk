@@ -75,6 +75,11 @@
         /// <summary>
         /// reminder
         /// </summary>
-        Zahlungserinnerung = 15
+        Zahlungserinnerung = 15,
+
+        /// <summary>
+        /// In sending process
+        /// </summary>
+        Im_Fulfillment = 16
     }
 }
