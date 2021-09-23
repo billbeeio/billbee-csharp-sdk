@@ -1,4 +1,4 @@
-[![Logo](https://app01.billbee.de/static/billbee/img/logo.png)](https://www.billbee.de)
+[![Logo](https://app.billbee.io/static/billbee/img/logo.png)](https://www.billbee.io)
 
 # Billbee API
 With this package you can implement the official Billbee API in your C# application.
@@ -6,7 +6,7 @@ With this package you can implement the official Billbee API in your C# applicat
 ## Prerequisites
 - For accessing the Billbee API you need an API Key.
 To get an API key, send a mail to [support@billbee.de](mailto:support@billbee.de) and send us a short note about what you are building.
-- The API module must be activated in the account ([https://app01.billbee.de/de/settings/api](https://app01.billbee.de/de/settings/api))
+- The API module must be activated in the account ([https://app.billbee.io/app_v2/settings/api/general](https://app.billbee.io/app_v2/settings/api/general))
 
 ## Install
 Download this package and decompress the solution to a place of your choice.
@@ -16,7 +16,7 @@ PM> Install-Package Billbee.Api.Client -Version 1.0.1
 ```
 
 ## Official API Documentation
-[https://app01.billbee.de/swagger/ui/index](https://app01.billbee.de/swagger/ui/index)
+[https://app.billbee.io/swagger/ui/index](https://app.billbee.io/swagger/ui/index)
 
 ## Usage
 
