@@ -29,5 +29,11 @@
         /// If applicable, the internal id of the shipping product, the shipment uses
         /// </summary>
         public long? ShippingProviderProductId { get; set; }
+        
+        /// <summary>
+        /// If applicable, the id of a shipping carrier that should be assigend to the shipment
+        /// Will override the carrier from the shipment product.
+        /// </summary>
+        public byte? CarrierId { get; set; }
     }
 }
