@@ -211,6 +211,14 @@ namespace Billbee.Api.Client.Model
         /// </summary>
         public string CustomInvoiceNote { get; set; }
 
+        /// <summary>
+        /// The customer number (not to be confused with the id of the customer)
+        /// </summary>
         public string CustomerNumber { get; set; }
+        
+        /// <summary>
+        /// The Customer object connected with the order
+        /// </summary>
+        public Customer Customer { get; set; }
     }
 }
