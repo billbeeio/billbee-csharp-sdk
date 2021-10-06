@@ -92,7 +92,7 @@ namespace Billbee.Api.Client.EndPoint
         /// <param name="modifiedAtMax">Maximum date of last modification</param>
         /// <param name="excludeTags">Defines, that no tags should be supplied</param>
         /// <returns></returns>
-        public ApiResult<List<Order>> GetOrderList(DateTime? minOrderDate = null,
+        public ApiPagedResult<List<Order>> GetOrderList(DateTime? minOrderDate = null,
             DateTime? maxOrderDate = null,
             int page = 1,
             int pageSize = 50,
@@ -162,7 +162,7 @@ namespace Billbee.Api.Client.EndPoint
             parameters.Add("pageSize", pageSize.ToString());
             parameters.Add("excludeTags", excludeTags.ToString());
 
-            return requestResource<ApiResult<List<Order>>>("/orders", parameters);
+            return requestResource<ApiPagedResult<List<Order>>>("/orders", parameters);
         }
 
         /// <summary>
