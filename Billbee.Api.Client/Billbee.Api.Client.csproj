@@ -85,6 +85,7 @@
     <Compile Include="Model\Order.cs" />
     <Compile Include="Model\OrderItem.cs" />
     <Compile Include="Model\OrderItemAttribute.cs" />
+    <Compile Include="Model\OrderPayment.cs" />
     <Compile Include="Model\OrderSearchResult.cs" />
     <Compile Include="Model\OrderUser.cs" />
     <Compile Include="Model\OrderProductImage.cs" />

@@ -220,5 +220,10 @@ namespace Billbee.Api.Client.Model
         /// The Customer object connected with the order
         /// </summary>
         public Customer Customer { get; set; }
+        
+        /// <summary>
+        /// List of payments, associated with this order
+        /// </summary>
+        public List<OrderPayment> Payments { get; set; }
     }
 }
