@@ -265,8 +265,7 @@ namespace Billbee.Api.Client
             var response = c.Post<T>(req);
             throwWhenErrResponse(response, resource);
 
-
-            return response.Data;
+            return JsonConvert.DeserializeObject<T>(response.Content);
         }
 
 
