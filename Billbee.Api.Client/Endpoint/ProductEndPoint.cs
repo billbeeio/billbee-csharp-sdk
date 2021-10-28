@@ -16,6 +16,15 @@ namespace Billbee.Api.Client.EndPoint
         }
 
         /// <summary>
+        /// Query all defined stock locations
+        /// </summary>
+        /// <returns>Result of the operation</returns>
+        public ApiResult<List<Stock>> GetStocks()
+        {
+            return requestResource<ApiResult<List<Stock>>>("/products/stocks");
+        }
+
+        /// <summary>
         /// Update the sotck amount for multiple articles
         /// </summary>
         /// <param name="updateStockList">List of UpdateStockRequest</param>

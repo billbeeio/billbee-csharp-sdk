@@ -121,6 +121,7 @@
     <Compile Include="Model\ShippingCarrier.cs" />
     <Compile Include="Model\ShippingProduct.cs" />
     <Compile Include="Model\ShippingProvider.cs" />
+    <Compile Include="Model\Stock.cs" />
     <Compile Include="Model\StockArticle.cs" />
     <Compile Include="Model\TermsResult.cs" />
     <Compile Include="Model\TriggerEventContainer.cs" />
