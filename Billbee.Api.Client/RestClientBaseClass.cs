@@ -172,7 +172,7 @@ namespace Billbee.Api.Client
                 }
             }
 
-            var response = await c.ExecutePostTaskAsync(req).ConfigureAwait(false);
+            var response = await c.ExecutePostAsync(req).ConfigureAwait(false);
             throwWhenErrResponse(response, resource);
             return response.Content;
         }
@@ -225,7 +225,7 @@ namespace Billbee.Api.Client
             var c = createRestClient();
             var req = createRestRequest(resource, null);
             req.AddBody(data);
-            var response = await c.ExecutePostTaskAsync(req).ConfigureAwait(false);
+            var response = await c.ExecutePostAsync(req).ConfigureAwait(false);
             throwWhenErrResponse(response, resource);
             return response.Content;
         }
@@ -240,7 +240,7 @@ namespace Billbee.Api.Client
             var req = createRestRequest(resource, parameter);
             if (data != null)
                 req.AddBody(data);
-            var response = await c.ExecutePostTaskAsync<T>(req).ConfigureAwait(false);
+            var response = await c.ExecutePostAsync<T>(req).ConfigureAwait(false);
             throwWhenErrResponse(response, resource);
             return response.Data;
         }
@@ -274,7 +274,7 @@ namespace Billbee.Api.Client
             var c = createRestClient();
             var req = createRestRequest(resource, parameter);
             req.Method = Method.PUT;
-            var response = await c.ExecuteTaskAsync(req).ConfigureAwait(false);
+            var response = await c.ExecuteAsync(req).ConfigureAwait(false);
             throwWhenErrResponse(response, resource);
             return response.Content;
         }
@@ -285,7 +285,7 @@ namespace Billbee.Api.Client
             var req = createRestRequest(resource, null);
             req.Method = Method.PUT;
             req.AddBody(data);
-            var response = await c.ExecuteTaskAsync(req).ConfigureAwait(false);
+            var response = await c.ExecuteAsync(req).ConfigureAwait(false);
             throwWhenErrResponse(response, resource);
             return response.Content;
         }
@@ -296,7 +296,7 @@ namespace Billbee.Api.Client
             var req = createRestRequest(resource, null);
             req.Method = Method.PUT;
             req.AddBody(data);
-            var response = await c.ExecuteTaskAsync<T>(req).ConfigureAwait(false);
+            var response = await c.ExecuteAsync<T>(req).ConfigureAwait(false);
             throwWhenErrResponse(response, resource);
             return response.Data;
         }
@@ -340,8 +340,17 @@ namespace Billbee.Api.Client
 
         protected T requestResource<T>(
             string resource,
+            NameValueCollection parameter = null) where T : new()
+        {
+            return requestResourceInternal<T>(resource, parameter);
+        }
+        
+        private T requestResourceInternal<T>(
+            string resource,
             NameValueCollection parameter = null,
+#pragma warning disable 618
             Action<IList<Parameter>> headerProcessor = null,
+#pragma warning restore 618
             int sleepTimeMs = 1000, Action<IRestResponse<T>> preDeserializeHook = null,
             NameValueCollection headerParameter = null) where T : new()
         {
