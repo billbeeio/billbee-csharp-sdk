@@ -340,8 +340,17 @@ namespace Billbee.Api.Client
 
         protected T requestResource<T>(
             string resource,
+            NameValueCollection parameter = null) where T : new()
+        {
+            return requestResourceInternal<T>(resource, parameter);
+        }
+        
+        private T requestResourceInternal<T>(
+            string resource,
             NameValueCollection parameter = null,
+#pragma warning disable 618
             Action<IList<Parameter>> headerProcessor = null,
+#pragma warning restore 618
             int sleepTimeMs = 1000, Action<IRestResponse<T>> preDeserializeHook = null,
             NameValueCollection headerParameter = null) where T : new()
         {

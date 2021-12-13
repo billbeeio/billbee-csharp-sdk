@@ -29,7 +29,7 @@ namespace Billbee.Api.Client.Demo
 
             // Creating new instance of ApiClient
             string configPath = "config.json";
-            ApiClient client = null;
+            ApiClient client;
 
             if (File.Exists(configPath))
             {
