@@ -32,10 +32,7 @@
         /// <summary>
         /// Shows, of a request was successful or not.
         /// </summary>
-        public bool Success
-        {
-            get { return ErrorMessage == null && ErrorCode == ErrorCodeEnum.NoError; }
-        }
+        public bool Success => string.IsNullOrWhiteSpace(ErrorMessage) && ErrorCode == ErrorCodeEnum.NoError;
 
         /// <summary>
         /// If a request failed, a detailed message can be found here.
