@@ -25,6 +25,11 @@ namespace Billbee.Api.Client.Model
             /// Name of the cloud printer, to send the labels to
             /// </summary>
             public string PrinterName { get; set; }
+            
+            /// <summary>
+            /// The id of a connected Cloudprinter to sent the export docs to
+            /// </summary>
+            public long? PrinterIdForExportDocs { get; set; }
 
             /// <summary>
             /// List of services, to attach to the shipping product
@@ -75,6 +80,13 @@ namespace Billbee.Api.Client.Model
             /// The Id of the carrier, the parcel will be send with
             /// </summary>
             public byte shippingCarrier { get; set; }
+            
+            /// <summary>
+            /// The value of the shipments content (net)
+            /// </summary>
+            public decimal TotalNet { get; set; }
+            
+            public ShipmentDimensions Dimension { get; set; }
         }
     }
 }
