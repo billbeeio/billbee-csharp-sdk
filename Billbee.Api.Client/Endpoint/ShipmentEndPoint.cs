@@ -1,53 +1,42 @@
 ﻿using System.Collections.Generic;
 using System.Net;
+using Billbee.Api.Client.Interfaces.Endpoint;
 using Billbee.Api.Client.Model;
 using Billbee.Api.Client.Model.Rechnungsdruck.WebApp.Model.Api;
 
 namespace Billbee.Api.Client.EndPoint
 {
-    /// <summary>
-    /// EndPoint for generation of shipments
-    /// </summary>
-    public class ShipmentEndPoint : RestClientBaseClass
+    /// <inheritdoc cref="IShipmentEndPoint" />
+    public class ShipmentEndPoint : RestClientBaseClass, IShipmentEndPoint
     {
         internal ShipmentEndPoint(ApiConfiguration config, ILogger logger) : base(logger, config)
         {
         }
 
-        /// <summary>
-        /// Requests a list of all available shipping providers and their products.
-        /// </summary>
-        /// <returns>List of shipping providers.</returns>
+        /// <inheritdoc />
         public List<ShippingProvider> GetShippingProvider()
         {
             return requestResource<List<ShippingProvider>>("/shipment/shippingproviders");
         }
 
-        /// <summary>
-        /// Creates a new shipment.
-        /// </summary>
-        /// <param name="shipment">The shipment specification, that should be created.</param>
-        /// <returns>The result of the shipment <see cref="ShipmentResult"/></returns>
+        /// <inheritdoc />
         public ApiResult<ShipmentResult> PostShipment(PostShipment shipment)
         {
             return post<ApiResult<ShipmentResult>>("/shipment/shipment", shipment);
         }
 
+        /// <inheritdoc />
         public ApiResult<ShipmentWithLabelResult> ShipOrderWithLabel(ShipmentWithLabel shipmentRequest)
         {
             return post<ApiResult<ShipmentWithLabelResult>>("/shipment/shipment", shipmentRequest);
         }
 
-        /// <summary>
-        /// Delivers a list of all registered shipping carriers
-        /// </summary>
-        /// <returns>List of available shipping carriers</returns>
+        /// <inheritdoc />
         public List<ShippingCarrier> GetShippingCarriers()
         {
             return requestResource<List<ShippingCarrier>>("/shipment/shippingcarriers");
         }
-
-
+        
         /// <summary>
         /// Creates a test request to the api
         /// </summary>

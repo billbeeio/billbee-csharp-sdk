@@ -5,24 +5,18 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Billbee.Api.Client.Interfaces.Endpoint;
 
 namespace Billbee.Api.Client.EndPoint
 {
-    /// <summary>
-    /// Endpoint to access customer base data
-    /// </summary>
-    public class CustomerEndPoint: RestClientBaseClass
+    /// <inheritdoc cref="Billbee.Api.Client.Interfaces.Endpoint.ICustomerEndPoint" />
+    public class CustomerEndPoint: RestClientBaseClass, ICustomerEndPoint
     {
         internal CustomerEndPoint(ApiConfiguration config, ILogger logger = null) : base(logger, config)
         {
         }
 
-        /// <summary>
-        /// Queries a list of customers
-        /// </summary>
-        /// <param name="page">page number</param>
-        /// <param name="pageSize">page size</param>
-        /// <returns>List of customers on the given page.</returns>
+        /// <inheritdoc />
         public ApiPagedResult<List<Customer>> GetCustomerList(int page, int pageSize)
         {
             NameValueCollection parameters = new NameValueCollection();
@@ -32,31 +26,19 @@ namespace Billbee.Api.Client.EndPoint
             return requestResource<ApiPagedResult<List<Customer>>>($"/customers", parameters);
         }
 
-        /// <summary>
-        /// Adds a new customer
-        /// </summary>
-        /// <param name="customer">The customer object to add</param>
-        /// <returns>The customer object after adding to the account.</returns>
+        /// <inheritdoc />
         public ApiResult<Customer> AddCustomer(CustomerForCreation customer)
         {
             return post<ApiResult<Customer>>($"/customers", customer);
         }
 
-        /// <summary>
-        /// Queires the customer identified by the given id
-        /// </summary>
-        /// <param name="id">Id of the customer</param>
-        /// <returns>Customer object.</returns>
+        /// <inheritdoc />
         public ApiResult<Customer> GetCustomer(long id)
         {
             return requestResource<ApiResult<Customer>>($"/customers/{id}");
         }
 
-        /// <summary>
-        /// Updates a customer
-        /// </summary>
-        /// <param name="customer">Updated customer object</param>
-        /// <returns>The customer object after update.</returns>
+        /// <inheritdoc />
         public ApiResult<Customer> UpdateCustomer(Customer customer)
         {
             if (customer.Id == null)
@@ -67,13 +49,7 @@ namespace Billbee.Api.Client.EndPoint
 
         }
 
-        /// <summary>
-        /// Queries orders for a specific customer
-        /// </summary>
-        /// <param name="id">Id of the customer</param>
-        /// <param name="page">Page number</param>
-        /// <param name="pageSize">Count of entries per page</param>
-        /// <returns>Resultset of the queried page of orders.</returns>
+        /// <inheritdoc />
         public ApiPagedResult<List<Order>> GetOrdersForCustomer(long id, int page, int pageSize)
         {
             NameValueCollection parameters = new NameValueCollection();
@@ -82,13 +58,7 @@ namespace Billbee.Api.Client.EndPoint
             return requestResource<ApiPagedResult<List<Order>>>($"/customers/{id}/orders", parameters);
         }
 
-        /// <summary>
-        /// Queries addresses for a specific user
-        /// </summary>
-        /// <param name="id">Id of the customer</param>
-        /// <param name="page">Page number</param>
-        /// <param name="pageSize">Count of entries per page</param>
-        /// <returns>Resultset of the queried page of addresses.</returns>
+        /// <inheritdoc />
         public ApiPagedResult<List<CustomerAddress>> GetAddressesForCustomer(long id, int page, int pageSize)
         {
             NameValueCollection parameters = new NameValueCollection();

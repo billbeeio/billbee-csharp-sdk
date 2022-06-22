@@ -4,22 +4,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Billbee.Api.Client.Interfaces.Endpoint;
 
 namespace Billbee.Api.Client.EndPoint
 {
-    /// <summary>
-    /// EndPoint to access all cloud storage relevant methods.
-    /// </summary>
-    public class CloudStoragesEndPoint : RestClientBaseClass
+    /// <inheritdoc cref="Billbee.Api.Client.Interfaces.Endpoint.ICloudStoragesEndPoint" />
+    public class CloudStoragesEndPoint : RestClientBaseClass, ICloudStoragesEndPoint
     {
         internal CloudStoragesEndPoint(ApiConfiguration config, ILogger logger = null) : base(logger, config)
         {
         }
 
-        /// <summary>
-        /// Requests a list of all available cloud storages of the user
-        /// </summary>
-        /// <returns>List of cloud storages.</returns>
+        /// <inheritdoc />
         public ApiResult<List<CloudStorage>> GetCloudStorageList()
         {
             return requestResource<ApiResult<List<CloudStorage>>>($"/cloudstorages");

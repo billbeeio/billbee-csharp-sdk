@@ -3,20 +3,17 @@ using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Reflection;
+using Billbee.Api.Client.Interfaces;
+using Billbee.Api.Client.Interfaces.Endpoint;
 
 namespace Billbee.Api.Client
 {
-    /// <summary>
-    /// Client for the Billbee API
-    /// see https://app.billbee.io/swagger/ui/index or https://www.billbee.de/api/ for further information
-    /// </summary>
-    public class ApiClient
+    /// <inheritdoc />
+    public class ApiClient : IApiClient
     {
         #region external methods/ properties
 
-        /// <summary>
-        /// Configuration, used to connect to the API <see cref="ApiConfiguration"/>.
-        /// </summary>
+        /// <inheritdoc />
         public ApiConfiguration Configuration { get; private set; }
 
 
@@ -56,60 +53,44 @@ namespace Billbee.Api.Client
             string configStr = System.IO.File.ReadAllText(path);
 
             Configuration = JsonConvert.DeserializeObject<ApiConfiguration>(configStr);
-
         }
 
-        /// <summary>
-        /// EndPoint to access events
-        /// </summary>
-        public EventEndPoint Events => new EventEndPoint(Configuration, logger);
 
-        /// <summary>
-        /// EndPoint to access order independent shipments
-        /// </summary>
-        public ShipmentEndPoint Shipment => new ShipmentEndPoint(Configuration, logger);
+        /// <inheritdoc />
+        public IEventEndPoint Events => new EventEndPoint(Configuration, logger);
 
-        public WebhookEndPoint Webhooks => new WebhookEndPoint(Configuration, logger);
+        private ShipmentEndPoint ShipmentEndPoint => new ShipmentEndPoint(Configuration, logger);
 
-        /// <summary>
-        /// EndPoint to access Products
-        /// </summary>
-        public ProductEndPoint Products => new ProductEndPoint(Configuration, logger);
+        /// <inheritdoc />
+        public IShipmentEndPoint Shipment => ShipmentEndPoint;
 
-        /// <summary>
-        /// EndPoint to allow automatic user creation
-        /// </summary>
-        public AutomaticProvisionEndPoint AutomaticProvision => new AutomaticProvisionEndPoint(Configuration, logger);
+        /// <inheritdoc />
+        public IWebhookEndPoint Webhooks => new WebhookEndPoint(Configuration, logger);
 
-        /// <summary>
-        /// EndPoint to access customer base data
-        /// </summary>
-        public CustomerEndPoint Customer => new CustomerEndPoint(Configuration, logger);
+        /// <inheritdoc />
+        public IProductEndPoint Products => new ProductEndPoint(Configuration, logger);
 
-        /// <summary>
-        /// EndPoint for searches in customers, orders and products
-        /// </summary>
-        public SearchEndPoint Search => new SearchEndPoint(Configuration, logger);
+        /// <inheritdoc />
+        public IAutomaticProvisionEndPoint AutomaticProvision => new AutomaticProvisionEndPoint(Configuration, logger);
 
-        /// <summary>
-        /// EndPoint to access orders
-        /// </summary>
-        public OrderEndPoint Orders => new OrderEndPoint(Configuration, logger);
+        /// <inheritdoc />
+        public ICustomerEndPoint Customer => new CustomerEndPoint(Configuration, logger);
 
-        /// <summary>
-        /// EndPoint to access cloud storages
-        /// </summary>
+        /// <inheritdoc />
+        public ISearchEndPoint Search => new SearchEndPoint(Configuration, logger);
+
+        /// <inheritdoc />
+        public IOrderEndPoint Orders => new OrderEndPoint(Configuration, logger);
+
+        /// <inheritdoc />
         public CloudStoragesEndPoint CloudStorages => new CloudStoragesEndPoint(Configuration, logger);
 
-        /// <summary>
-        /// Validates, that access to the api is possible with the given configuration
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc />
         public bool TestConfiguration()
         {
             try
             {
-                return Shipment.Ping();
+                return ShipmentEndPoint.Ping();
             }
             catch (Exception) // If user selectes to throw exceptions on server side errors, or other errors occurs.
             {
