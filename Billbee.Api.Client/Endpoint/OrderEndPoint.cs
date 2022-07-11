@@ -44,16 +44,7 @@ namespace Billbee.Api.Client.EndPoint
         /// <returns></returns>
         public ApiResult<object> PatchOrder(long id, Dictionary<string, object> FieldsToPatch)
         {
-            JObject obj = new JObject();
-            foreach (var keyElement in FieldsToPatch)
-            {
-
-                JProperty prop = new JProperty(keyElement.Key, keyElement.Value);
-                obj.Add(prop);
-            }
-
-
-            return patch<ApiResult<object>>($"/orders/{id}", null, obj);
+            return patch<ApiResult<object>>($"/orders/{id}", data: FieldsToPatch);
         }
 
         /// <summary>
