@@ -10,20 +10,26 @@ namespace Billbee.Api.Client
     /// <inheritdoc cref="Billbee.Api.Client.IApiClient"/>
     public class ApiClient : IApiClient
     {
-        private readonly ILogger _logger;
-        private readonly BillbeeRestClient _restClient;
+        private ILogger _logger;
+        private BillbeeRestClient _restClient;
 
         public ApiClient(ApiConfiguration configuration = null, ILogger logger = null)
         {
-            Configuration = configuration ?? new ApiConfiguration();
-            _logger = logger;
-            _restClient = new BillbeeRestClient(_logger, Configuration);
+            var config = configuration ?? new ApiConfiguration();
+            _init(config, logger);
         }
 
         public ApiClient(string configurationPath, ILogger logger = null)
         {
+            var config = LoadConfigFromFile(configurationPath);
+            _init(config, logger);
+        }
+
+        private void _init(ApiConfiguration configuration, ILogger logger)
+        {
             _logger = logger;
-            LoadConfigFromFile(configurationPath);
+            Configuration = configuration;
+            _restClient = new BillbeeRestClient(_logger, Configuration);
         }
         
         public ApiConfiguration Configuration { get; private set; }
@@ -58,7 +64,7 @@ namespace Billbee.Api.Client
             }
         }
 
-        private void LoadConfigFromFile(string path = null)
+        private ApiConfiguration LoadConfigFromFile(string path = null)
         {
             if (string.IsNullOrWhiteSpace(path))
             {
@@ -81,7 +87,7 @@ namespace Billbee.Api.Client
             }
 
             var configStr = File.ReadAllText(path);
-            Configuration = JsonConvert.DeserializeObject<ApiConfiguration>(configStr);
+            return JsonConvert.DeserializeObject<ApiConfiguration>(configStr);
         }
     }
 }
