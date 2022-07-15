@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Net;
+using Billbee.Api.Client.Endpoint.Interfaces;
 using Billbee.Api.Client.Model;
 using Billbee.Api.Client.Model.Rechnungsdruck.WebApp.Model.Api;
 
