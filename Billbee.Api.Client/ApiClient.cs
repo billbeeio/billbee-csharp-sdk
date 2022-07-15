@@ -12,7 +12,7 @@ namespace Billbee.Api.Client
     {
         private ILogger _logger;
         private BillbeeRestClient _restClient;
-
+        
         public ApiClient(ApiConfiguration configuration = null, ILogger logger = null)
         {
             var config = configuration ?? new ApiConfiguration();
@@ -51,7 +51,7 @@ namespace Billbee.Api.Client
         public IOrderEndPoint Orders => new OrderEndPoint(_restClient);
 
         public ICloudStoragesEndPoint CloudStorages => new CloudStoragesEndPoint(_restClient);
-
+        
         public bool TestConfiguration()
         {
             try

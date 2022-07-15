@@ -1,5 +1,4 @@
-﻿using Billbee.Api.Client.Endpoint.Interfaces;
-using Billbee.Api.Client.Model;
+﻿using Billbee.Api.Client.Model;
 
 namespace Billbee.Api.Client.EndPoint
 {
