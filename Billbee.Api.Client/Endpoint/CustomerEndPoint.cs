@@ -10,10 +10,13 @@ using Billbee.Api.Client.Endpoint.Interfaces;
 namespace Billbee.Api.Client.EndPoint
 {
     /// <inheritdoc cref="Billbee.Api.Client.Endpoint.Interfaces.ICustomerEndPoint" />
-    public class CustomerEndPoint: RestClientBaseClass, ICustomerEndPoint
+    public class CustomerEndPoint: ICustomerEndPoint
     {
-        internal CustomerEndPoint(ApiConfiguration config, ILogger logger = null) : base(logger, config)
+        private readonly IBillbeeRestClient _restClient;
+
+        internal CustomerEndPoint(IBillbeeRestClient restClient)
         {
+            _restClient = restClient;
         }
 
         public ApiPagedResult<List<Customer>> GetCustomerList(int page, int pageSize)
@@ -22,17 +25,17 @@ namespace Billbee.Api.Client.EndPoint
             parameters.Add("page", page.ToString());
             parameters.Add("pageSize", pageSize.ToString());
 
-            return requestResource<ApiPagedResult<List<Customer>>>($"/customers", parameters);
+            return _restClient.Get<ApiPagedResult<List<Customer>>>($"/customers", parameters);
         }
 
         public ApiResult<Customer> AddCustomer(CustomerForCreation customer)
         {
-            return post<ApiResult<Customer>>($"/customers", customer);
+            return _restClient.Post<ApiResult<Customer>>($"/customers", customer);
         }
 
         public ApiResult<Customer> GetCustomer(long id)
         {
-            return requestResource<ApiResult<Customer>>($"/customers/{id}");
+            return _restClient.Get<ApiResult<Customer>>($"/customers/{id}");
         }
 
         public ApiResult<Customer> UpdateCustomer(Customer customer)
@@ -41,7 +44,7 @@ namespace Billbee.Api.Client.EndPoint
             {
                 throw new InvalidValueException("Id must not be null.");
             }
-            return put<ApiResult<Customer>>($"/customers/{customer.Id}", customer);
+            return _restClient.Put<ApiResult<Customer>>($"/customers/{customer.Id}", customer);
 
         }
 
@@ -50,7 +53,7 @@ namespace Billbee.Api.Client.EndPoint
             NameValueCollection parameters = new NameValueCollection();
             parameters.Add("page", page.ToString());
             parameters.Add("pageSize", pageSize.ToString());
-            return requestResource<ApiPagedResult<List<Order>>>($"/customers/{id}/orders", parameters);
+            return _restClient.Get<ApiPagedResult<List<Order>>>($"/customers/{id}/orders", parameters);
         }
 
         public ApiPagedResult<List<CustomerAddress>> GetAddressesForCustomer(long id, int page, int pageSize)
@@ -58,7 +61,7 @@ namespace Billbee.Api.Client.EndPoint
             NameValueCollection parameters = new NameValueCollection();
             parameters.Add("page", page.ToString());
             parameters.Add("pageSize", pageSize.ToString());
-            return requestResource<ApiPagedResult<List<CustomerAddress>>>($"/customers/{id}/addresses", parameters);
+            return _restClient.Get<ApiPagedResult<List<CustomerAddress>>>($"/customers/{id}/addresses", parameters);
         }
     }
 }

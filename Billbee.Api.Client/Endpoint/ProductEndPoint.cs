@@ -8,25 +8,28 @@ using Billbee.Api.Client.Endpoint.Interfaces;
 namespace Billbee.Api.Client.EndPoint
 {
     /// <inheritdoc cref="Billbee.Api.Client.Endpoint.Interfaces.IProductEndPoint" />
-    public class ProductEndPoint : RestClientBaseClass, IProductEndPoint
+    public class ProductEndPoint : IProductEndPoint
     {
-        internal ProductEndPoint(ApiConfiguration config, ILogger logger = null) : base(logger, config)
+        private readonly IBillbeeRestClient _restClient;
+
+        internal ProductEndPoint(IBillbeeRestClient restClient)
         {
+            _restClient = restClient;
         }
 
         public ApiResult<List<Stock>> GetStocks()
         {
-            return requestResource<ApiResult<List<Stock>>>("/products/stocks");
+            return _restClient.Get<ApiResult<List<Stock>>>("/products/stocks");
         }
 
         public List<ApiResult<CurrentStockInfo>> UpdateStockMultiple(List<UpdateStock> updateStockList)
         {
-            return post<List<ApiResult<CurrentStockInfo>>>("/products/updatestockmultiple", updateStockList);
+            return _restClient.Post<List<ApiResult<CurrentStockInfo>>>("/products/updatestockmultiple", updateStockList);
         }
 
         public ApiResult<CurrentStockInfo> UpdateStock(UpdateStock updateStockModel)
         {
-            return post<ApiResult<CurrentStockInfo>>("/products/updatestock", updateStockModel);
+            return _restClient.Post<ApiResult<CurrentStockInfo>>("/products/updatestock", updateStockModel);
         }
 
         public ApiResult<GetReservedAmountResult> GetReservedAmount(string id, string lookupBy = "id", long? stockId = null)
@@ -39,12 +42,12 @@ namespace Billbee.Api.Client.EndPoint
                 parameters.Add("stockId", stockId.Value.ToString());
             }
 
-            return requestResource<ApiResult<GetReservedAmountResult>>($"/products/reservedamount", parameters);
+            return _restClient.Get<ApiResult<GetReservedAmountResult>>($"/products/reservedamount", parameters);
         }
 
         public ApiResult<object> UpdateStockCode(UpdateStockCode updateStockCodeModel)
         {
-            return post<ApiResult<object>>("/products/updatestockcode", updateStockCodeModel);
+            return _restClient.Post<ApiResult<object>>("/products/updatestockcode", updateStockCodeModel);
         }
 
         public ApiPagedResult<List<Product>> GetProducts(int page, int pageSize, DateTime? minCreatedAt = null)
@@ -57,7 +60,7 @@ namespace Billbee.Api.Client.EndPoint
                 parameters.Add("minCreatedAt", minCreatedAt.Value.ToString("yyyy-MM-dd"));
             }
 
-            return requestResource<ApiPagedResult<List<Product>>>($"/products", parameters);
+            return _restClient.Get<ApiPagedResult<List<Product>>>($"/products", parameters);
         }
 
         public ApiResult<Product> GetProduct(string id, ProductIdType type = ProductIdType.id)
@@ -66,7 +69,7 @@ namespace Billbee.Api.Client.EndPoint
 
             parameters.Add("lookupBy", type.ToString());
 
-            return requestResource<ApiResult<Product>>($"/products/{id}", parameters);
+            return _restClient.Get<ApiResult<Product>>($"/products/{id}", parameters);
         }
 
         public ApiPagedResult<List<ArticleCustomFieldDefinition>> GetCustomFields(int page, int pageSize)
@@ -75,37 +78,37 @@ namespace Billbee.Api.Client.EndPoint
             parameters.Add("page", page.ToString());
             parameters.Add("pageSize", pageSize.ToString());
 
-            return requestResource<ApiPagedResult<List<ArticleCustomFieldDefinition>>>($"/products/custom-fields", parameters);
+            return _restClient.Get<ApiPagedResult<List<ArticleCustomFieldDefinition>>>($"/products/custom-fields", parameters);
         }
 
         public ApiResult<ArticleCustomFieldDefinition> GetCustomField(long id)
         {
-            return requestResource<ApiResult<ArticleCustomFieldDefinition>>($"/products/custom-fields/{id}");
+            return _restClient.Get<ApiResult<ArticleCustomFieldDefinition>>($"/products/custom-fields/{id}");
         }
 
         public ApiResult<List<string>> GetPatchableProductFields()
         {
-            return requestResource<ApiResult<List<string>>>($"/products/PatchableFields");
+            return _restClient.Get<ApiResult<List<string>>>($"/products/PatchableFields");
         }
 
         public ApiResult<Product> PatchArticle(long id, Dictionary<string, string> fieldsToPatch)
         {
-            return patch<ApiResult<Product>>($"/products/{id}", data: fieldsToPatch);
+            return _restClient.Patch<ApiResult<Product>>($"/products/{id}", data: fieldsToPatch);
         }
 
         public ApiResult<List<ArticleImage>> GetArticleImages(long id)
         {
-            return requestResource<ApiResult<List<ArticleImage>>>($"/products/{id}/images");
+            return _restClient.Get<ApiResult<List<ArticleImage>>>($"/products/{id}/images");
         }
 
         public ApiResult<ArticleImage> GetArticleImage(long articleId, long imageId)
         {
-            return requestResource<ApiResult<ArticleImage>>($"/products/{articleId}/images/{imageId}");
+            return _restClient.Get<ApiResult<ArticleImage>>($"/products/{articleId}/images/{imageId}");
         }
 
         public ApiResult<ArticleImage> GetArticleImage(long imageId)
         {
-            return requestResource<ApiResult<ArticleImage>>($"/products/images/{imageId}");
+            return _restClient.Get<ApiResult<ArticleImage>>($"/products/images/{imageId}");
         }
 
         public ApiResult<ArticleImage> AddArticleImage(ArticleImage image)
@@ -115,7 +118,7 @@ namespace Billbee.Api.Client.EndPoint
                 throw new InvalidValueException("To add a new image, only 0 as Id is allowed.");
             }
 
-            return put<ApiResult<ArticleImage>>($"/products/{image.ArticleId}/images/{image.Id}", image);
+            return _restClient.Put<ApiResult<ArticleImage>>($"/products/{image.ArticleId}/images/{image.Id}", image);
         }
 
         public ApiResult<ArticleImage> UpdateArticleImage(ArticleImage image)
@@ -125,29 +128,29 @@ namespace Billbee.Api.Client.EndPoint
                 throw new InvalidValueException("To update an image, the Id must not be 0.");
             }
 
-            return put<ApiResult<ArticleImage>>($"/products/{image.ArticleId}/images/{image.Id}", image);
+            return _restClient.Put<ApiResult<ArticleImage>>($"/products/{image.ArticleId}/images/{image.Id}", image);
         }
 
         public ApiResult<List<ArticleImage>> AddMultipleArticleImages(long articleId, List<ArticleImage> images, bool replace = false)
         {
             NameValueCollection parameters = new NameValueCollection();
             parameters.Add("replace", replace.ToString());
-            return put<ApiResult<List<ArticleImage>>>($"/products/{articleId}/images", images, parameters);
+            return _restClient.Put<ApiResult<List<ArticleImage>>>($"/products/{articleId}/images", images, parameters);
         }
 
         public void DeleteArticleImage(long articleId, long imageId)
         {
-            delete($"/products/{articleId}/images/{imageId}");
+            _restClient.Delete($"/products/{articleId}/images/{imageId}");
         }
 
         public void DeleteArticleImage(long imageId)
         {
-            delete($"/products/images/{imageId}");
+            _restClient.Delete($"/products/images/{imageId}");
         }
 
         public ApiResult<DeletedImages> DeleteMultipleArticleImages(List<long> imageIds)
         {
-            return post<ApiResult<DeletedImages>>($"/products/images/delete", imageIds);
+            return _restClient.Post<ApiResult<DeletedImages>>($"/products/images/delete", imageIds);
         }
 
     }

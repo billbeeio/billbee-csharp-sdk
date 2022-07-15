@@ -4,7 +4,7 @@ namespace Billbee.Api.Client.Model
 {
     public class Webhook
     {
-            public string Id { get; set; }
+        public string Id { get; set; }
         public string WebHookUri { get; set; }
         public string Secret { get; set; }
         public string Description { get; set; }

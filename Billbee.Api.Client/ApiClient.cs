@@ -11,11 +11,13 @@ namespace Billbee.Api.Client
     public class ApiClient : IApiClient
     {
         private readonly ILogger _logger;
+        private readonly BillbeeRestClient _restClient;
 
         public ApiClient(ApiConfiguration configuration = null, ILogger logger = null)
         {
             Configuration = configuration ?? new ApiConfiguration();
             _logger = logger;
+            _restClient = new BillbeeRestClient(_logger, Configuration);
         }
 
         public ApiClient(string configurationPath, ILogger logger = null)
@@ -26,23 +28,23 @@ namespace Billbee.Api.Client
         
         public ApiConfiguration Configuration { get; private set; }
         
-        public IEventEndPoint Events => new EventEndPoint(Configuration, _logger);
+        public IEventEndPoint Events => new EventEndPoint(_restClient);
 
-        public IShipmentEndPoint Shipment => new ShipmentEndPoint(Configuration, _logger);
+        public IShipmentEndPoint Shipment => new ShipmentEndPoint(_restClient);
 
-        public IWebhookEndPoint Webhooks => new WebhookEndPoint(Configuration, _logger);
+        public IWebhookEndPoint Webhooks => new WebhookEndPoint(_restClient);
 
-        public IProductEndPoint Products => new ProductEndPoint(Configuration, _logger);
+        public IProductEndPoint Products => new ProductEndPoint(_restClient);
 
-        public IAutomaticProvisionEndPoint AutomaticProvision => new AutomaticProvisionEndPoint(Configuration, _logger);
+        public IAutomaticProvisionEndPoint AutomaticProvision => new AutomaticProvisionEndPoint(_restClient);
 
-        public ICustomerEndPoint Customer => new CustomerEndPoint(Configuration, _logger);
+        public ICustomerEndPoint Customer => new CustomerEndPoint(_restClient);
 
-        public ISearchEndPoint Search => new SearchEndPoint(Configuration, _logger);
+        public ISearchEndPoint Search => new SearchEndPoint(_restClient);
 
-        public IOrderEndPoint Orders => new OrderEndPoint(Configuration, _logger);
+        public IOrderEndPoint Orders => new OrderEndPoint(_restClient);
 
-        public ICloudStoragesEndPoint CloudStorages => new CloudStoragesEndPoint(Configuration, _logger);
+        public ICloudStoragesEndPoint CloudStorages => new CloudStoragesEndPoint(_restClient);
 
         public bool TestConfiguration()
         {

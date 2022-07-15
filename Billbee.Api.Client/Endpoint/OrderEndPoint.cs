@@ -9,20 +9,23 @@ using Billbee.Api.Client.Endpoint.Interfaces;
 namespace Billbee.Api.Client.EndPoint
 {
     /// <inheritdoc cref="Billbee.Api.Client.Endpoint.Interfaces.IOrderEndPoint" />
-    public class OrderEndPoint : RestClientBaseClass, IOrderEndPoint
+    public class OrderEndPoint : IOrderEndPoint
     {
-        internal OrderEndPoint(ApiConfiguration config, ILogger logger = null) : base(logger, config)
+        private readonly IBillbeeRestClient _restClient;
+
+        internal OrderEndPoint(IBillbeeRestClient restClient)
         {
+            _restClient = restClient;
         }
 
         public ApiResult<Order> GetOrder(string id, int articleTitleSource = 0)
         {
-            return requestResource<ApiResult<Order>>($"/orders/{id}?articleTitleSource={articleTitleSource}");
+            return _restClient.Get<ApiResult<Order>>($"/orders/{id}?articleTitleSource={articleTitleSource}");
         }
 
         public ApiResult<List<string>> GetPatchableFields()
         {
-            return requestResource<ApiResult<List<string>>>("/orders/PatchableFields");
+            return _restClient.Get<ApiResult<List<string>>>("/orders/PatchableFields");
         }
 
         public ApiResult<object> PatchOrder(long id, Dictionary<string, object> fieldsToPatch)
@@ -36,17 +39,17 @@ namespace Billbee.Api.Client.EndPoint
             }
 
 
-            return patch<ApiResult<object>>($"/orders/{id}", null, obj);
+            return _restClient.Patch<ApiResult<object>>($"/orders/{id}", null, obj);
         }
 
         public ApiResult<Order> GetOrderByExternalReference(string id)
         {
-            return requestResource<ApiResult<Order>>($"/orders/findbyextref/{id}");
+            return _restClient.Get<ApiResult<Order>>($"/orders/findbyextref/{id}");
         }
 
         public ApiResult<Order> GetOrderByExternalIdAndPartner(string partner, string id)
         {
-            return requestResource<ApiResult<Order>>($"/orders/find/{id}/{partner}");
+            return _restClient.Get<ApiResult<Order>>($"/orders/find/{id}/{partner}");
         }
 
         public ApiPagedResult<List<Order>> GetOrderList(DateTime? minOrderDate = null,
@@ -119,7 +122,7 @@ namespace Billbee.Api.Client.EndPoint
             parameters.Add("pageSize", pageSize.ToString());
             parameters.Add("excludeTags", excludeTags.ToString());
 
-            return requestResource<ApiPagedResult<List<Order>>>("/orders", parameters);
+            return _restClient.Get<ApiPagedResult<List<Order>>>("/orders", parameters);
         }
 
         public ApiResult<List<InvoiceDetail>> GetInvoiceList(
@@ -189,7 +192,7 @@ namespace Billbee.Api.Client.EndPoint
             parameters.Add("pageSize", pageSize.ToString());
             parameters.Add("excludeTags", excludeTags.ToString());
 
-            return requestResource<ApiResult<List<InvoiceDetail>>>("/orders/invoices", parameters);
+            return _restClient.Get<ApiResult<List<InvoiceDetail>>>("/orders/invoices", parameters);
         }
 
         public ApiResult<OrderResult> PostNewOrder(Order order, long shopId)
@@ -197,22 +200,22 @@ namespace Billbee.Api.Client.EndPoint
             NameValueCollection parameters = new NameValueCollection();
             parameters.Add("shopId", shopId.ToString());
 
-            return post<ApiResult<OrderResult>>("/orders", order, parameters);
+            return _restClient.Post<ApiResult<OrderResult>>("/orders", order, parameters);
         }
 
         public ApiResult<dynamic> AddTags(List<string> tags, long orderId)
         {
-            return post<ApiResult<dynamic>>($"/orders/{orderId}/tags", new { Tags = tags });
+            return _restClient.Post<ApiResult<dynamic>>($"/orders/{orderId}/tags", new { Tags = tags });
         }
 
         public ApiResult<dynamic> UpdateTags(List<string> tags, long orderId)
         {
-            return put<ApiResult<dynamic>>($"/orders/{orderId}/tags", new { Tags = tags });
+            return _restClient.Put<ApiResult<dynamic>>($"/orders/{orderId}/tags", new { Tags = tags });
         }
         
         public void AddShipment(OrderShipment shipment)
         {
-            post($"/orders/{shipment.OrderId}/shipment", shipment);
+            _restClient.Post($"/orders/{shipment.OrderId}/shipment", shipment);
         }
 
         public ApiResult<DeliveryNote> CreateDeliveryNote(long orderId, bool includePdf = false, long? sendToCloudId = null)
@@ -223,7 +226,7 @@ namespace Billbee.Api.Client.EndPoint
             if (sendToCloudId.HasValue)
                 parameters.Add("sendToCloudId", sendToCloudId.ToString());
 
-            return post<ApiResult<DeliveryNote>>($"/orders/CreateDeliveryNote/{orderId}", parameters);
+            return _restClient.Post<ApiResult<DeliveryNote>>($"/orders/CreateDeliveryNote/{orderId}", parameters);
         }
 
         public ApiResult<Invoice> CreateInvoice(long orderId, bool includePdf = false, long? templateId = null, long? sendToCloudId = null)
@@ -237,17 +240,17 @@ namespace Billbee.Api.Client.EndPoint
             if (templateId.HasValue)
                 parameters.Add("templateId", templateId.ToString());
 
-            return post<ApiResult<Invoice>>($"/orders/CreateInvoice/{orderId}", parameters);
+            return _restClient.Post<ApiResult<Invoice>>($"/orders/CreateInvoice/{orderId}", parameters);
         }
 
         public void ChangeOrderState(long id, OrderStateEnum state)
         {
-            put<object>($"/orders/{id}/orderstate", new { NewStateId = (int)state }, null);
+            _restClient.Put<object>($"/orders/{id}/orderstate", new { NewStateId = (int)state }, null);
         }
 
         public void SendMailForOrder(long orderId, SendMessage message)
         {
-            post($"/orders/{orderId}/send-message", message);
+            _restClient.Post($"/orders/{orderId}/send-message", message);
         }
 
         public void CreateEventAtOrder(long orderId, string eventName, uint delayInMinutes = 0)
@@ -258,7 +261,7 @@ namespace Billbee.Api.Client.EndPoint
                 Name = eventName
             };
 
-            post($"/orders/{orderId}/trigger-event", model);
+            _restClient.Post($"/orders/{orderId}/trigger-event", model);
         }
     }
 }

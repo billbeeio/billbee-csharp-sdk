@@ -8,11 +8,11 @@
         /// <summary>
         /// Throws an exception, if a server side error occurs while processing a request
         /// </summary>
-        throwException,
+        ThrowException,
 
         /// <summary>
         /// Returns an object, that contains further error information, if a server error occurs while processing a request
         /// </summary>
-        returnErrorContent
+        ReturnErrorContent
     }
 }

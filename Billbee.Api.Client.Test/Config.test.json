@@ -1,0 +1,7 @@
+{
+  "Username": "myUserFromFile",
+  "Password": "myPwdFromFile",
+  "ApiKey": "myApiKeyFromFile",
+  "BaseUrl": "myBaseUrlFromFile",
+  "errorHandlingBehaviour": 1
+}

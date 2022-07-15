@@ -8,10 +8,13 @@ using Billbee.Api.Client.Model;
 namespace Billbee.Api.Client.EndPoint
 {
     /// <inheritdoc cref="Billbee.Api.Client.Endpoint.Interfaces.IEventEndPoint" />
-    public class EventEndPoint : RestClientBaseClass, IEventEndPoint
+    public class EventEndPoint : IEventEndPoint
     {
-        internal EventEndPoint(ApiConfiguration config, ILogger logger = null) : base(logger, config)
+        private readonly IBillbeeRestClient _restClient;
+
+        internal EventEndPoint(IBillbeeRestClient restClient)
         {
+            _restClient = restClient;
         }
 
         public ApiPagedResult<List<Event>> GetEvents(
@@ -53,7 +56,7 @@ namespace Billbee.Api.Client.EndPoint
                 }
             }
 
-            return requestResource<ApiPagedResult<List<Event>>>("/events", parameters);
+            return _restClient.Get<ApiPagedResult<List<Event>>>("/events", parameters);
         }
     }
 }
