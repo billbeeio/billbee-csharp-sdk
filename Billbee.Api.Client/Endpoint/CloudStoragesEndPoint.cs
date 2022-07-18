@@ -9,15 +9,18 @@ using Billbee.Api.Client.Endpoint.Interfaces;
 namespace Billbee.Api.Client.EndPoint
 {
     /// <inheritdoc cref="Billbee.Api.Client.Endpoint.Interfaces.ICloudStoragesEndPoint" />
-    public class CloudStoragesEndPoint : RestClientBaseClass, ICloudStoragesEndPoint
+    public class CloudStoragesEndPoint : ICloudStoragesEndPoint
     {
-        internal CloudStoragesEndPoint(ApiConfiguration config, ILogger logger = null) : base(logger, config)
+        private readonly IBillbeeRestClient _restClient;
+
+        internal CloudStoragesEndPoint(IBillbeeRestClient restClient)
         {
+            _restClient = restClient;
         }
 
         public ApiResult<List<CloudStorage>> GetCloudStorageList()
         {
-            return requestResource<ApiResult<List<CloudStorage>>>($"/cloudstorages");
+            return _restClient.Get<ApiResult<List<CloudStorage>>>($"/cloudstorages");
         }
     }
 }

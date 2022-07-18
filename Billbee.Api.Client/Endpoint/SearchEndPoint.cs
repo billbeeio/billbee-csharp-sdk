@@ -9,15 +9,18 @@ using Billbee.Api.Client.Endpoint.Interfaces;
 namespace Billbee.Api.Client.EndPoint
 {
     /// <inheritdoc cref="Billbee.Api.Client.Endpoint.Interfaces.ISearchEndPoint" />
-    public class SearchEndPoint : RestClientBaseClass, ISearchEndPoint
+    public class SearchEndPoint : ISearchEndPoint
     {
-        internal SearchEndPoint(ApiConfiguration config, ILogger logger = null) : base(logger, config)
+        private readonly IBillbeeRestClient _restClient;
+
+        internal SearchEndPoint(IBillbeeRestClient restClient)
         {
+            _restClient = restClient;
         }
 
         public ApiResult<SearchResult> SearchTerm(Search search)
         {
-            return post<ApiResult<SearchResult>>($"/search", search );
+            return _restClient.Post<ApiResult<SearchResult>>($"/search", search );
         }
     }
 }

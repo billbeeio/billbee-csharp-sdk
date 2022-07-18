@@ -5,15 +5,18 @@ using Billbee.Api.Client.Endpoint.Interfaces;
 namespace Billbee.Api.Client.EndPoint
 {
     /// <inheritdoc cref="Billbee.Api.Client.Endpoint.Interfaces.IWebhookEndPoint" />
-    public class WebhookEndPoint : RestClientBaseClass, IWebhookEndPoint
+    public class WebhookEndPoint : IWebhookEndPoint
     {
-        public WebhookEndPoint(ApiConfiguration config, ILogger logger) : base(logger, config)
+        private readonly IBillbeeRestClient _restClient;
+
+        internal WebhookEndPoint(IBillbeeRestClient restClient)
         {
+            _restClient = restClient;
         }
 
         public void DeleteAllWebhooks()
         {
-            delete("/webhooks");
+            _restClient.Delete("/webhooks");
         }
 
         public void DeleteWebhook(string id)
@@ -23,12 +26,12 @@ namespace Billbee.Api.Client.EndPoint
                 throw new InvalidValueException($"Property Id was not set.");
             }
 
-            delete($"/webhooks/{id}");
+            _restClient.Delete($"/webhooks/{id}");
         }
 
         public List<Webhook> GetWebhooks()
         {
-            return requestResource<List<Webhook>>("/webhooks");
+            return _restClient.Get<List<Webhook>>("/webhooks");
         }
 
         public Webhook GetWebhook(string id)
@@ -38,7 +41,7 @@ namespace Billbee.Api.Client.EndPoint
                 throw new InvalidValueException($"Property Id was not set.");
             }
 
-            return requestResource<Webhook>($"/webhooks/{id}");
+            return _restClient.Get<Webhook>($"/webhooks/{id}");
         }
 
         public void UpdateWebhook(Webhook webhook)
@@ -48,13 +51,12 @@ namespace Billbee.Api.Client.EndPoint
                 throw new InvalidValueException($"Property Id was not set.");
             }
 
-            put($"/webhooks/{webhook.Id}", webhook);
-
+            _restClient.Put($"/webhooks/{webhook.Id}", webhook);
         }
 
         public List<WebhookFilter> GetFilters()
         {
-            return requestResource<List<WebhookFilter>>("/webhooks/filters");
+            return _restClient.Get<List<WebhookFilter>>("/webhooks/filters");
         }
 
         public void CreateWebhook(Webhook webhook)
@@ -69,7 +71,7 @@ namespace Billbee.Api.Client.EndPoint
                 throw new InvalidValueException($"Property secret is malformed. It must meet the following criteria: Not null or whitespaces only, between 32 and 64 charackters long.");
             }
 
-            post("/webhooks", webhook);
+            _restClient.Post("/webhooks", webhook);
         }
     }
 }

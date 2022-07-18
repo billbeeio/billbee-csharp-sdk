@@ -10,40 +10,48 @@ namespace Billbee.Api.Client
     /// <inheritdoc cref="Billbee.Api.Client.IApiClient"/>
     public class ApiClient : IApiClient
     {
-        private readonly ILogger _logger;
-
+        private ILogger _logger;
+        private BillbeeRestClient _restClient;
+        
         public ApiClient(ApiConfiguration configuration = null, ILogger logger = null)
         {
-            Configuration = configuration ?? new ApiConfiguration();
-            _logger = logger;
+            var config = configuration ?? new ApiConfiguration();
+            _init(config, logger);
         }
 
         public ApiClient(string configurationPath, ILogger logger = null)
         {
+            var config = LoadConfigFromFile(configurationPath);
+            _init(config, logger);
+        }
+
+        private void _init(ApiConfiguration configuration, ILogger logger)
+        {
             _logger = logger;
-            LoadConfigFromFile(configurationPath);
+            Configuration = configuration;
+            _restClient = new BillbeeRestClient(_logger, Configuration);
         }
         
         public ApiConfiguration Configuration { get; private set; }
         
-        public IEventEndPoint Events => new EventEndPoint(Configuration, _logger);
+        public IEventEndPoint Events => new EventEndPoint(_restClient);
 
-        public IShipmentEndPoint Shipment => new ShipmentEndPoint(Configuration, _logger);
+        public IShipmentEndPoint Shipment => new ShipmentEndPoint(_restClient);
 
-        public IWebhookEndPoint Webhooks => new WebhookEndPoint(Configuration, _logger);
+        public IWebhookEndPoint Webhooks => new WebhookEndPoint(_restClient);
 
-        public IProductEndPoint Products => new ProductEndPoint(Configuration, _logger);
+        public IProductEndPoint Products => new ProductEndPoint(_restClient);
 
-        public IAutomaticProvisionEndPoint AutomaticProvision => new AutomaticProvisionEndPoint(Configuration, _logger);
+        public IAutomaticProvisionEndPoint AutomaticProvision => new AutomaticProvisionEndPoint(_restClient);
 
-        public ICustomerEndPoint Customer => new CustomerEndPoint(Configuration, _logger);
+        public ICustomerEndPoint Customer => new CustomerEndPoint(_restClient);
 
-        public ISearchEndPoint Search => new SearchEndPoint(Configuration, _logger);
+        public ISearchEndPoint Search => new SearchEndPoint(_restClient);
 
-        public IOrderEndPoint Orders => new OrderEndPoint(Configuration, _logger);
+        public IOrderEndPoint Orders => new OrderEndPoint(_restClient);
 
-        public ICloudStoragesEndPoint CloudStorages => new CloudStoragesEndPoint(Configuration, _logger);
-
+        public ICloudStoragesEndPoint CloudStorages => new CloudStoragesEndPoint(_restClient);
+        
         public bool TestConfiguration()
         {
             try
@@ -56,7 +64,7 @@ namespace Billbee.Api.Client
             }
         }
 
-        private void LoadConfigFromFile(string path = null)
+        private ApiConfiguration LoadConfigFromFile(string path = null)
         {
             if (string.IsNullOrWhiteSpace(path))
             {
@@ -79,7 +87,7 @@ namespace Billbee.Api.Client
             }
 
             var configStr = File.ReadAllText(path);
-            Configuration = JsonConvert.DeserializeObject<ApiConfiguration>(configStr);
+            return JsonConvert.DeserializeObject<ApiConfiguration>(configStr);
         }
     }
 }

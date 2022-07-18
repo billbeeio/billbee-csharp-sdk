@@ -7,35 +7,38 @@ using Billbee.Api.Client.Model.Rechnungsdruck.WebApp.Model.Api;
 namespace Billbee.Api.Client.EndPoint
 {
     /// <inheritdoc cref="Billbee.Api.Client.Endpoint.Interfaces.IShipmentEndPoint" />
-    public class ShipmentEndPoint : RestClientBaseClass, IShipmentEndPoint
+    public class ShipmentEndPoint : IShipmentEndPoint
     {
-        internal ShipmentEndPoint(ApiConfiguration config, ILogger logger) : base(logger, config)
+        private readonly IBillbeeRestClient _restClient;
+
+        internal ShipmentEndPoint(IBillbeeRestClient restClient)
         {
+            _restClient = restClient;
         }
 
         public List<ShippingProvider> GetShippingProvider()
         {
-            return requestResource<List<ShippingProvider>>("/shipment/shippingproviders");
+            return _restClient.Get<List<ShippingProvider>>("/shipment/shippingproviders");
         }
 
         public ApiResult<ShipmentResult> PostShipment(PostShipment shipment)
         {
-            return post<ApiResult<ShipmentResult>>("/shipment/shipment", shipment);
+            return _restClient.Post<ApiResult<ShipmentResult>>("/shipment/shipment", shipment);
         }
 
         public ApiResult<ShipmentWithLabelResult> ShipOrderWithLabel(ShipmentWithLabel shipmentRequest)
         {
-            return post<ApiResult<ShipmentWithLabelResult>>("/shipment/shipment", shipmentRequest);
+            return _restClient.Post<ApiResult<ShipmentWithLabelResult>>("/shipment/shipment", shipmentRequest);
         }
         
         public List<ShippingCarrier> GetShippingCarriers()
         {
-            return requestResource<List<ShippingCarrier>>("/shipment/shippingcarriers");
+            return _restClient.Get<List<ShippingCarrier>>("/shipment/shippingcarriers");
         }
 
         internal bool Ping()
         {
-            var result = get("/shipment/ping");
+            var result = _restClient.Get("/shipment/ping");
             switch (result)
             {
                 case HttpStatusCode.OK:
