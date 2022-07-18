@@ -17,10 +17,6 @@ public static class TestHelpers
         // act & assert
         actAndAssert(restClientMock.Object);
         restClientMock.Verify(expression);
-        if (mockResult != null)
-        {
-            Assert.IsNotNull(mockResult);
-        }
     }
     
     public static ApiResult<T> GetApiResult<T>(T t, ApiResult<T>.ErrorCodeEnum errorCode = ApiResult<T>.ErrorCodeEnum.NoError, string? errorMessage = null)
