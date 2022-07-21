@@ -30,16 +30,7 @@ namespace Billbee.Api.Client.EndPoint
 
         public ApiResult<object> PatchOrder(long id, Dictionary<string, object> fieldsToPatch)
         {
-            JObject obj = new JObject();
-            foreach (var keyElement in fieldsToPatch)
-            {
-
-                JProperty prop = new JProperty(keyElement.Key, keyElement.Value);
-                obj.Add(prop);
-            }
-
-
-            return _restClient.Patch<ApiResult<object>>($"/orders/{id}", null, obj);
+            return _restClient.Patch<ApiResult<object>>($"/orders/{id}", data: fieldsToPatch);
         }
 
         public ApiResult<Order> GetOrderByExternalReference(string id)

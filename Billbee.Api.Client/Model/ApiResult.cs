@@ -30,7 +30,7 @@
         }
 
         /// <summary>
-        /// Shows, of a request was successful or not.
+        /// Shows, if a request was successful or not.
         /// </summary>
         public bool Success => string.IsNullOrWhiteSpace(ErrorMessage) && ErrorCode == ErrorCodeEnum.NoError;
 
