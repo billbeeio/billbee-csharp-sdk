@@ -30,7 +30,7 @@ namespace Billbee.Api.Client.EndPoint
 
         public ApiResult<object> PatchOrder(long id, Dictionary<string, object> fieldsToPatch)
         {
-            return _restClient.patch<ApiResult<object>>($"/orders/{id}", data: fieldsToPatch);
+            return _restClient.Patch<ApiResult<object>>($"/orders/{id}", data: fieldsToPatch);
         }
 
         public ApiResult<Order> GetOrderByExternalReference(string id)
