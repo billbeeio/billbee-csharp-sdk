@@ -30,6 +30,6 @@ namespace Billbee.Api.Client
         /// <summary>
         /// How should the api treat server side errors
         /// </summary>
-        public ErrorHandlingEnum errorHandlingBehaviour { get; set; } = ErrorHandlingEnum.throwException;
+        public ErrorHandlingEnum ErrorHandlingBehaviour { get; set; } = ErrorHandlingEnum.ThrowException;
     }
 }

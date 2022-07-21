@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Billbee.Api.Client", "Billb
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Billbee.Api.Client.Demo", "Billbee.Api.Client.Demo\Billbee.Api.Client.Demo.csproj", "{37E147A5-6B5B-4012-A38E-0828D8E229EA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Billbee.Api.Client.Test", "Billbee.Api.Client.Test\Billbee.Api.Client.Test.csproj", "{3ADDE5CD-C642-476E-8ABA-6EC3031AE247}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{37E147A5-6B5B-4012-A38E-0828D8E229EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37E147A5-6B5B-4012-A38E-0828D8E229EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37E147A5-6B5B-4012-A38E-0828D8E229EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3ADDE5CD-C642-476E-8ABA-6EC3031AE247}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3ADDE5CD-C642-476E-8ABA-6EC3031AE247}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3ADDE5CD-C642-476E-8ABA-6EC3031AE247}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3ADDE5CD-C642-476E-8ABA-6EC3031AE247}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
