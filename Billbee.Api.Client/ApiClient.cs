@@ -46,6 +46,8 @@ namespace Billbee.Api.Client
 
         public ICustomerEndPoint Customer => new CustomerEndPoint(_restClient);
 
+        public ICustomerAddressesEndPoint CustomerAddresses => new CustomerAddressesEndPoint(_restClient);
+
         public ISearchEndPoint Search => new SearchEndPoint(_restClient);
 
         public IOrderEndPoint Orders => new OrderEndPoint(_restClient);

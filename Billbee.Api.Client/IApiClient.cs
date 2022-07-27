@@ -45,6 +45,11 @@ namespace Billbee.Api.Client
         ICustomerEndPoint Customer { get; }
 
         /// <summary>
+        /// EndPoint to access customer addresses
+        /// </summary>
+        ICustomerAddressesEndPoint CustomerAddresses { get; }
+
+        /// <summary>
         /// EndPoint for searches in customers, orders and products
         /// </summary>
         ISearchEndPoint Search { get; }
