@@ -28,7 +28,7 @@ namespace Billbee.Api.Client.EndPoint
 
         public ApiResult<ShipmentWithLabelResult> ShipOrderWithLabel(ShipmentWithLabel shipmentRequest)
         {
-            return _restClient.Post<ApiResult<ShipmentWithLabelResult>>("/shipment/shipment", shipmentRequest);
+            return _restClient.Post<ApiResult<ShipmentWithLabelResult>>("/shipment/shipwithlabel", shipmentRequest);
         }
         
         public List<ShippingCarrier> GetShippingCarriers()
