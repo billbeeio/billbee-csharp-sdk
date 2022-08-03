@@ -18,6 +18,7 @@ namespace Billbee.Api.Client.EndPoint
             _restClient = restClient;
         }
 
+        [ApiMapping("/api/v1/cloudstorages", HttpOperation.Get)]
         public ApiResult<List<CloudStorage>> GetCloudStorageList()
         {
             return _restClient.Get<ApiResult<List<CloudStorage>>>($"/cloudstorages");

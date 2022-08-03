@@ -14,11 +14,13 @@ namespace Billbee.Api.Client.EndPoint
             _restClient = restClient;
         }
 
+        [ApiMapping("/api/v1/webhooks", HttpOperation.Delete)]
         public void DeleteAllWebhooks()
         {
             _restClient.Delete("/webhooks");
         }
 
+        [ApiMapping("/api/v1/webhooks/{id}", HttpOperation.Delete)]
         public void DeleteWebhook(string id)
         {
             if (string.IsNullOrWhiteSpace(id))
@@ -29,11 +31,13 @@ namespace Billbee.Api.Client.EndPoint
             _restClient.Delete($"/webhooks/{id}");
         }
 
+        [ApiMapping("/api/v1/webhooks", HttpOperation.Get)]
         public List<Webhook> GetWebhooks()
         {
             return _restClient.Get<List<Webhook>>("/webhooks");
         }
 
+        [ApiMapping("/api/v1/webhooks/{id}", HttpOperation.Get)]
         public Webhook GetWebhook(string id)
         {
             if (string.IsNullOrWhiteSpace(id))
@@ -44,6 +48,7 @@ namespace Billbee.Api.Client.EndPoint
             return _restClient.Get<Webhook>($"/webhooks/{id}");
         }
 
+        [ApiMapping("/api/v1/webhooks/{id}", HttpOperation.Put)]
         public void UpdateWebhook(Webhook webhook)
         {
             if (string.IsNullOrWhiteSpace(webhook.Id ))
@@ -54,12 +59,14 @@ namespace Billbee.Api.Client.EndPoint
             _restClient.Put($"/webhooks/{webhook.Id}", webhook);
         }
 
+        [ApiMapping("/api/v1/webhooks/filters", HttpOperation.Get)]
         public List<WebhookFilter> GetFilters()
         {
             return _restClient.Get<List<WebhookFilter>>("/webhooks/filters");
         }
 
-        public void CreateWebhook(Webhook webhook)
+        [ApiMapping("/api/v1/webhooks", HttpOperation.Post)]
+        public Webhook CreateWebhook(Webhook webhook)
         {
             if (webhook.Id != null)
             {
@@ -71,7 +78,7 @@ namespace Billbee.Api.Client.EndPoint
                 throw new InvalidValueException($"Property secret is malformed. It must meet the following criteria: Not null or whitespaces only, between 32 and 64 charackters long.");
             }
 
-            _restClient.Post("/webhooks", webhook);
+            return _restClient.Post<Webhook>("/webhooks", webhook);
         }
     }
 }

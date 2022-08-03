@@ -19,6 +19,7 @@ namespace Billbee.Api.Client.EndPoint
             _restClient = restClient;
         }
 
+        [ApiMapping("/api/v1/customers", HttpOperation.Get)]
         public ApiPagedResult<List<Customer>> GetCustomerList(int page, int pageSize)
         {
             NameValueCollection parameters = new NameValueCollection();
@@ -28,16 +29,19 @@ namespace Billbee.Api.Client.EndPoint
             return _restClient.Get<ApiPagedResult<List<Customer>>>($"/customers", parameters);
         }
 
+        [ApiMapping("/api/v1/customers", HttpOperation.Post)]
         public ApiResult<Customer> AddCustomer(CustomerForCreation customer)
         {
             return _restClient.Post<ApiResult<Customer>>($"/customers", customer);
         }
 
+        [ApiMapping("/api/v1/customers/{id}", HttpOperation.Get)]
         public ApiResult<Customer> GetCustomer(long id)
         {
             return _restClient.Get<ApiResult<Customer>>($"/customers/{id}");
         }
 
+        [ApiMapping("/api/v1/customers/{id}", HttpOperation.Put)]
         public ApiResult<Customer> UpdateCustomer(Customer customer)
         {
             if (customer.Id == null)
@@ -48,6 +52,7 @@ namespace Billbee.Api.Client.EndPoint
 
         }
 
+        [ApiMapping("/api/v1/customers/{id}/orders", HttpOperation.Get)]
         public ApiPagedResult<List<Order>> GetOrdersForCustomer(long id, int page, int pageSize)
         {
             NameValueCollection parameters = new NameValueCollection();
@@ -56,12 +61,37 @@ namespace Billbee.Api.Client.EndPoint
             return _restClient.Get<ApiPagedResult<List<Order>>>($"/customers/{id}/orders", parameters);
         }
 
+        [ApiMapping("/api/v1/customers/{id}/addresses", HttpOperation.Get)]
         public ApiPagedResult<List<CustomerAddress>> GetAddressesForCustomer(long id, int page, int pageSize)
         {
             NameValueCollection parameters = new NameValueCollection();
             parameters.Add("page", page.ToString());
             parameters.Add("pageSize", pageSize.ToString());
             return _restClient.Get<ApiPagedResult<List<CustomerAddress>>>($"/customers/{id}/addresses", parameters);
+        }
+
+        [ApiMapping("/api/v1/customers/{id}/addresses", HttpOperation.Post)]
+        public ApiResult<CustomerAddress> AddAddressToCustomer(CustomerAddress customerAddress)
+        {
+            return _restClient.Post<ApiResult<CustomerAddress>>($"/customers/{customerAddress.CustomerId}/addresses", customerAddress);
+        }
+
+        [ApiMapping("/api/v1/customers/addresses/{id}", HttpOperation.Get)]
+        public ApiResult<CustomerAddress> GetCustomerAddress(long customerAddressId)
+        {
+            return _restClient.Get<ApiResult<CustomerAddress>>($"/customers/addresses/{customerAddressId}");
+        }
+
+        [ApiMapping("/api/v1/customers/addresses/{id}", HttpOperation.Put)]
+        public ApiResult<CustomerAddress> UpdateCustomerAddress(CustomerAddress customerAddress)
+        {
+            return _restClient.Put<ApiResult<CustomerAddress>>($"/customers/addresses/{customerAddress.Id}", customerAddress);
+        }
+        
+        [ApiMapping("/api/v1/customers/addresses/{id}", HttpOperation.Patch)]
+        public ApiResult<CustomerAddress> PatchCustomerAddress(long customerAddressId, Dictionary<string, string> fieldsToPatch)
+        {
+            return _restClient.Patch<ApiResult<CustomerAddress>>($"/customers/addresses/{customerAddressId}", null, fieldsToPatch);
         }
     }
 }

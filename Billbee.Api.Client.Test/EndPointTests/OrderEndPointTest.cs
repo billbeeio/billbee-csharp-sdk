@@ -349,4 +349,41 @@ public class OrderEndPointTest
        
         restClientMock.Verify(x => x.Post($"/orders/{orderId}/trigger-event", It.IsAny<TriggerEventContainer>()));
     }
+    
+    [TestMethod]
+    public void GetLayoutsTest()
+    {
+        var testLayoutList = new List<LayoutTemplate>
+        {
+            new() { Id = 1, Name = "layout1", Type = ReportTemplates.Invoice },
+            new() { Id = 2, Name = "layout2", Type = ReportTemplates.Label },
+        };
+        
+        Expression<Func<IBillbeeRestClient, object>> expression = x => x.Get<ApiResult<List<LayoutTemplate>>>($"/layouts", null);
+        object mockResult = TestHelpers.GetApiResult(testLayoutList);
+        TestHelpers.RestClientMockTest(expression, mockResult, (restClient) =>
+        {
+            var uut = new OrderEndPoint(restClient);
+            var result = uut.GetLayouts();
+            Assert.IsNotNull(result.Data);
+            Assert.AreEqual(2, result.Data.Count);
+        });
+    }
+    
+    [TestMethod]
+    public void ParsePlaceholdersTest()
+    {
+        var restClientMock = new Mock<IBillbeeRestClient>();
+        var uut = new OrderEndPoint(restClientMock.Object);
+        
+        var orderId = 4711;
+        var parsePlaceholdersQuery = new ParsePlaceholdersQuery
+        {
+            TextToParse = "This is my text for Order {{id}}"
+        };
+
+        uut.ParsePlaceholders(orderId, parsePlaceholdersQuery);
+        
+        restClientMock.Verify(x => x.Post<ParsePlaceholdersResult>($"/orders/{orderId}/parse-placeholders", It.IsAny<ParsePlaceholdersQuery>(), null));
+    }
 }

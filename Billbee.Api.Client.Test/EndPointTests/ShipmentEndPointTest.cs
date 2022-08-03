@@ -25,6 +25,21 @@ public class ShipmentEndPointTest
             Assert.AreEqual(1, result.Count);
         });
     }
+
+    [TestMethod]
+    public void GetShipmentsTest()
+    {
+        var testShipment = new Shipment();
+        
+        Expression<Func<IBillbeeRestClient, object>> expression = x => x.Get<ApiPagedResult<List<Shipment>>>($"/shipment/shipments", It.IsAny<NameValueCollection>());
+        object mockResult = TestHelpers.GetApiPagedResult(new List<Shipment> { testShipment });
+        TestHelpers.RestClientMockTest(expression, mockResult, (restClient) =>
+        {
+            var uut = new ShipmentEndPoint(restClient);
+            var result = uut.GetShipments(1, 20);
+            Assert.AreEqual(1, result.Data.Count);
+        });
+    }
     
     [TestMethod]
     public void PostShipmentTest()
@@ -48,7 +63,7 @@ public class ShipmentEndPointTest
         var testShipmentWithLabel = new ShipmentWithLabel();
         var testShipmentWithLabelResult = new ShipmentWithLabelResult();
         
-        Expression<Func<IBillbeeRestClient, object>> expression = x => x.Post<ApiResult<ShipmentWithLabelResult>>($"/shipment/shipment", testShipmentWithLabel, null);
+        Expression<Func<IBillbeeRestClient, object>> expression = x => x.Post<ApiResult<ShipmentWithLabelResult>>($"/shipment/shipwithlabel", testShipmentWithLabel, null);
         object mockResult = TestHelpers.GetApiResult(testShipmentWithLabelResult);
         TestHelpers.RestClientMockTest(expression, mockResult, (restClient) =>
         {

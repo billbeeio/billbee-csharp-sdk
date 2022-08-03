@@ -17,6 +17,7 @@ namespace Billbee.Api.Client.EndPoint
             _restClient = restClient;
         }
 
+        [ApiMapping("/api/v1/events", HttpOperation.Get)]
         public ApiPagedResult<List<Event>> GetEvents(
             DateTime? minDate = null,
             DateTime? maxDate = null,

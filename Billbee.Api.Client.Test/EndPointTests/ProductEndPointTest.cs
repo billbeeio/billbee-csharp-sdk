@@ -190,8 +190,6 @@ public class ProductEndPointTest
     [TestMethod]
     public void GetPatchableProductFieldsTest()
     {
-        long id = 4711;
-
         Expression<Func<IBillbeeRestClient, object>> expression = x => x.Get<ApiResult<List<string>>>($"/products/PatchableFields", null);
         var mockResult = TestHelpers.GetApiResult(new List<string> { "foo", "bar" });
         TestHelpers.RestClientMockTest(expression, mockResult, (restClient) =>
@@ -226,7 +224,6 @@ public class ProductEndPointTest
     {
         var testArticleImage = new ArticleImage();
         long id = 4711;
-        var fieldsToPatch = new Dictionary<string, string> { { "foo", "val" }, { "bar", "val2" } };
 
         Expression<Func<IBillbeeRestClient, object>> expression = x => x.Get<ApiResult<List<ArticleImage>>>($"/products/{id}/images", null);
         var mockResult = TestHelpers.GetApiResult(new List<ArticleImage> { testArticleImage });
@@ -365,4 +362,50 @@ public class ProductEndPointTest
         });
     }
 
+    [TestMethod]
+    public void AddProductTest()
+    {
+        var testProduct = new Product();
+    
+        Expression<Func<IBillbeeRestClient, object>> expression = x => x.Post<ApiResult<Product>>($"/products", testProduct, null);
+        var mockResult = TestHelpers.GetApiResult(testProduct);
+        TestHelpers.RestClientMockTest(expression, mockResult, (restClient) =>
+        {
+            var uut = new ProductEndPoint(restClient);
+            var result = uut.AddProduct(testProduct);
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Data);
+        });
+    }
+    
+    [TestMethod]
+    public void DeleteProductTest()
+    {
+        long productId = 4712;
+
+        var restClientMock = new Mock<IBillbeeRestClient>();
+        var uut = new ProductEndPoint(restClientMock.Object);
+        uut.DeleteProduct(productId);
+        restClientMock.Verify(x => x.Delete($"/products/{productId}", null, ParameterType.QueryString));
+    }
+    
+    [TestMethod]
+    public void GetCategoriesTest()
+    {
+        var testCategoryList = new List<ArticleCategory>
+        {
+            new() { Name = "cat1", Id = 1 },
+            new() { Name = "cat2", Id = 2 }
+        };
+        Expression<Func<IBillbeeRestClient, object>> expression = x => x.Get<ApiResult<List<ArticleCategory>>>($"/products/category", null);
+        var mockResult = TestHelpers.GetApiResult(testCategoryList);
+        TestHelpers.RestClientMockTest(expression, mockResult, (restClient) =>
+        {
+            var uut = new ProductEndPoint(restClient);
+            var result = uut.GetCategories();
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Data);
+            Assert.AreEqual(2, result.Data.Count);
+        });
+    }
 }
