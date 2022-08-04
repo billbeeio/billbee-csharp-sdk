@@ -59,7 +59,7 @@ namespace Billbee.Api.Client.EndPoint
             return _restClient.Get<List<WebhookFilter>>("/webhooks/filters");
         }
 
-        public void CreateWebhook(Webhook webhook)
+        public Webhook CreateWebhook(Webhook webhook)
         {
             if (webhook.Id != null)
             {
@@ -71,7 +71,7 @@ namespace Billbee.Api.Client.EndPoint
                 throw new InvalidValueException($"Property secret is malformed. It must meet the following criteria: Not null or whitespaces only, between 32 and 64 charackters long.");
             }
 
-            _restClient.Post("/webhooks", webhook);
+            return _restClient.Post<Webhook>("/webhooks", webhook);
         }
     }
 }
