@@ -93,7 +93,7 @@ public static class CrudHelpers
         return gotItem;
     }
     
-    public static ApiResult<T> GetOneApiResult<T>(Func<dynamic, ApiResult<T>> func, dynamic id)
+    public static ApiResult<T> GetOneApiResult<T>(Func<dynamic, ApiResult<T>> func, dynamic id, bool hasId = true)
     {
         string typeName = typeof(T).Name;
         
@@ -104,8 +104,15 @@ public static class CrudHelpers
         var gotItem = result;
         Assert.IsNotNull(gotItem);
         Assert.IsNotNull(gotItem.Data);
-        Assert.AreEqual(id.ToString(), gotItem.Data.Id.ToString());
-        Console.WriteLine($"Got {typeName}, id={gotItem.Data.Id}");
+        if (hasId)
+        {
+            Assert.AreEqual(id.ToString(), gotItem.Data.Id.ToString());
+            Console.WriteLine($"Got {typeName}, id={gotItem.Data.Id}");
+        }
+        else
+        {
+            Console.WriteLine($"Got {typeName}");
+        }
 
         return gotItem;
     }
