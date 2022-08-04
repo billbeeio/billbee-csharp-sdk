@@ -78,7 +78,7 @@ namespace Billbee.Api.Client.EndPoint
                 throw new InvalidValueException($"Property secret is malformed. It must meet the following criteria: Not null or whitespaces only, between 32 and 64 charackters long.");
             }
 
-            return _restClient.Post<Webhook>("/webhooks", webhook);
+            _restClient.Post("/webhooks", webhook);
         }
     }
 }
