@@ -27,6 +27,7 @@ public class SearchEndPointTest
         {
             var uut = new SearchEndPoint(restClient);
             var result = uut.SearchTerm(search);
+            Assert.IsNotNull(result);
             Assert.IsNotNull(result.Data);
         });
     }

@@ -1,14 +1,38 @@
-﻿using Billbee.Api.Client.Test.EndPointIntegrationTests.Helpers;
+﻿using Billbee.Api.Client.Model;
+using Billbee.Api.Client.Test.EndPointIntegrationTests.Helpers;
+using Newtonsoft.Json;
+using RestSharp.Serialization.Json;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Billbee.Api.Client.Test.EndPointIntegrationTests;
 
 [TestClass]
 public class SearchEndPointIntegrationTest
 {
+    public TestContext TestContext { get; set; }
+
+    [TestInitialize]
+    public void TestInitialize()
+    {
+        IntegrationTestHelpers.CheckAccess(TestContext.ManagedType, TestContext.ManagedMethod);
+    }
+    
     [TestMethod]
     [RequiresApiAccess]
     public void SearchTerm_IntegrationTest()
     {
-        Assert.Inconclusive();
+        var customer = CrudHelpers.CreateApiResult(c => IntegrationTestHelpers.ApiClient.Customer.AddCustomer(c), TestData.Customer);
+        Assert.IsNotNull(customer);
+        
+        var search = new Search
+        {
+            Term = "john",
+            Type = new List<string> { "customer" }
+        };
+        var result = IntegrationTestHelpers.ApiClient.Search.SearchTerm(search);
+        Assert.IsNotNull(result);
+        Assert.IsNotNull(result.Data);
+        Assert.IsNotNull(result.Data.Customers);
+        Assert.IsTrue(result.Data.Customers.Count > 0);
     }
 }
