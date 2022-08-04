@@ -120,5 +120,9 @@
         MollieEPS = 123,
         CrefoPayPrepaid = 124,
         MollieBancontact = 125,
+        MolliePrzelewy24 = 126,
+        MollieKlarnaRatenkauf = 127,
+        MollieKlarnaSliceit = 128,
+        GooglePay = 129,
     }
 }
