@@ -5,7 +5,9 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests;
 [TestClass]
 public class EventEndPointIntegrationTest
 {
+#pragma warning disable CS8618
     public TestContext TestContext { get; set; }
+#pragma warning restore CS8618
 
     [TestInitialize]
     public void TestInitialize()

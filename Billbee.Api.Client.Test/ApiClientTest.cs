@@ -59,6 +59,8 @@ public class ApiClientTest
     public void InitWithConfigFileTest()
     {
         var fiDll = new FileInfo(Assembly.GetExecutingAssembly().Location);
+        Assert.IsNotNull(fiDll);
+        Assert.IsNotNull(fiDll.Directory);
         var path = Path.Combine(fiDll.Directory.FullName, "../../../config.test");
         var uut = new ApiClient(path);
         
@@ -117,6 +119,7 @@ public class ApiClientTest
 
             var testTypeName = clientType.Name + testClassPostfix;
             var testType = testTypes.FirstOrDefault(t => t.IsClass && t.IsPublic && t.Name == testTypeName && t.GetCustomAttributes().Any(a => a is TestClassAttribute));
+            Assert.IsNotNull(testType);
 
             var bindingFlags = BindingFlags.Public | BindingFlags.DeclaredOnly | BindingFlags.Instance;
             var clientMethods = clientType.GetMethods(bindingFlags);

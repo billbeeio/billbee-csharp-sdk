@@ -48,7 +48,9 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
     [TestClass]
     public class ProductEndPointIntegrationTest
     {
+#pragma warning disable CS8618
         public TestContext TestContext { get; set; }
+#pragma warning restore CS8618
         private long _countExpectedAfterTest = -1;
 
         [TestInitialize]

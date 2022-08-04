@@ -33,7 +33,9 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
     [TestClass]
     public class CustomerAddressesEndPointIntegrationTest
     {
+#pragma warning disable CS8618
         public TestContext TestContext { get; set; }
+#pragma warning restore CS8618
 
         [TestInitialize]
         public void TestInitialize()
@@ -45,7 +47,9 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
         [RequiresApiAccess]
         public void GetCustomerAddresses_IntegrationTest()
         {
-            CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.CustomerAddresses.GetCustomerAddresses(1, 5));
+            var result = CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.CustomerAddresses.GetCustomerAddresses(1, 5));
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Data);
         }
 
         [TestMethod]

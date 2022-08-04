@@ -13,7 +13,7 @@ public class ApiSyncTest
     [DebuggerDisplay("{Path}:{HttpOperation}")]
     public class ApiOperation
     {
-        public string Path { get; set; }
+        public string Path { get; set; } = null!;
         public HttpOperation HttpOperation { get; set; }
 
         public override string ToString() => $"{Path}:{HttpOperation}";

@@ -65,7 +65,9 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
     [TestClass]
     public class ShipmentEndPointIntegrationTest
     {
+#pragma warning disable CS8618
         public TestContext TestContext { get; set; }
+#pragma warning restore CS8618
 
         [TestInitialize]
         public void TestInitialize()
@@ -99,6 +101,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
             var orderId = CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.Orders.GetOrderList()).Data.First()
                 .BillBeeOrderId;
+            Assert.IsNotNull(orderId);
             var providerId = provider.id;
             var productId = provider.products.First().id;
 

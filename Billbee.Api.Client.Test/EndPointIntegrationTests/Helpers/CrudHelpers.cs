@@ -48,7 +48,7 @@ public static class CrudHelpers
         return result;
     }
 
-    public static T Create<T, TCreate>(Func<TCreate, T> func, TCreate newItem)
+    public static T Create<T, TCreate>(Func<TCreate, T> func, TCreate newItem) where T: notnull
     {
         string typeName = typeof(T).Name;
         
@@ -57,7 +57,7 @@ public static class CrudHelpers
         
         dynamic result = func(newItem);
         Assert.IsNotNull(result);
-        Console.WriteLine($"{typeName} created, id={result.Id}");
+        Console.WriteLine($"{typeName} created, id={result!.Id}");
 
         return result;
     }

@@ -25,7 +25,9 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
     [TestClass]
     public class WebhookEndPointIntegrationTest
     {
+#pragma warning disable CS8618
         public TestContext TestContext { get; set; }
+#pragma warning restore CS8618
         private long _countBeforeTest = -1;
         private long _countExpectedAfterTest = -1;
 
