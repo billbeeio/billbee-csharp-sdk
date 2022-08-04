@@ -48,7 +48,7 @@ namespace Billbee.Api.Client.Endpoint.Interfaces
         /// Registers a new webhook with the given information
         /// </summary>
         /// <param name="webhook">The details of the webhook to register. The property Id must be null.</param>
-        /// <returns>The Id of the registered webhook</returns>
-        void CreateWebhook(Webhook webhook);
+        /// <returns>The registered webhook</returns>
+        Webhook CreateWebhook(Webhook webhook);
     }
 }

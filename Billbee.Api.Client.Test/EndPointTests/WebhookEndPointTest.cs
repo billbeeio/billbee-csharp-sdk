@@ -135,6 +135,6 @@ public class WebhookEndPointTest
 
         testWebHook.Secret = "0123456789012345678901234567890123456789";
         uut.CreateWebhook(testWebHook);
-        restClientMock.Verify(x => x.Post("/webhooks", testWebHook));
+        restClientMock.Verify(x => x.Post<Webhook>("/webhooks", testWebHook, null));
     }
 }
