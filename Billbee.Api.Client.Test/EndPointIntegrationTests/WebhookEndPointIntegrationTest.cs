@@ -44,6 +44,8 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
         [TestCleanup]
         public void TestCleanup()
         {
+            IntegrationTestHelpers.CheckAccess(TestContext.ManagedType, TestContext.ManagedMethod);
+            
             var result = CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.Webhooks.GetWebhooks());
             Assert.AreEqual(_countExpectedAfterTest, result.Count);
         }
