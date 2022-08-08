@@ -30,7 +30,7 @@ namespace Billbee.Api.Client.Endpoint.Interfaces
         /// <param name="id">The id of the order to patch.</param>
         /// <param name="fieldsToPatch">Name-Value pairs of fields, to be patched.</param>
         /// <returns></returns>
-        ApiResult<object> PatchOrder(long id, Dictionary<string, object> fieldsToPatch);
+        ApiResult<Order> PatchOrder(long id, Dictionary<string, object> fieldsToPatch);
 
         /// <summary>
         /// Selects an order by it's external id
@@ -108,6 +108,13 @@ namespace Billbee.Api.Client.Endpoint.Interfaces
         /// <param name="shopId">The id of the shop. Necessary, to attach an order directly to a shop connection</param>
         /// <returns></returns>
         ApiResult<OrderResult> PostNewOrder(Order order, long shopId);
+
+        /// <summary>
+        /// Creates a new order
+        /// </summary>
+        /// <param name="order">An order object, to create in billbee</param>
+        /// <returns></returns>
+        ApiResult<Order> PostNewOrder(Order order);
 
         /// <summary>
         /// Reset the tags on an order and add the given ones.

@@ -50,8 +50,8 @@ public class OrderEndPointTest
             { "SellerComment", "my comment..." }
         };
             
-        Expression<Func<IBillbeeRestClient, object>> expression = x => x.Patch<ApiResult<object>>($"/orders/{orderId}", null, It.IsAny<object>());
-        object mockResult = TestHelpers.GetApiResult(new object());
+        Expression<Func<IBillbeeRestClient, ApiResult<Order>>> expression = x => x.Patch<ApiResult<Order>>($"/orders/{orderId}", null, It.IsAny<object>());
+        var mockResult = TestHelpers.GetApiResult(new Order());
         TestHelpers.RestClientMockTest(expression, mockResult, (restClient) =>
         {
             var uut = new OrderEndPoint(restClient);
@@ -379,7 +379,7 @@ public class OrderEndPointTest
         var orderId = 4711;
         var parsePlaceholdersQuery = new ParsePlaceholdersQuery
         {
-            TextToParse = "This is my text for Order {{id}}"
+            TextToParse = "This is my text for Order {OrderNumber}"
         };
 
         uut.ParsePlaceholders(orderId, parsePlaceholdersQuery);

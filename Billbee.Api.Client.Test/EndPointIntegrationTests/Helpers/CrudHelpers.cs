@@ -175,8 +175,21 @@ public static class CrudHelpers
 
         return updatedItem;
     }
-    
+
+    public static ApiResult<T> Patch<T>(Func<dynamic, Dictionary<string, object>, ApiResult<T>> func, dynamic id,
+        Dictionary<string, object> fieldsToPatch)
+    {
+        return _patch<T, string, object>(func, id, fieldsToPatch);
+    }
+
     public static ApiResult<T> Patch<T>(Func<dynamic, Dictionary<string, string>, ApiResult<T>> func, dynamic id, Dictionary<string, string> fieldsToPatch)
+    {
+        return _patch<T, string, string>(func, id, fieldsToPatch);
+    }
+
+    private static ApiResult<T> _patch<T, TKey, TValue>(Func<dynamic, Dictionary<TKey, TValue>, ApiResult<T>> func,
+        dynamic id,
+        Dictionary<TKey, TValue> fieldsToPatch) where TKey : notnull
     {
         string typeName = typeof(T).Name;
         

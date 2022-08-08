@@ -31,9 +31,9 @@ namespace Billbee.Api.Client.EndPoint
         }
 
         [ApiMapping("/api/v1/orders/{id}", HttpOperation.Patch)]
-        public ApiResult<object> PatchOrder(long id, Dictionary<string, object> fieldsToPatch)
+        public ApiResult<Order> PatchOrder(long id, Dictionary<string, object> fieldsToPatch)
         {
-            return _restClient.Patch<ApiResult<object>>($"/orders/{id}", data: fieldsToPatch);
+            return _restClient.Patch<ApiResult<Order>>($"/orders/{id}", data: fieldsToPatch);
         }
 
         [ApiMapping("/api/v1/orders/findbyextref/{extRef}", HttpOperation.Get)]
@@ -201,7 +201,12 @@ namespace Billbee.Api.Client.EndPoint
 
             return _restClient.Post<ApiResult<OrderResult>>("/orders", order, parameters);
         }
-
+        
+        public ApiResult<Order> PostNewOrder(Order order)
+        {
+            return _restClient.Post<ApiResult<Order>>("/orders", order, null);
+        }
+        
         [ApiMapping("/api/v1/orders/{id}/tags", HttpOperation.Post)]
         public ApiResult<dynamic> AddTags(List<string> tags, long orderId)
         {
