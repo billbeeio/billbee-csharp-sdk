@@ -10,30 +10,30 @@ namespace Billbee.Api.Client.Test.EndPointTests;
 public class EnumEndPointTest
 {
     [TestMethod]
-    public void GetPaymentTypesTest()
+    public void Enum_GetPaymentTypes_Test()
     {
-        ExecuteEnumTest("paymenttypes", x => x.GetPaymentTypes());
+        _executeEnumTest("paymenttypes", x => x.GetPaymentTypes());
     }
 
     [TestMethod]
-    public void GetShippingCarriersTest()
+    public void Enum_GetShippingCarriers_Test()
     {
-        ExecuteEnumTest("shippingcarriers", x => x.GetShippingCarriers());
+        _executeEnumTest("shippingcarriers", x => x.GetShippingCarriers());
     }
     
     [TestMethod]
-    public void GetShipmentTypesTest()
+    public void Enum_GetShipmentTypes_Test()
     {
-        ExecuteEnumTest("shipmenttypes", x => x.GetShipmentTypes());
+        _executeEnumTest("shipmenttypes", x => x.GetShipmentTypes());
     }
 
     [TestMethod]
-    public void GetOrderStatesTest()
+    public void Enum_GetOrderStates_Test()
     {
-        ExecuteEnumTest("orderstates", x => x.GetOrderStates());
+        _executeEnumTest("orderstates", x => x.GetOrderStates());
     }
     
-    private void ExecuteEnumTest(string endpoint, Func<IEnumEndPoint, List<EnumEntry>> endpointFunc)
+    private void _executeEnumTest(string endpoint, Func<IEnumEndPoint, List<EnumEntry>> endpointFunc)
     {
         var testEnumEntryList = new List<EnumEntry>
         {

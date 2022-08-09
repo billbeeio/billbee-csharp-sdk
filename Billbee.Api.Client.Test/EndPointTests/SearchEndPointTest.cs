@@ -12,7 +12,7 @@ public class SearchEndPointTest
     private static SearchResult CreateTestSearchResult() => new();
 
     [TestMethod]
-    public void SearchTermTest()
+    public void Search_SearchTerm_Test()
     {
         var testSearchResult = CreateTestSearchResult();
         var search = new Search

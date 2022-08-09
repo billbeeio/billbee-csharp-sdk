@@ -17,7 +17,7 @@ public class CloudStoragesEndPointIntegrationTest
 
     [TestMethod]
     [RequiresApiAccess]
-    public void GetCloudStorageList_IntegrationTest()
+    public void CloudStorages_GetCloudStorageList_IntegrationTest()
     {
         CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.CloudStorages.GetCloudStorageList());
     }

@@ -49,7 +49,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void CreateAccount_IntegrationTest()
+        public void AutomaticProvision_CreateAccount_IntegrationTest()
         {
             var account = TestData.Account(Guid.NewGuid().ToString());
             var result =
@@ -62,7 +62,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public async Task TermsInfo_IntegrationTest()
+        public async Task AutomaticProvision_TermsInfo_IntegrationTest()
         {
             var result = IntegrationTestHelpers.ApiClient.AutomaticProvision.TermsInfo();
             Assert.IsNotNull(result);

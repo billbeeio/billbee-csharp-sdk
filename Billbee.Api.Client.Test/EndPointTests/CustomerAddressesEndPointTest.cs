@@ -9,7 +9,7 @@ namespace Billbee.Api.Client.Test.EndPointTests;
 public class CustomerAddressesEndPointTest
 {
     [TestMethod]
-    public void GetCustomerAddressesTest()
+    public void CustomerAddresses_GetCustomerAddresses_Test()
     {
         var testCustomerAddress = new CustomerAddress { Id = 4711 };
         var page = 1;
@@ -31,7 +31,7 @@ public class CustomerAddressesEndPointTest
     }   
     
     [TestMethod]
-    public void GetCustomerAddressTest()
+    public void CustomerAddresses_GetCustomerAddress_Test()
     {
         var testCustomerAddress = new CustomerAddress { Id = 4711 };
         
@@ -46,7 +46,7 @@ public class CustomerAddressesEndPointTest
     }
     
     [TestMethod]
-    public void AddCustomerAddressTest()
+    public void CustomerAddresses_AddCustomerAddress_Test()
     {
         var testCustomerAddress = new CustomerAddress { Id = 4711 };
         
@@ -61,7 +61,7 @@ public class CustomerAddressesEndPointTest
     }
     
     [TestMethod]
-    public void UpdateCustomerAddressTest()
+    public void CustomerAddresses_UpdateCustomerAddress_Test()
     {
         var testCustomerAddress = new CustomerAddress { Id = 4711 };
         

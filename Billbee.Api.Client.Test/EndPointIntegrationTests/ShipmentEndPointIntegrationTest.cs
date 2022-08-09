@@ -77,21 +77,21 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void GetShipments_IntegrationTest()
+        public void Shipment_GetShipments_IntegrationTest()
         {
             CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.Shipment.GetShipments());
         }
 
         [TestMethod]
         [RequiresApiAccess]
-        public void GetShippingProvider_IntegrationTest()
+        public void Shipment_GetShippingProvider_IntegrationTest()
         {
             CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.Shipment.GetShippingProvider());
         }
 
         [TestMethod]
         [RequiresApiAccess]
-        public void ShipOrderWithLabel_IntegrationTest()
+        public void Shipment_ShipOrderWithLabel_IntegrationTest()
         {
             var provider = CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.Shipment.GetShippingProvider())
                 .First();
@@ -113,7 +113,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void PostShipment_IntegrationTest()
+        public void Shipment_PostShipment_IntegrationTest()
         {
             var provider = CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.Shipment.GetShippingProvider())
                 .First();
@@ -135,7 +135,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void GetShippingCarriers_IntegrationTest()
+        public void Shipment_GetShippingCarriers_IntegrationTest()
         {
             CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.Shipment.GetShippingCarriers());
         }

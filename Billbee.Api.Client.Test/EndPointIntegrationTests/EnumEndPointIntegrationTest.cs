@@ -20,33 +20,34 @@ public class EnumEndPointIntegrationTest
     
     [TestMethod]
     [RequiresApiAccess]
-    public void GetPaymentTypes_IntegrationTest()
+    [TestCategory("EnumEndPoint")]
+    public void Enum_GetPaymentTypes_IntegrationTest()
     {
-        ExecuteEnumSyncTest<PaymentTypeEnum>(x => x.GetPaymentTypes());
+        _executeEnumSyncTest<PaymentTypeEnum>(x => x.GetPaymentTypes());
     }
     
     [TestMethod]
     [RequiresApiAccess]
-    public void GetShippingCarriers_IntegrationTest()
+    public void Enum_GetShippingCarriers_IntegrationTest()
     {
-        ExecuteEnumSyncTest<ShippingCarrierEnum>(x => x.GetShippingCarriers());
+        _executeEnumSyncTest<ShippingCarrierEnum>(x => x.GetShippingCarriers());
     }
     
     [TestMethod]
     [RequiresApiAccess]
-    public void GetShipmentTypes_IntegrationTest()
+    public void Enum_GetShipmentTypes_IntegrationTest()
     {
-        ExecuteEnumSyncTest<ShipmentTypeEnum>(x => x.GetShipmentTypes());
+        _executeEnumSyncTest<ShipmentTypeEnum>(x => x.GetShipmentTypes());
     }
     
     [TestMethod]
     [RequiresApiAccess]
-    public void GetOrderStates_IntegrationTest()
+    public void Enum_GetOrderStates_IntegrationTest()
     {
-        ExecuteEnumSyncTest<OrderStateEnum>(x => x.GetOrderStates());
+        _executeEnumSyncTest<OrderStateEnum>(x => x.GetOrderStates());
     }
 
-    private void ExecuteEnumSyncTest<T>(Func<IEnumEndPoint, List<EnumEntry>> endpointFunc) where T: struct, System.Enum
+    private void _executeEnumSyncTest<T>(Func<IEnumEndPoint, List<EnumEntry>> endpointFunc) where T: struct, System.Enum
     {
         var apiEnumEntries = endpointFunc(IntegrationTestHelpers.ApiClient.Enums);
             

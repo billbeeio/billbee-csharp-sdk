@@ -48,7 +48,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void GetLayouts_IntegrationTest()
+        public void Order_GetLayouts_IntegrationTest()
         {
             var result = CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.Orders.GetLayouts());
             Assert.IsNotNull(result);
@@ -57,14 +57,14 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void GetOrder_IntegrationTest()
+        public void Order_GetOrder_IntegrationTest()
         {
-            PostNewOrder_IntegrationTest();
+            Order_PostNewOrder_IntegrationTest();
         }
 
         [TestMethod]
         [RequiresApiAccess]
-        public void GetPatchableFields_IntegrationTest()
+        public void Order_GetPatchableFields_IntegrationTest()
         {
             var patchableFields =
                 CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.Orders.GetPatchableFields());
@@ -77,7 +77,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void PatchOrder_IntegrationTest()
+        public void Order_PatchOrder_IntegrationTest()
         {
             var order = _createOrder();
             Assert.IsNotNull(order.BillBeeOrderId);
@@ -96,7 +96,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void GetOrderByExternalReference_IntegrationTest()
+        public void Order_GetOrderByExternalReference_IntegrationTest()
         {
             var extRef = Guid.NewGuid().ToString();
             var order = _createOrder(extRef);
@@ -109,14 +109,14 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void GetOrderByExternalIdAndPartner_IntegrationTest()
+        public void Order_GetOrderByExternalIdAndPartner_IntegrationTest()
         {
             Assert.Inconclusive();
         }
 
         [TestMethod]
         [RequiresApiAccess]
-        public void GetOrderList_IntegrationTest()
+        public void Order_GetOrderList_IntegrationTest()
         {
             var result = CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.Orders.GetOrderList());
             Assert.IsNotNull(result);
@@ -125,7 +125,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void GetInvoiceList_IntegrationTest()
+        public void Order_GetInvoiceList_IntegrationTest()
         {
             var result = CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.Orders.GetInvoiceList());
             Assert.IsNotNull(result);
@@ -134,7 +134,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void PostNewOrder_IntegrationTest()
+        public void Order_PostNewOrder_IntegrationTest()
         {
             var order = _createOrder();
             Assert.IsNotNull(order.BillBeeOrderId);
@@ -147,14 +147,14 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void AddTags_IntegrationTest()
+        public void Order_AddTags_IntegrationTest()
         {
             _createOrderWithTags();
         }
 
         [TestMethod]
         [RequiresApiAccess]
-        public void UpdateTags_IntegrationTest()
+        public void Order_UpdateTags_IntegrationTest()
         {
             var order = _createOrderWithTags();
             Assert.IsNotNull(order.BillBeeOrderId);
@@ -176,7 +176,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void AddShipment_IntegrationTest()
+        public void Order_AddShipment_IntegrationTest()
         {
             var provider = CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.Shipment.GetShippingProvider())
                 .First();
@@ -200,7 +200,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void CreateDeliveryNote_IntegrationTest()
+        public void Order_CreateDeliveryNote_IntegrationTest()
         {
             var order = _createOrder();
             Assert.IsNotNull(order.BillBeeOrderId);
@@ -212,7 +212,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void CreateInvoice_IntegrationTest()
+        public void Order_CreateInvoice_IntegrationTest()
         {
             var order = _createOrder();
             Assert.IsNotNull(order.BillBeeOrderId);
@@ -223,7 +223,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void ChangeOrderState_IntegrationTest()
+        public void Order_ChangeOrderState_IntegrationTest()
         {
             var order = _createOrder();
             Assert.IsNotNull(order.BillBeeOrderId);
@@ -244,7 +244,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void SendMailForOrder_IntegrationTest()
+        public void Order_SendMailForOrder_IntegrationTest()
         {
             var order = _createOrder();
             Assert.IsNotNull(order.BillBeeOrderId);
@@ -273,7 +273,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void CreateEventAtOrder_IntegrationTest()
+        public void Order_CreateEventAtOrder_IntegrationTest()
         {
             var order = _createOrder();
             Assert.IsNotNull(order.BillBeeOrderId);
@@ -282,7 +282,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void ParsePlaceholders_IntegrationTest()
+        public void Order_ParsePlaceholders_IntegrationTest()
         {
             var order = _createOrder();
             Assert.IsNotNull(order.BillBeeOrderId);

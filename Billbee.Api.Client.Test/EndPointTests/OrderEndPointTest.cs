@@ -12,7 +12,7 @@ namespace Billbee.Api.Client.Test.EndPointTests;
 public class OrderEndPointTest
 {
     [TestMethod]
-    public void GetOrderTest()
+    public void Order_GetOrder_Test()
     {
         var testOrder = new Order();
         var id = "4711";
@@ -29,7 +29,7 @@ public class OrderEndPointTest
     }
 
     [TestMethod]
-    public void GetPatchableFieldsTest()
+    public void Order_GetPatchableFields_Test()
     {
         Expression<Func<IBillbeeRestClient, object>> expression = x => x.Get<ApiResult<List<string>>>($"/orders/PatchableFields", null);
         object mockResult = TestHelpers.GetApiResult( new List<string> { "SellerComment", "Foo" });
@@ -42,7 +42,7 @@ public class OrderEndPointTest
     }
     
     [TestMethod]
-    public void PatchOrderTest()
+    public void Order_PatchOrder_Test()
     {
         var orderId = 4711;
         var fieldsToPatch = new Dictionary<string, object>
@@ -61,7 +61,7 @@ public class OrderEndPointTest
     }
     
     [TestMethod]
-    public void GetOrderByExternalReferenceTest()
+    public void Order_GetOrderByExternalReference_Test()
     {
         var testOrder = new Order();
         var extRef = "extRef";
@@ -77,7 +77,7 @@ public class OrderEndPointTest
     }
     
     [TestMethod]
-    public void GetOrderByExternalIdAndPartnerTest()
+    public void Order_GetOrderByExternalIdAndPartner_Test()
     {
         var testOrder = new Order();
         var partner = "thePartner";
@@ -94,7 +94,7 @@ public class OrderEndPointTest
     }
     
     [TestMethod]
-    public void GetOrderListTest()
+    public void Order_GetOrderList_Test()
     {
         var testOrder = new Order();
         DateTime? minOrderDate = DateTime.Now.AddDays(-2);
@@ -147,7 +147,7 @@ public class OrderEndPointTest
     }
     
     [TestMethod]
-    public void GetInvoiceListTest()
+    public void Order_GetInvoiceList_Test()
     {
         var testInvoiceDetail = new InvoiceDetail();
         DateTime? minInvoiceDate = DateTime.Now.AddDays(-2);
@@ -201,7 +201,7 @@ public class OrderEndPointTest
     
      
     [TestMethod]
-    public void PostNewOrderTest()
+    public void Order_PostNewOrder_Test()
     {
         var testOrder = new Order();
         var testOrderResult = new OrderResult();
@@ -219,7 +219,7 @@ public class OrderEndPointTest
     }
     
     [TestMethod]
-    public void AddTagsTest()
+    public void Order_AddTags_Test()
     {
         var orderId = 4711;
         var tags = new List<string> { "tag1", "tag2" };
@@ -235,7 +235,7 @@ public class OrderEndPointTest
     }
     
     [TestMethod]
-    public void UpdateTagsTest()
+    public void Order_UpdateTags_Test()
     {
         var orderId = 4711;
         var tags = new List<string> { "tag1", "tag2" };
@@ -251,7 +251,7 @@ public class OrderEndPointTest
     }
     
     [TestMethod]
-    public void AddShipmentTest()
+    public void Order_AddShipment_Test()
     {
         var testOrderShipment = new OrderShipment();
         
@@ -265,7 +265,7 @@ public class OrderEndPointTest
     }
     
     [TestMethod]
-    public void CreateDeliveryNoteTest()
+    public void Order_CreateDeliveryNote_Test()
     {
         var orderId = 4711;
         var includePdf = true;
@@ -287,7 +287,7 @@ public class OrderEndPointTest
     }
     
     [TestMethod]
-    public void CreateInvoiceTest()
+    public void Order_CreateInvoice_Test()
     {
         var orderId = 4711;
         var includePdf = true;
@@ -310,7 +310,7 @@ public class OrderEndPointTest
     }
     
     [TestMethod]
-    public void ChangeOrderStateTest()
+    public void Order_ChangeOrderState_Test()
     {
         var orderId = 4711;
         
@@ -324,7 +324,7 @@ public class OrderEndPointTest
     }
    
     [TestMethod]
-    public void SendMailForOrderTest()
+    public void Order_SendMailForOrder_Test()
     {
         var testSendMessage = new SendMessage();
         var orderId = 4711;
@@ -337,7 +337,7 @@ public class OrderEndPointTest
     }
     
     [TestMethod]
-    public void CreateEventAtOrderTest()
+    public void Order_CreateEventAtOrder_Test()
     {
         var restClientMock = new Mock<IBillbeeRestClient>();
         var uut = new OrderEndPoint(restClientMock.Object);
@@ -351,7 +351,7 @@ public class OrderEndPointTest
     }
     
     [TestMethod]
-    public void GetLayoutsTest()
+    public void Order_GetLayouts_Test()
     {
         var testLayoutList = new List<LayoutTemplate>
         {
@@ -371,7 +371,7 @@ public class OrderEndPointTest
     }
     
     [TestMethod]
-    public void ParsePlaceholdersTest()
+    public void Order_ParsePlaceholders_Test()
     {
         var restClientMock = new Mock<IBillbeeRestClient>();
         var uut = new OrderEndPoint(restClientMock.Object);

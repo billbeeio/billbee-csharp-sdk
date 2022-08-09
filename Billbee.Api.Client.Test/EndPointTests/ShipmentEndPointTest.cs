@@ -12,7 +12,7 @@ namespace Billbee.Api.Client.Test.EndPointTests;
 public class ShipmentEndPointTest
 {
     [TestMethod]
-    public void GetShippingProviderTest()
+    public void Shipment_GetShippingProvider_Test()
     {
         var testShippingProvider = new ShippingProvider();
         
@@ -27,7 +27,7 @@ public class ShipmentEndPointTest
     }
 
     [TestMethod]
-    public void GetShipmentsTest()
+    public void Shipment_GetShipments_Test()
     {
         var testShipment = new Shipment();
         
@@ -42,7 +42,7 @@ public class ShipmentEndPointTest
     }
     
     [TestMethod]
-    public void PostShipmentTest()
+    public void Shipment_PostShipment_Test()
     {
         var testShipmentResult = new ShipmentResult();
         var testPostShipment = new PostShipment();
@@ -58,7 +58,7 @@ public class ShipmentEndPointTest
     }
     
     [TestMethod]
-    public void ShipOrderWithLabelTest()
+    public void Shipment_ShipOrderWithLabel_Test()
     {
         var testShipmentWithLabel = new ShipmentWithLabel();
         var testShipmentWithLabelResult = new ShipmentWithLabelResult();
@@ -74,7 +74,7 @@ public class ShipmentEndPointTest
     }
     
     [TestMethod]
-    public void GetShippingCarriersTest()
+    public void Shipment_GetShippingCarriers_Test()
     {
         var testShippingCarrier = new ShippingCarrier();
         
@@ -89,7 +89,7 @@ public class ShipmentEndPointTest
     }
 
     [TestMethod]
-    public void PingTest()
+    public void Shipment_Ping_Test()
     {
         var restClientMock = new Mock<IBillbeeRestClient>();
         restClientMock

@@ -10,7 +10,7 @@ namespace Billbee.Api.Client.Test.EndPointTests;
 public class CloudStoragesEndPointTest
 {
     [TestMethod]
-    public void GetCloudStorageListTest()
+    public void CloudStorages_GetCloudStorageList_Test()
     {
         var testCloudStorage = new CloudStorage();
         

@@ -10,7 +10,7 @@ namespace Billbee.Api.Client.Test.EndPointTests;
 public class CustomerEndPointTest
 {
     [TestMethod]
-    public void GetCustomerListTest()
+    public void Customer_GetCustomerList_Test()
     {
         var testCustomer = new Customer { Id = 4711 };
         var page = 1;
@@ -32,7 +32,7 @@ public class CustomerEndPointTest
     }
     
     [TestMethod]
-    public void AddCustomerTest()
+    public void Customer_AddCustomer_Test()
     {
         var testCustomer = new Customer { Id = 4711 };
         var customerForCreation = new CustomerForCreation();
@@ -48,7 +48,7 @@ public class CustomerEndPointTest
     }
     
     [TestMethod]
-    public void GetCustomerTest()
+    public void Customer_GetCustomer_Test()
     {
         var testCustomer = new Customer { Id = 4711 };
         
@@ -63,7 +63,7 @@ public class CustomerEndPointTest
     }
 
     [TestMethod]
-    public void UpdateCustomerTest()
+    public void Customer_UpdateCustomer_Test()
     {
         var testCustomer = new Customer { Id = 4711 };
         
@@ -83,7 +83,7 @@ public class CustomerEndPointTest
     }
     
     [TestMethod]
-    public void GetOrdersForCustomerTest()
+    public void Customer_GetOrdersForCustomer_Test()
     {
         var testCustomer = new Customer { Id = 4711 };
         var testOrder = new Order();
@@ -107,7 +107,7 @@ public class CustomerEndPointTest
     }
     
     [TestMethod]
-    public void GetAddressesForCustomerTest()
+    public void Customer_GetAddressesForCustomer_Test()
     {
         var testCustomer = new Customer { Id = 4711 };
         var testCustomerAddress = new CustomerAddress();
@@ -131,7 +131,7 @@ public class CustomerEndPointTest
     }
 
     [TestMethod]
-    public void AddAddressToCustomerTest()
+    public void Customer_AddAddressToCustomer_Test()
     {
         var testCustomer = new Customer { Id = 4711 };
         var testCustomerAddress = new CustomerAddress { Id = 4712, CustomerId = testCustomer.Id };
@@ -146,7 +146,7 @@ public class CustomerEndPointTest
     }
     
     [TestMethod]
-    public void GetCustomerAddressTest()
+    public void Customer_GetCustomerAddress_Test()
     {
         var testCustomerAddress = new CustomerAddress { Id = 4711 };
         
@@ -161,7 +161,7 @@ public class CustomerEndPointTest
     }
     
     [TestMethod]
-    public void UpdateCustomerAddressTest()
+    public void Customer_UpdateCustomerAddress_Test()
     {
         var testCustomerAddress = new CustomerAddress { Id = 4711 };
         
@@ -177,7 +177,7 @@ public class CustomerEndPointTest
     
     
     [TestMethod]
-    public void PatchCustomerAddressTest()
+    public void Customer_PatchCustomerAddress_Test()
     {
         var testCustomerAddress = new CustomerAddress { Id = 4711 };
 

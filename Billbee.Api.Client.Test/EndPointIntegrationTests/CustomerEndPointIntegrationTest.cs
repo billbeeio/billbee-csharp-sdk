@@ -32,14 +32,14 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void GetCustomerList_IntegrationTest()
+        public void Customer_GetCustomerList_IntegrationTest()
         {
             CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.Customer.GetCustomerList(1, int.MaxValue));
         }
 
         [TestMethod]
         [RequiresApiAccess]
-        public void AddCustomer_IntegrationTest()
+        public void Customer_AddCustomer_IntegrationTest()
         {
             var customer = CrudHelpers.CreateApiResult(c => IntegrationTestHelpers.ApiClient.Customer.AddCustomer(c),
                 TestData.Customer);
@@ -52,7 +52,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void AddAddressToCustomer_IntegrationTest()
+        public void Customer_AddAddressToCustomer_IntegrationTest()
         {
             var customer = CrudHelpers.CreateApiResult(c => IntegrationTestHelpers.ApiClient.Customer.AddCustomer(c),
                 TestData.Customer);
@@ -66,7 +66,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void GetCustomerAddress_IntegrationTest()
+        public void Customer_GetCustomerAddress_IntegrationTest()
         {
             var customer = CrudHelpers.CreateApiResult(c => IntegrationTestHelpers.ApiClient.Customer.AddCustomer(c),
                 TestData.Customer);
@@ -87,7 +87,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void UpdateCustomerAddress_IntegrationTest()
+        public void Customer_UpdateCustomerAddress_IntegrationTest()
         {
             var customer = CrudHelpers.CreateApiResult(c => IntegrationTestHelpers.ApiClient.Customer.AddCustomer(c),
                 TestData.Customer);
@@ -112,7 +112,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void PatchCustomerAddress_IntegrationTest()
+        public void Customer_PatchCustomerAddress_IntegrationTest()
         {
             var customer = CrudHelpers.CreateApiResult(c => IntegrationTestHelpers.ApiClient.Customer.AddCustomer(c),
                 TestData.Customer);
@@ -141,7 +141,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void GetCustomer_IntegrationTest()
+        public void Customer_GetCustomer_IntegrationTest()
         {
             var customer = CrudHelpers.CreateApiResult(c => IntegrationTestHelpers.ApiClient.Customer.AddCustomer(c),
                 TestData.Customer);
@@ -155,7 +155,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void UpdateCustomer_IntegrationTest()
+        public void Customer_UpdateCustomer_IntegrationTest()
         {
             var result = CrudHelpers.CreateApiResult(c => IntegrationTestHelpers.ApiClient.Customer.AddCustomer(c),
                 TestData.Customer);
@@ -181,7 +181,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void GetOrdersForCustomer_IntegrationTest()
+        public void Customer_GetOrdersForCustomer_IntegrationTest()
         {
             var customer = CrudHelpers.CreateApiResult(c => IntegrationTestHelpers.ApiClient.Customer.AddCustomer(c),
                 TestData.Customer);
@@ -196,7 +196,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void GetAddressesForCustomer_IntegrationTest()
+        public void Customer_GetAddressesForCustomer_IntegrationTest()
         {
             var customer = CrudHelpers.CreateApiResult(c => IntegrationTestHelpers.ApiClient.Customer.AddCustomer(c),
                 TestData.Customer);

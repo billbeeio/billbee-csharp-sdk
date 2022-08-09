@@ -20,7 +20,7 @@ public class ApiSyncTest
     }
     
     [TestMethod]
-    public async Task ApiSyncCheckTest()
+    public async Task Api_SyncCheck_Test()
     {
         var sdkOps = GetSdkOperations();
         var apiOps = await GetApiOperations();

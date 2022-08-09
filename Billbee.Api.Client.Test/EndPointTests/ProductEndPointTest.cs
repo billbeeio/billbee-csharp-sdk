@@ -12,7 +12,7 @@ namespace Billbee.Api.Client.Test.EndPointTests;
 public class ProductEndPointTest
 {
     [TestMethod]
-    public void GetStocksTest()
+    public void Product_GetStocks_Test()
     {
         var testStock = new Stock();
 
@@ -28,7 +28,7 @@ public class ProductEndPointTest
     }
     
     [TestMethod]
-    public void UpdateStockMultipleTest()
+    public void Product_UpdateStockMultiple_Test()
     {
         var testCurrentStockInfo = new CurrentStockInfo();
         var testUpdateStock = new UpdateStock();
@@ -45,7 +45,7 @@ public class ProductEndPointTest
     }
     
     [TestMethod]
-    public void UpdateStockTest()
+    public void Product_UpdateStock_Test()
     {
         var testCurrentStockInfo = new CurrentStockInfo();
         var testUpdateStock = new UpdateStock();
@@ -62,7 +62,7 @@ public class ProductEndPointTest
     }
     
     [TestMethod]
-    public void GetReservedAmountTest()
+    public void Product_GetReservedAmount_Test()
     {
         var testGetReservedAmountResult = new GetReservedAmountResult();
         
@@ -88,7 +88,7 @@ public class ProductEndPointTest
     }
     
     [TestMethod]
-    public void UpdateStockCodeTest()
+    public void Product_UpdateStockCode_Test()
     {
         var testUpdateStockCode = new UpdateStockCode();
         
@@ -104,7 +104,7 @@ public class ProductEndPointTest
     }
     
     [TestMethod]
-    public void GetProductsTest()
+    public void Product_GetProducts_Test()
     {
         var testProduct = new Product();
         int page = 1;
@@ -129,7 +129,7 @@ public class ProductEndPointTest
     }
     
     [TestMethod]
-    public void GetProductTest()
+    public void Product_GetProduct_Test()
     {
         var testProduct = new Product();
         string id = "4711";
@@ -148,7 +148,7 @@ public class ProductEndPointTest
     }
 
     [TestMethod]
-    public void GetCustomFieldsTest()
+    public void Product_GetCustomFields_Test()
     {
         var testArticleCustomFieldDefinition = new ArticleCustomFieldDefinition();
         int page = 1;
@@ -171,7 +171,7 @@ public class ProductEndPointTest
     }
     
     [TestMethod]
-    public void GetCustomFieldTest()
+    public void Product_GetCustomField_Test()
     {
         var testArticleCustomFieldDefinition = new ArticleCustomFieldDefinition();
         long id = 4711;
@@ -188,7 +188,7 @@ public class ProductEndPointTest
     }
     
     [TestMethod]
-    public void GetPatchableProductFieldsTest()
+    public void Product_GetPatchableProductFields_Test()
     {
         Expression<Func<IBillbeeRestClient, object>> expression = x => x.Get<ApiResult<List<string>>>($"/products/PatchableFields", null);
         var mockResult = TestHelpers.GetApiResult(new List<string> { "foo", "bar" });
@@ -202,7 +202,7 @@ public class ProductEndPointTest
     }
     
     [TestMethod]
-    public void PatchArticleTest()
+    public void Product_PatchArticle_Test()
     {
         var testProduct = new Product();
         long id = 4711;
@@ -220,7 +220,7 @@ public class ProductEndPointTest
     }
     
     [TestMethod]
-    public void GetArticleImagesTest()
+    public void Product_GetArticleImages_Test()
     {
         var testArticleImage = new ArticleImage();
         long id = 4711;
@@ -237,7 +237,7 @@ public class ProductEndPointTest
     } 
    
     [TestMethod]
-    public void GetArticleImageTest()
+    public void Product_GetArticleImage_Test()
     {
         var testArticleImage = new ArticleImage();
         long articleId = 4711;
@@ -255,7 +255,7 @@ public class ProductEndPointTest
     } 
     
     [TestMethod]
-    public void GetArticleImage2Test()
+    public void Product_GetArticleImage2_Test()
     {
         var testArticleImage = new ArticleImage();
         long imageId = 4712;
@@ -272,7 +272,7 @@ public class ProductEndPointTest
     } 
     
     [TestMethod]
-    public void AddArticleImageTest()
+    public void Product_AddArticleImage_Test()
     {
         var testArticleImage = new ArticleImage { Id = 0, ArticleId = 4712 };
 
@@ -288,7 +288,7 @@ public class ProductEndPointTest
     } 
     
     [TestMethod]
-    public void UpdateArticleImageTest()
+    public void Product_UpdateArticleImage_Test()
     {
         var testArticleImage = new ArticleImage { Id = 4711, ArticleId = 4712 };
 
@@ -304,7 +304,7 @@ public class ProductEndPointTest
     } 
     
     [TestMethod]
-    public void AddMultipleArticleImagesTest()
+    public void Product_AddMultipleArticleImages_Test()
     {
         var testArticleImage = new ArticleImage { Id = 4711, ArticleId = 4712 };
         var images = new List<ArticleImage> { testArticleImage };
@@ -323,7 +323,7 @@ public class ProductEndPointTest
     } 
   
     [TestMethod]
-    public void DeleteArticleImageTest()
+    public void Product_DeleteArticleImage_Test()
     {
         long articleId = 4711;
         long imageId = 4712;
@@ -335,7 +335,7 @@ public class ProductEndPointTest
     }
 
     [TestMethod]
-    public void DeleteArticleImage2Test()
+    public void Product_DeleteArticleImage2_Test()
     {
         long imageId = 4712;
 
@@ -346,7 +346,7 @@ public class ProductEndPointTest
     } 
 
     [TestMethod]
-    public void DeleteMultipleArticleImagesTest()
+    public void Product_DeleteMultipleArticleImages_Test()
     {
         var testDeletedImages = new DeletedImages();
         var imageIds = new List<long> { 4711, 4712 };
@@ -363,7 +363,7 @@ public class ProductEndPointTest
     }
 
     [TestMethod]
-    public void AddProductTest()
+    public void Product_AddProduct_Test()
     {
         var testProduct = new Product();
     
@@ -379,7 +379,7 @@ public class ProductEndPointTest
     }
     
     [TestMethod]
-    public void DeleteProductTest()
+    public void Product_DeleteProduct_Test()
     {
         long productId = 4712;
 
@@ -390,7 +390,7 @@ public class ProductEndPointTest
     }
     
     [TestMethod]
-    public void GetCategoriesTest()
+    public void Product_GetCategories_Test()
     {
         var testCategoryList = new List<ArticleCategory>
         {

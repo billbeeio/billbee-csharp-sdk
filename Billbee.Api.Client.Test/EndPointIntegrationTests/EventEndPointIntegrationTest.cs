@@ -17,7 +17,7 @@ public class EventEndPointIntegrationTest
 
     [TestMethod]
     [RequiresApiAccess]
-    public void GetEvents_IntegrationTest()
+    public void Event_GetEvents_IntegrationTest()
     {
         var result = CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.Events.GetEvents());
         Assert.IsTrue(result.Data.Count > 0);

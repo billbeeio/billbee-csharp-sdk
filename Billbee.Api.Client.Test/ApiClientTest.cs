@@ -9,7 +9,7 @@ namespace Billbee.Api.Client.Test;
 public class ApiClientTest
 {
     [TestMethod]
-    public void InitTest()
+    public void ApiClient_Init_Test()
     {
         var uut = new ApiClient();
         
@@ -33,7 +33,7 @@ public class ApiClientTest
     }
 
     [TestMethod]
-    public void InitWithConfigTest()
+    public void ApiClient_InitWithConfig_Test()
     {
         var config = new ApiConfiguration
         {
@@ -56,7 +56,7 @@ public class ApiClientTest
     }
 
     [TestMethod]
-    public void InitWithConfigFileTest()
+    public void ApiClient_InitWithConfigFile_Test()
     {
         var fiDll = new FileInfo(Assembly.GetExecutingAssembly().Location);
         Assert.IsNotNull(fiDll);
@@ -90,18 +90,18 @@ public class ApiClientTest
     }
     
     [TestMethod]
-    public void UnitTestsForAllEndpointsTest()
+    public void CheckAllTests_UnitTestsForAllEndpointsTest()
     {
-        CheckTestMethods("Test", "Test");
+        _checkTestMethods("Test", "_Test");
     }
 
     [TestMethod]
-    public void IntegrationTestsForAllEndpointsTest()
+    public void CheckAllTests_IntegrationTestsForAllEndpointsTest()
     {
-        CheckTestMethods( "IntegrationTest", "_IntegrationTest");
+        _checkTestMethods( "IntegrationTest", "_IntegrationTest");
     }
 
-    private void CheckTestMethods(string testClassPostfix, string testMethodPostfix)
+    private void _checkTestMethods(string testClassPostfix, string testMethodPostfix)
     {
         var clientAssembly = Assembly.Load("Billbee.Api.Client");
         var clientTypes = clientAssembly.GetTypes();
@@ -117,6 +117,8 @@ public class ApiClientTest
                 continue;
             }
 
+            var entityNamePrefix = clientTypeName.Substring(0, clientTypeName.IndexOf("EndPoint")) + "_";
+
             var testTypeName = clientType.Name + testClassPostfix;
             var testType = testTypes.FirstOrDefault(t => t.IsClass && t.IsPublic && t.Name == testTypeName && t.GetCustomAttributes().Any(a => a is TestClassAttribute));
             Assert.IsNotNull(testType);
@@ -128,7 +130,7 @@ public class ApiClientTest
             {
                 var clientMethodName = clientMethod.Name;
                 
-                var testMethodName = clientMethodName + testMethodPostfix;
+                var testMethodName = entityNamePrefix + clientMethodName + testMethodPostfix;
                 var foundMapping = testMethods.Any(t => t.Name == testMethodName);
                 if (clientTypeName != nameof(EnumEndPoint))
                 {

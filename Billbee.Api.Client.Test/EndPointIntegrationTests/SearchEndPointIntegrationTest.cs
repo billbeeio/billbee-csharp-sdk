@@ -21,7 +21,7 @@ public class SearchEndPointIntegrationTest
     
     [TestMethod]
     [RequiresApiAccess]
-    public void SearchTerm_IntegrationTest()
+    public void Search_SearchTerm_IntegrationTest()
     {
         var customer = CrudHelpers.CreateApiResult(c => IntegrationTestHelpers.ApiClient.Customer.AddCustomer(c), TestData.Customer);
         Assert.IsNotNull(customer);

@@ -45,7 +45,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void GetCustomerAddresses_IntegrationTest()
+        public void CustomerAddresses_GetCustomerAddresses_IntegrationTest()
         {
             var result = CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.CustomerAddresses.GetCustomerAddresses(1, 5));
             Assert.IsNotNull(result);
@@ -54,7 +54,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void GetCustomerAddress_IntegrationTest()
+        public void CustomerAddresses_GetCustomerAddress_IntegrationTest()
         {
             var customer =
                 CrudHelpers.CreateApiResult(c => IntegrationTestHelpers.ApiClient.Customer.AddCustomer(c),
@@ -72,14 +72,14 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void AddCustomerAddress_IntegrationTest()
+        public void CustomerAddresses_AddCustomerAddress_IntegrationTest()
         {
-            GetCustomerAddress_IntegrationTest();
+            CustomerAddresses_GetCustomerAddress_IntegrationTest();
         }
 
         [TestMethod]
         [RequiresApiAccess]
-        public void UpdateCustomerAddress_IntegrationTest()
+        public void CustomerAddresses_UpdateCustomerAddress_IntegrationTest()
         {
             var customer =
                 CrudHelpers.CreateApiResult(c => IntegrationTestHelpers.ApiClient.Customer.AddCustomer(c),

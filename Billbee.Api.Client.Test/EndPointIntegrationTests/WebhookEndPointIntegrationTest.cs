@@ -52,21 +52,21 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void GetFilters_IntegrationTest()
+        public void Webhook_GetFilters_IntegrationTest()
         {
             CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.Webhooks.GetFilters());
         }
 
         [TestMethod]
         [RequiresApiAccess]
-        public void GetWebhooks_IntegrationTest()
+        public void Webhook_GetWebhooks_IntegrationTest()
         {
             CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.Webhooks.GetWebhooks());
         }
 
         [TestMethod]
         [RequiresApiAccess]
-        public void GetWebhook_IntegrationTest()
+        public void Webhook_GetWebhook_IntegrationTest()
         {
             var webhook = CrudHelpers.Create(w => IntegrationTestHelpers.ApiClient.Webhooks.CreateWebhook(w),
                 TestData.WebHook);
@@ -79,7 +79,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void CreateWebhook_IntegrationTest()
+        public void Webhook_CreateWebhook_IntegrationTest()
         {
             var webhook = CrudHelpers.Create(w => IntegrationTestHelpers.ApiClient.Webhooks.CreateWebhook(w),
                 TestData.WebHook);
@@ -92,7 +92,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void DeleteAllWebhooks_IntegrationTest()
+        public void Webhook_DeleteAllWebhooks_IntegrationTest()
         {
             if (_countBeforeTest > 0)
             {
@@ -115,7 +115,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void DeleteWebhook_IntegrationTest()
+        public void Webhook_DeleteWebhook_IntegrationTest()
         {
             var webhook = CrudHelpers.Create(w => IntegrationTestHelpers.ApiClient.Webhooks.CreateWebhook(w),
                 TestData.WebHook);
@@ -133,7 +133,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void UpdateWebhook_IntegrationTest()
+        public void Webhook_UpdateWebhook_IntegrationTest()
         {
             var webhook = CrudHelpers.Create(w => IntegrationTestHelpers.ApiClient.Webhooks.CreateWebhook(w),
                 TestData.WebHook);

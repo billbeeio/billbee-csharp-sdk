@@ -83,14 +83,14 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void GetCategories_IntegrationTest()
+        public void Product_GetCategories_IntegrationTest()
         {
             CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.Products.GetCategories());
         }
 
         [TestMethod]
         [RequiresApiAccess]
-        public void AddProduct_IntegrationTest()
+        public void Product_AddProduct_IntegrationTest()
         {
             var result = CrudHelpers.CreateApiResult(w => IntegrationTestHelpers.ApiClient.Products.AddProduct(w),
                 TestData.Product);
@@ -107,7 +107,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void DeleteProduct_IntegrationTest()
+        public void Product_DeleteProduct_IntegrationTest()
         {
             var createdProduct = _createProduct();
             Assert.IsNotNull(createdProduct.Id);
@@ -122,14 +122,14 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void GetStocks_IntegrationTest()
+        public void Product_GetStocks_IntegrationTest()
         {
             CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.Products.GetStocks());
         }
 
         [TestMethod]
         [RequiresApiAccess]
-        public void UpdateStockMultiple_IntegrationTest()
+        public void Product_UpdateStockMultiple_IntegrationTest()
         {
             var product1 = _createProduct("4711");
             Assert.IsNotNull(product1.Id);
@@ -182,7 +182,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void UpdateStock_IntegrationTest()
+        public void Product_UpdateStock_IntegrationTest()
         {
             var createdProduct = _createProduct();
             Assert.IsNotNull(createdProduct.Id);
@@ -212,7 +212,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void GetReservedAmount_IntegrationTest()
+        public void Product_GetReservedAmount_IntegrationTest()
         {
             var createdProduct = _createProduct();
             Assert.IsNotNull(createdProduct.Id);
@@ -229,7 +229,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void UpdateStockCode_IntegrationTest()
+        public void Product_UpdateStockCode_IntegrationTest()
         {
             var createdProduct = _createProduct();
             Assert.IsNotNull(createdProduct.Id);
@@ -255,14 +255,14 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void GetProducts_IntegrationTest()
+        public void Product_GetProducts_IntegrationTest()
         {
             CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.Products.GetProducts(1, int.MaxValue));
         }
 
         [TestMethod]
         [RequiresApiAccess]
-        public void GetProduct_IntegrationTest()
+        public void Product_GetProduct_IntegrationTest()
         {
             var createdProduct = _createProduct();
             Assert.IsNotNull(createdProduct.Id);
@@ -277,14 +277,14 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void GetCustomFields_IntegrationTest()
+        public void Product_GetCustomFields_IntegrationTest()
         {
             CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.Products.GetCustomFields(1, int.MaxValue));
         }
 
         [TestMethod]
         [RequiresApiAccess]
-        public void GetCustomField_IntegrationTest()
+        public void Product_GetCustomField_IntegrationTest()
         {
             var customField = CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.Products.GetCustomFields(1, int.MaxValue)).Data.FirstOrDefault();
             Assert.IsNotNull(customField);
@@ -296,7 +296,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void GetPatchableProductFields_IntegrationTest()
+        public void Product_GetPatchableProductFields_IntegrationTest()
         {
             var patchableFields = CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.Products.GetPatchableProductFields());
             Console.WriteLine("Patchable Product Fields:");
@@ -308,7 +308,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void PatchArticle_IntegrationTest()
+        public void Product_PatchArticle_IntegrationTest()
         {
             var createdProduct = _createProduct();
             Assert.IsNotNull(createdProduct.Id);
@@ -331,7 +331,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void GetArticleImages_IntegrationTest()
+        public void Product_GetArticleImages_IntegrationTest()
         {
             var createdProduct = _createProduct();
             Assert.IsNotNull(createdProduct.Id);
@@ -350,7 +350,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void GetArticleImage_IntegrationTest()
+        public void Product_GetArticleImage_IntegrationTest()
         {
             var createdProduct = _createProduct();
             Assert.IsNotNull(createdProduct.Id);
@@ -369,7 +369,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void AddArticleImage_IntegrationTest()
+        public void Product_AddArticleImage_IntegrationTest()
         {
             var createdProduct = _createProduct();
             Assert.IsNotNull(createdProduct.Id);
@@ -386,7 +386,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void UpdateArticleImage_IntegrationTest()
+        public void Product_UpdateArticleImage_IntegrationTest()
         {
             var createdProduct = _createProduct();
             Assert.IsNotNull(createdProduct.Id);
@@ -409,7 +409,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void AddMultipleArticleImages_IntegrationTest()
+        public void Product_AddMultipleArticleImages_IntegrationTest()
         {
             var createdProduct = _createProduct();
             Assert.IsNotNull(createdProduct.Id);
@@ -438,7 +438,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void DeleteArticleImage_IntegrationTest()
+        public void Product_DeleteArticleImage_IntegrationTest()
         {
             var createdProduct = _createProduct();
             Assert.IsNotNull(createdProduct.Id);
@@ -463,7 +463,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 
         [TestMethod]
         [RequiresApiAccess]
-        public void DeleteMultipleArticleImages_IntegrationTest()
+        public void Product_DeleteMultipleArticleImages_IntegrationTest()
         {
             var createdProduct = _createProduct();
             Assert.IsNotNull(createdProduct.Id);
