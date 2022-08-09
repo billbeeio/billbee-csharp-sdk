@@ -78,8 +78,9 @@ public class ApiSyncTest
     private static List<ApiOperation> GetSdkOperations()
     {
         var sdkOps = new List<ApiOperation>();
-        var endpointTypes = Assembly.GetAssembly(typeof(ApiClient))!.GetTypes()
+        var endpointTypes = Assembly.GetAssembly(typeof(ApiClient))?.GetTypes()
             .Where(t => t.Namespace == "Billbee.Api.Client.EndPoint");
+        Assert.IsNotNull(endpointTypes);
         foreach (var endpoint in endpointTypes)
         {
             foreach (var methodInfo in endpoint.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic |

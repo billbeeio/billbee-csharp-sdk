@@ -110,11 +110,12 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
         public void DeleteProduct_IntegrationTest()
         {
             var createdProduct = _createProduct();
+            Assert.IsNotNull(createdProduct.Id);
             
             CrudHelpers.GetOneApiResult<Product>((id) => IntegrationTestHelpers.ApiClient.Products.GetProduct(id),
                 createdProduct.Id.ToString()!);
             CrudHelpers.DeleteOne<Product>((id) => IntegrationTestHelpers.ApiClient.Products.DeleteProduct(id),
-                createdProduct.Id!.Value);
+                createdProduct.Id.Value);
             CrudHelpers.GetOneExpectException<Product>((id) => IntegrationTestHelpers.ApiClient.Products.GetProduct(id),
                 createdProduct.Id.ToString()!);
         }
@@ -131,7 +132,9 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
         public void UpdateStockMultiple_IntegrationTest()
         {
             var product1 = _createProduct("4711");
+            Assert.IsNotNull(product1.Id);
             var product2 = _createProduct("4712");
+            Assert.IsNotNull(product2.Id);
             
             Assert.AreEqual(null, product1.StockCurrent);
             Assert.AreEqual(null, product2.StockCurrent);
@@ -172,9 +175,9 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
             
             // cleanup
             CrudHelpers.DeleteOne<Product>((id) => IntegrationTestHelpers.ApiClient.Products.DeleteProduct(id),
-                product1.Id!.Value);
+                product1.Id.Value);
             CrudHelpers.DeleteOne<Product>((id) => IntegrationTestHelpers.ApiClient.Products.DeleteProduct(id),
-                product2.Id!.Value);
+                product2.Id.Value);
         }
 
         [TestMethod]
@@ -182,6 +185,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
         public void UpdateStock_IntegrationTest()
         {
             var createdProduct = _createProduct();
+            Assert.IsNotNull(createdProduct.Id);
             
             Assert.AreEqual(null, createdProduct.StockCurrent);
 
@@ -203,7 +207,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
             
             // cleanup
             CrudHelpers.DeleteOne<Product>((id) => IntegrationTestHelpers.ApiClient.Products.DeleteProduct(id),
-                createdProduct!.Id!);
+                createdProduct.Id!);
         }
 
         [TestMethod]
@@ -211,6 +215,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
         public void GetReservedAmount_IntegrationTest()
         {
             var createdProduct = _createProduct();
+            Assert.IsNotNull(createdProduct.Id);
             
             var reservedResult = CrudHelpers.GetOneApiResult<GetReservedAmountResult>((id) => IntegrationTestHelpers.ApiClient.Products.GetReservedAmount(id),
                 createdProduct.Id.ToString()!, false);
@@ -219,7 +224,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
             
             // cleanup
             CrudHelpers.DeleteOne<Product>((id) => IntegrationTestHelpers.ApiClient.Products.DeleteProduct(id),
-                createdProduct!.Id!);
+                createdProduct.Id!);
         }
 
         [TestMethod]
@@ -227,6 +232,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
         public void UpdateStockCode_IntegrationTest()
         {
             var createdProduct = _createProduct();
+            Assert.IsNotNull(createdProduct.Id);
             Assert.IsTrue(string.IsNullOrEmpty(createdProduct.StockCode));
             
             var updateStockCode = new UpdateStockCode
@@ -244,7 +250,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
             
             // cleanup
             CrudHelpers.DeleteOne<Product>((id) => IntegrationTestHelpers.ApiClient.Products.DeleteProduct(id),
-                createdProduct!.Id!);
+                createdProduct.Id);
         }
 
         [TestMethod]
@@ -259,13 +265,14 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
         public void GetProduct_IntegrationTest()
         {
             var createdProduct = _createProduct();
+            Assert.IsNotNull(createdProduct.Id);
             
             CrudHelpers.GetOneApiResult<Product>((id) => IntegrationTestHelpers.ApiClient.Products.GetProduct(id),
                 createdProduct.Id.ToString()!);
             
             // cleanup
             CrudHelpers.DeleteOne<Product>((id) => IntegrationTestHelpers.ApiClient.Products.DeleteProduct(id),
-                createdProduct!.Id!);
+                createdProduct.Id);
         }
 
         [TestMethod]
@@ -281,9 +288,10 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
         {
             var customField = CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.Products.GetCustomFields(1, int.MaxValue)).Data.FirstOrDefault();
             Assert.IsNotNull(customField);
+            Assert.IsNotNull(customField.Id);
 
             CrudHelpers.GetOneApiResult<ArticleCustomFieldDefinition>((id) => IntegrationTestHelpers.ApiClient.Products.GetCustomField(id),
-                customField!.Id!.Value);
+                customField.Id.Value);
         }
 
         [TestMethod]
@@ -303,7 +311,8 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
         public void PatchArticle_IntegrationTest()
         {
             var createdProduct = _createProduct();
-            Assert.AreEqual(TestData.Product.Description.First().Text, createdProduct!.Description.First().Text);
+            Assert.IsNotNull(createdProduct.Id);
+            Assert.AreEqual(TestData.Product.Description.First().Text, createdProduct.Description.First().Text);
             
             var fieldsToPatch = new Dictionary<string, string>
             {
@@ -311,13 +320,13 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
             };
             var patchResult = CrudHelpers.Patch<Product>(
                 (id, fields) => IntegrationTestHelpers.ApiClient.Products.PatchArticle(id, fields),
-                createdProduct!.Id!.Value, fieldsToPatch);
+                createdProduct.Id.Value, fieldsToPatch);
             
             Assert.AreEqual("Modified", patchResult.Data.Description.First().Text);
             
             // cleanup
             CrudHelpers.DeleteOne<Product>((id) => IntegrationTestHelpers.ApiClient.Products.DeleteProduct(id),
-                createdProduct!.Id!.Value);
+                createdProduct.Id.Value);
         }
 
         [TestMethod]
@@ -325,17 +334,18 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
         public void GetArticleImages_IntegrationTest()
         {
             var createdProduct = _createProduct();
+            Assert.IsNotNull(createdProduct.Id);
 
-            var articleImage = TestData.GetArticleImage(createdProduct!.Id!.Value);
+            var articleImage = TestData.GetArticleImage(createdProduct.Id.Value);
             CrudHelpers.CreateApiResult(x => IntegrationTestHelpers.ApiClient.Products.AddArticleImage(x),
                 articleImage);
             
-            var imagesResult = CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.Products.GetArticleImages(createdProduct!.Id!.Value));
+            var imagesResult = CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.Products.GetArticleImages(createdProduct.Id.Value));
             Assert.AreEqual(1, imagesResult.Data.Count);
             
             // cleanup
             CrudHelpers.DeleteOne<Product>((id) => IntegrationTestHelpers.ApiClient.Products.DeleteProduct(id),
-                createdProduct!.Id!.Value);
+                createdProduct.Id.Value);
         }
 
         [TestMethod]
@@ -343,8 +353,9 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
         public void GetArticleImage_IntegrationTest()
         {
             var createdProduct = _createProduct();
+            Assert.IsNotNull(createdProduct.Id);
 
-            var articleImage = TestData.GetArticleImage(createdProduct!.Id!.Value);
+            var articleImage = TestData.GetArticleImage(createdProduct.Id.Value);
             var resultImage = CrudHelpers.CreateApiResult(x => IntegrationTestHelpers.ApiClient.Products.AddArticleImage(x),
                 articleImage);
             
@@ -353,7 +364,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
             
             // cleanup
             CrudHelpers.DeleteOne<Product>((id) => IntegrationTestHelpers.ApiClient.Products.DeleteProduct(id),
-                createdProduct!.Id!.Value);
+                createdProduct.Id.Value);
         }
 
         [TestMethod]
@@ -361,15 +372,16 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
         public void AddArticleImage_IntegrationTest()
         {
             var createdProduct = _createProduct();
+            Assert.IsNotNull(createdProduct.Id);
 
-            var articleImage = TestData.GetArticleImage(createdProduct!.Id!.Value);
+            var articleImage = TestData.GetArticleImage(createdProduct.Id.Value);
             var resultImage = CrudHelpers.CreateApiResult(x => IntegrationTestHelpers.ApiClient.Products.AddArticleImage(x),
                 articleImage);
             Assert.AreEqual((byte)1, resultImage.Data.Position);
             
             // cleanup
             CrudHelpers.DeleteOne<Product>((id) => IntegrationTestHelpers.ApiClient.Products.DeleteProduct(id),
-                createdProduct!.Id!.Value);
+                createdProduct.Id.Value);
         }
 
         [TestMethod]
@@ -377,8 +389,9 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
         public void UpdateArticleImage_IntegrationTest()
         {
             var createdProduct = _createProduct();
+            Assert.IsNotNull(createdProduct.Id);
 
-            var articleImage = TestData.GetArticleImage(createdProduct!.Id!.Value);
+            var articleImage = TestData.GetArticleImage(createdProduct.Id.Value);
             var resultImage = CrudHelpers.CreateApiResult(x => IntegrationTestHelpers.ApiClient.Products.AddArticleImage(x),
                 articleImage);
             Assert.AreEqual((byte)1, resultImage.Data.Position);
@@ -391,7 +404,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
             
             // cleanup
             CrudHelpers.DeleteOne<Product>((id) => IntegrationTestHelpers.ApiClient.Products.DeleteProduct(id),
-                createdProduct!.Id!.Value);
+                createdProduct.Id.Value);
         }
 
         [TestMethod]
@@ -399,27 +412,28 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
         public void AddMultipleArticleImages_IntegrationTest()
         {
             var createdProduct = _createProduct();
+            Assert.IsNotNull(createdProduct.Id);
 
-            var imagesResult = CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.Products.GetArticleImages(createdProduct!.Id!.Value));
+            var imagesResult = CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.Products.GetArticleImages(createdProduct.Id.Value));
             Assert.AreEqual(0, imagesResult.Data.Count);
 
             var articleImages = new List<ArticleImage>
             {
-                TestData.GetArticleImage(createdProduct!.Id!.Value),
-                TestData.GetArticleImage(createdProduct!.Id!.Value),
-                TestData.GetArticleImage(createdProduct!.Id!.Value)
+                TestData.GetArticleImage(createdProduct.Id.Value),
+                TestData.GetArticleImage(createdProduct.Id.Value),
+                TestData.GetArticleImage(createdProduct.Id.Value)
             };
             Console.WriteLine();
             Console.WriteLine($"Adding multiple ArticleImages (3)");
-            IntegrationTestHelpers.ApiClient.Products.AddMultipleArticleImages(createdProduct!.Id!.Value, articleImages);
+            IntegrationTestHelpers.ApiClient.Products.AddMultipleArticleImages(createdProduct.Id.Value, articleImages);
             Console.WriteLine($"Added multiple ArticleImages");
             
-            imagesResult = CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.Products.GetArticleImages(createdProduct!.Id!.Value));
+            imagesResult = CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.Products.GetArticleImages(createdProduct.Id.Value));
             Assert.AreEqual(3, imagesResult.Data.Count);
             
             // cleanup
             CrudHelpers.DeleteOne<Product>((id) => IntegrationTestHelpers.ApiClient.Products.DeleteProduct(id),
-                createdProduct!.Id!.Value);
+                createdProduct.Id.Value);
         }
 
         [TestMethod]
@@ -427,23 +441,24 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
         public void DeleteArticleImage_IntegrationTest()
         {
             var createdProduct = _createProduct();
+            Assert.IsNotNull(createdProduct.Id);
 
-            var articleImage = TestData.GetArticleImage(createdProduct!.Id!.Value);
+            var articleImage = TestData.GetArticleImage(createdProduct.Id.Value);
             var resultImage = CrudHelpers.CreateApiResult(x => IntegrationTestHelpers.ApiClient.Products.AddArticleImage(x),
                 articleImage);
             
-            var imagesResult = CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.Products.GetArticleImages(createdProduct!.Id!.Value));
+            var imagesResult = CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.Products.GetArticleImages(createdProduct.Id.Value));
             Assert.AreEqual(1, imagesResult.Data.Count);
             
             CrudHelpers.DeleteOne<ArticleImage>((id) => IntegrationTestHelpers.ApiClient.Products.DeleteArticleImage(id),
                 resultImage.Data.Id);
             
-            imagesResult = CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.Products.GetArticleImages(createdProduct!.Id!.Value));
+            imagesResult = CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.Products.GetArticleImages(createdProduct.Id.Value));
             Assert.AreEqual(0, imagesResult.Data.Count);
             
             // cleanup
             CrudHelpers.DeleteOne<Product>((id) => IntegrationTestHelpers.ApiClient.Products.DeleteProduct(id),
-                createdProduct!.Id!.Value);
+                createdProduct.Id.Value);
         }
 
         [TestMethod]
@@ -451,8 +466,9 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
         public void DeleteMultipleArticleImages_IntegrationTest()
         {
             var createdProduct = _createProduct();
+            Assert.IsNotNull(createdProduct.Id);
 
-            var articleImage = TestData.GetArticleImage(createdProduct!.Id!.Value);
+            var articleImage = TestData.GetArticleImage(createdProduct.Id.Value);
             var resultImage1 = CrudHelpers.CreateApiResult(x => IntegrationTestHelpers.ApiClient.Products.AddArticleImage(x),
                 articleImage);
             var resultImage2 = CrudHelpers.CreateApiResult(x => IntegrationTestHelpers.ApiClient.Products.AddArticleImage(x),
@@ -460,7 +476,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
             var resultImage3 = CrudHelpers.CreateApiResult(x => IntegrationTestHelpers.ApiClient.Products.AddArticleImage(x),
                 articleImage);
             
-            var imagesResult = CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.Products.GetArticleImages(createdProduct!.Id!.Value));
+            var imagesResult = CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.Products.GetArticleImages(createdProduct.Id.Value));
             Assert.AreEqual(3, imagesResult.Data.Count);
 
             Console.WriteLine();
@@ -473,13 +489,13 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
             Assert.AreEqual(2, deleteResult.Data.Deleted.Count);
             Assert.AreEqual(0, deleteResult.Data.NotFound.Count);
             
-            imagesResult = CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.Products.GetArticleImages(createdProduct!.Id!.Value));
+            imagesResult = CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.Products.GetArticleImages(createdProduct.Id.Value));
             Assert.AreEqual(1, imagesResult.Data.Count);
             Assert.IsTrue(imagesResult.Data.Any(x => x.Id == resultImage3.Data.Id));
             
             // cleanup
             CrudHelpers.DeleteOne<Product>((id) => IntegrationTestHelpers.ApiClient.Products.DeleteProduct(id),
-                createdProduct!.Id!.Value);
+                createdProduct.Id.Value);
         }
 
         private Product _createProduct(string sku = null!)

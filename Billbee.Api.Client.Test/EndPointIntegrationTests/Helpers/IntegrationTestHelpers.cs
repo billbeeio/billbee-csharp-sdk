@@ -16,8 +16,10 @@ public static class IntegrationTestHelpers
         }
 
         var type = Assembly.GetExecutingAssembly().GetType(testContextManagedType);
-        var mi = type!.GetMethod(testContextManagedMethod);
-        bool requiresApiAccess = mi!.GetCustomAttributes<RequiresApiAccessAttribute>().Any();
+        Assert.IsNotNull(type);
+        var mi = type.GetMethod(testContextManagedMethod);
+        Assert.IsNotNull(mi);
+        bool requiresApiAccess = mi.GetCustomAttributes<RequiresApiAccessAttribute>().Any();
         if (requiresApiAccess && !IntegrationTestSettings.AllowReadWriteAccessToBillbeeApi)
         {
             Assert.Inconclusive(
@@ -31,8 +33,9 @@ public static class IntegrationTestHelpers
         {
             if (_apiClient == null)
             {
-                var fiDll = new FileInfo(Assembly.GetExecutingAssembly().Location);                
-                var di = new DirectoryInfo(Path.Combine(fiDll!.Directory!.FullName, "../../../"));
+                var fiDll = new FileInfo(Assembly.GetExecutingAssembly().Location);
+                Assert.IsNotNull(fiDll.Directory);
+                var di = new DirectoryInfo(Path.Combine(fiDll.Directory.FullName, "../../../"));
                 var path = Path.Combine(di.FullName, "config.prod");
                 if (!File.Exists(path + ".json"))
                 {

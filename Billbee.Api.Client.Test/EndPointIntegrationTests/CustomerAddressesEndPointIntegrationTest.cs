@@ -64,9 +64,10 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
                 CrudHelpers.CreateApiResult(
                     a => IntegrationTestHelpers.ApiClient.CustomerAddresses.AddCustomerAddress(a),
                     TestData.GetCustomerAddress(customer.Id)).Data;
+            Assert.IsNotNull(customerAddress.Id);
             CrudHelpers.GetOneApiResult<CustomerAddress>(
                 (id) => IntegrationTestHelpers.ApiClient.CustomerAddresses.GetCustomerAddress(id),
-                customerAddress.Id!.Value);
+                customerAddress.Id.Value);
         }
 
         [TestMethod]
@@ -88,9 +89,10 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
                 CrudHelpers.CreateApiResult(
                     a => IntegrationTestHelpers.ApiClient.CustomerAddresses.AddCustomerAddress(a),
                     TestData.GetCustomerAddress(customer.Id)).Data;
+            Assert.IsNotNull(customerAddress.Id);
             var result = CrudHelpers.GetOneApiResult<CustomerAddress>(
                 (id) => IntegrationTestHelpers.ApiClient.CustomerAddresses.GetCustomerAddress(id),
-                customerAddress.Id!.Value);
+                customerAddress.Id.Value);
             var address = result.Data;
 
             address.LastName = "Modified";
@@ -99,7 +101,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
                 address);
             CrudHelpers.GetOneApiResult<CustomerAddress>(
                 (id) => IntegrationTestHelpers.ApiClient.CustomerAddresses.GetCustomerAddress(id),
-                customerAddress.Id!.Value);
+                customerAddress.Id.Value);
             Assert.AreEqual("Modified", address.LastName);
         }
     }

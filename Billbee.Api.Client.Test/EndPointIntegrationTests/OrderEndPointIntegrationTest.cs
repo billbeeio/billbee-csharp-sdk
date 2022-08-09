@@ -80,6 +80,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
         public void PatchOrder_IntegrationTest()
         {
             var order = _createOrder();
+            Assert.IsNotNull(order.BillBeeOrderId);
             Assert.AreEqual(TestData.Order.SellerComment, order.SellerComment);
             
             var fieldsToPatch = new Dictionary<string, object>
@@ -88,7 +89,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
             };
             var patchResult = CrudHelpers.Patch<Order>(
                 (id, fields) => IntegrationTestHelpers.ApiClient.Orders.PatchOrder(id, fields),
-                order.BillBeeOrderId!.Value, fieldsToPatch);
+                order.BillBeeOrderId.Value, fieldsToPatch);
             
             Assert.AreEqual("Modified", patchResult.Data.SellerComment);
         }
@@ -136,9 +137,10 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
         public void PostNewOrder_IntegrationTest()
         {
             var order = _createOrder();
+            Assert.IsNotNull(order.BillBeeOrderId);
             
             var orderResult = CrudHelpers.GetOneApiResult<Order>(id => IntegrationTestHelpers.ApiClient.Orders.GetOrder(id),
-                order.BillBeeOrderId!.Value.ToString(), false);
+                order.BillBeeOrderId.Value.ToString(), false);
             Assert.IsNotNull(orderResult);
             Assert.AreEqual(order.BillBeeOrderId, orderResult.Data.BillBeeOrderId);
         }
@@ -155,9 +157,10 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
         public void UpdateTags_IntegrationTest()
         {
             var order = _createOrderWithTags();
+            Assert.IsNotNull(order.BillBeeOrderId);
 
             var updatedTags = new List<string> { "tag3", "tag4" };
-            var result = IntegrationTestHelpers.ApiClient.Orders.UpdateTags(updatedTags, order.BillBeeOrderId!.Value);
+            var result = IntegrationTestHelpers.ApiClient.Orders.UpdateTags(updatedTags, order.BillBeeOrderId.Value);
             Assert.IsNotNull(result);
             Assert.AreEqual((int)ApiResult<object>.ErrorCodeEnum.NoError, (int)result.ErrorCode);
             
@@ -181,12 +184,13 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
             var carrier = CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.Shipment.GetShippingCarriers())
                 .First();
             
-            var order = _createOrder();
+            var order = _createOrder();            
+            Assert.IsNotNull(order.BillBeeOrderId);
             var orderShipment = new OrderShipment
             {
                 Comment = "comment",
                 CarrierId = carrier.Id,
-                OrderId = order.BillBeeOrderId!.Value,
+                OrderId = order.BillBeeOrderId.Value,
                 ShippingId = "123",
                 ShippingProviderId = provider.id,
                 ShippingProviderProductId = productId
@@ -199,7 +203,8 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
         public void CreateDeliveryNote_IntegrationTest()
         {
             var order = _createOrder();
-            var result = IntegrationTestHelpers.ApiClient.Orders.CreateDeliveryNote(order.BillBeeOrderId!.Value);
+            Assert.IsNotNull(order.BillBeeOrderId);
+            var result = IntegrationTestHelpers.ApiClient.Orders.CreateDeliveryNote(order.BillBeeOrderId.Value);
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.Data);
             Assert.AreEqual(order.OrderNumber, result.Data.OrderNumber);
@@ -210,9 +215,10 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
         public void CreateInvoice_IntegrationTest()
         {
             var order = _createOrder();
+            Assert.IsNotNull(order.BillBeeOrderId);
             
             // throws an exception, because no invoice has been created yet for this new order
-            Assert.ThrowsException<Exception>(() => IntegrationTestHelpers.ApiClient.Orders.CreateInvoice(order.BillBeeOrderId!.Value));
+            Assert.ThrowsException<Exception>(() => IntegrationTestHelpers.ApiClient.Orders.CreateInvoice(order.BillBeeOrderId.Value));
         }
 
         [TestMethod]
@@ -220,12 +226,13 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
         public void ChangeOrderState_IntegrationTest()
         {
             var order = _createOrder();
+            Assert.IsNotNull(order.BillBeeOrderId);
             
             var newState = OrderStateEnum.Bestaetigt;
             Console.WriteLine($"Old state: {order.State.ToString()}");
             Assert.AreNotEqual(newState, order.State);
             
-            IntegrationTestHelpers.ApiClient.Orders.ChangeOrderState(order.BillBeeOrderId!.Value, newState);
+            IntegrationTestHelpers.ApiClient.Orders.ChangeOrderState(order.BillBeeOrderId.Value, newState);
             
             var orderResult = CrudHelpers.GetOneApiResult<Order>(id => IntegrationTestHelpers.ApiClient.Orders.GetOrder(id),
                 order.BillBeeOrderId.Value.ToString(), false);
@@ -240,6 +247,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
         public void SendMailForOrder_IntegrationTest()
         {
             var order = _createOrder();
+            Assert.IsNotNull(order.BillBeeOrderId);
             var sendMessage = new SendMessage
             {
                 Subject = new List<MultiLanguageString>
@@ -260,7 +268,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
                 }
             };
             
-            IntegrationTestHelpers.ApiClient.Orders.SendMailForOrder(order.BillBeeOrderId!.Value, sendMessage);
+            IntegrationTestHelpers.ApiClient.Orders.SendMailForOrder(order.BillBeeOrderId.Value, sendMessage);
         }
 
         [TestMethod]
@@ -268,7 +276,8 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
         public void CreateEventAtOrder_IntegrationTest()
         {
             var order = _createOrder();
-            IntegrationTestHelpers.ApiClient.Orders.CreateEventAtOrder(order.BillBeeOrderId!.Value, "myEvent");
+            Assert.IsNotNull(order.BillBeeOrderId);
+            IntegrationTestHelpers.ApiClient.Orders.CreateEventAtOrder(order.BillBeeOrderId.Value, "myEvent");
         }
 
         [TestMethod]
@@ -276,12 +285,13 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
         public void ParsePlaceholders_IntegrationTest()
         {
             var order = _createOrder();
+            Assert.IsNotNull(order.BillBeeOrderId);
             
             var parsePlaceholdersQuery = new ParsePlaceholdersQuery
             {
                 TextToParse = "This is my text for Order {OrderNumber}"
             };
-            var result = IntegrationTestHelpers.ApiClient.Orders.ParsePlaceholders(order.BillBeeOrderId!.Value, parsePlaceholdersQuery);
+            var result = IntegrationTestHelpers.ApiClient.Orders.ParsePlaceholders(order.BillBeeOrderId.Value, parsePlaceholdersQuery);
             Assert.IsNotNull(result);
             Assert.AreEqual($"This is my text for Order {order.OrderNumber}", result.Result);
         }
@@ -306,9 +316,10 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
         private Order _createOrderWithTags()
         {
             var order = _createOrder();
+            Assert.IsNotNull(order.BillBeeOrderId);
 
             var tags = new List<string> { "tag1", "tag2" };
-            var result = IntegrationTestHelpers.ApiClient.Orders.AddTags(tags, order.BillBeeOrderId!.Value);
+            var result = IntegrationTestHelpers.ApiClient.Orders.AddTags(tags, order.BillBeeOrderId.Value);
             Assert.IsNotNull(result);
             Assert.AreEqual((int)ApiResult<object>.ErrorCodeEnum.NoError, (int)result.ErrorCode);
             

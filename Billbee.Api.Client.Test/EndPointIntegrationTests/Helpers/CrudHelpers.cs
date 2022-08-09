@@ -57,7 +57,7 @@ public static class CrudHelpers
         
         dynamic result = func(newItem);
         Assert.IsNotNull(result);
-        Console.WriteLine($"{typeName} created, id={result!.Id}");
+        Console.WriteLine($"{typeName} created, id={result.Id}");
 
         return result;
     }
@@ -71,7 +71,7 @@ public static class CrudHelpers
         
         dynamic result = func(newItem);
         Assert.IsNotNull(result);
-        Assert.IsNotNull(result!.Data);
+        Assert.IsNotNull(result.Data);
         Console.WriteLine(hasId ? $"{typeName} created, id={result.Data.Id}" : $"{typeName} created");
 
         return result;
