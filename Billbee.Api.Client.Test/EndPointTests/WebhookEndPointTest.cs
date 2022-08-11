@@ -32,7 +32,7 @@ public class WebhookEndPointTest
     };
     
     [TestMethod]
-    public void GetWebhooksTest()
+    public void Webhook_GetWebhooks_Test()
     {
         var testWebHook = CreateTestWebHook();
         
@@ -49,7 +49,7 @@ public class WebhookEndPointTest
     }
  
     [TestMethod]
-    public void GetWebhookTest()
+    public void Webhook_GetWebhook_Test()
     {
         var testWebHook = CreateTestWebHook();
         
@@ -64,7 +64,7 @@ public class WebhookEndPointTest
     }
 
     [TestMethod]
-    public void GetFiltersTest()
+    public void Webhook_GetFilters_Test()
     {
         Expression<Func<IBillbeeRestClient, object>> expression = x => x.Get<List<WebhookFilter>>("/webhooks/filters", null);
         object mockResult = new List<WebhookFilter> { TestWebHookFilter };
@@ -77,7 +77,7 @@ public class WebhookEndPointTest
     }
     
     [TestMethod]
-    public void DeleteAllWebhooksTest()
+    public void Webhook_DeleteAllWebhooks_Test()
     {
         var restClientMock = new Mock<IBillbeeRestClient>();
         restClientMock
@@ -90,7 +90,7 @@ public class WebhookEndPointTest
     }
     
     [TestMethod]
-    public void DeleteWebhookTest()
+    public void Webhook_DeleteWebhook_Test()
     {
         var testWebHook = CreateTestWebHook();
         var restClientMock = new Mock<IBillbeeRestClient>();
@@ -104,7 +104,7 @@ public class WebhookEndPointTest
     }
 
     [TestMethod]
-    public void UpdateWebhookTest()
+    public void Webhook_UpdateWebhook_Test()
     {
         var testWebHook = CreateTestWebHook();
         var restClientMock = new Mock<IBillbeeRestClient>();
@@ -118,7 +118,7 @@ public class WebhookEndPointTest
     }
 
     [TestMethod]
-    public void CreateWebhookTest()
+    public void Webhook_CreateWebhook_Test()
     {
         var testWebHook = CreateTestWebHook();
         testWebHook.Id = "4711";

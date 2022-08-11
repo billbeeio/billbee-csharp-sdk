@@ -45,6 +45,11 @@ namespace Billbee.Api.Client
         ICustomerEndPoint Customer { get; }
 
         /// <summary>
+        /// EndPoint to access customer addresses
+        /// </summary>
+        ICustomerAddressesEndPoint CustomerAddresses { get; }
+
+        /// <summary>
         /// EndPoint for searches in customers, orders and products
         /// </summary>
         ISearchEndPoint Search { get; }
@@ -58,6 +63,11 @@ namespace Billbee.Api.Client
         /// EndPoint to access cloud storages
         /// </summary>
         ICloudStoragesEndPoint CloudStorages { get; }
+        
+        /// <summary>
+        /// EndPoint to access enum values
+        /// </summary>
+        IEnumEndPoint Enums { get; }
 
         /// <summary>
         /// Validates, that access to the api is possible with the given configuration

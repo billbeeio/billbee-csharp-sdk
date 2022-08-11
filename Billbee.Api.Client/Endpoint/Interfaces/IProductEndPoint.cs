@@ -64,6 +64,25 @@ namespace Billbee.Api.Client.Endpoint.Interfaces
         ApiResult<Product> GetProduct(string id, ProductIdType type = ProductIdType.id);
 
         /// <summary>
+        /// Adds a new product
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns></returns>
+        ApiResult<Product> AddProduct(Product product);
+                
+        /// <summary>
+        /// Deletes one product, identified by the given id.
+        /// </summary>
+        /// <param name="id">Id of the product to delete.</param>
+        void DeleteProduct(long id);
+        
+        /// <summary>
+        /// Requests a list of all categories
+        /// </summary>
+        /// <returns>List of Categories</returns>
+        ApiResult<List<ArticleCategory>> GetCategories();
+        
+        /// <summary>
         /// Requests a list of all custom fields, usable in products
         /// </summary>
         /// <returns>List of CustomFields</returns>

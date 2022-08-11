@@ -11,7 +11,7 @@ namespace Billbee.Api.Client.Test.EndPointTests;
 public class EventEndPointTest
 {
     [TestMethod]
-    public void GetEventsTest()
+    public void Event_GetEvents_Test()
     {
         var testEvent = new Event();
         DateTime? minDate = DateTime.Now.AddDays(-2);

@@ -10,26 +10,24 @@ namespace Billbee.Api.Client
     /// <inheritdoc cref="Billbee.Api.Client.IApiClient"/>
     public class ApiClient : IApiClient
     {
-        private ILogger _logger;
-        private BillbeeRestClient _restClient;
+        private IBillbeeRestClient _restClient;
         
-        public ApiClient(ApiConfiguration configuration = null, ILogger logger = null)
+        public ApiClient(ApiConfiguration configuration = null, ILogger logger = null, bool allowReadWrite = true)
         {
             var config = configuration ?? new ApiConfiguration();
-            _init(config, logger);
+            _init(config, logger, allowReadWrite);
         }
 
-        public ApiClient(string configurationPath, ILogger logger = null)
+        public ApiClient(string configurationPath, ILogger logger = null, bool allowReadWrite = true)
         {
             var config = LoadConfigFromFile(configurationPath);
-            _init(config, logger);
+            _init(config, logger, allowReadWrite);
         }
 
-        private void _init(ApiConfiguration configuration, ILogger logger)
+        private void _init(ApiConfiguration configuration, ILogger logger, bool allowReadWrite = true)
         {
-            _logger = logger;
             Configuration = configuration;
-            _restClient = new BillbeeRestClient(_logger, Configuration);
+            _restClient = new BillbeeRestClient(logger, Configuration, allowReadWrite);
         }
         
         public ApiConfiguration Configuration { get; private set; }
@@ -46,11 +44,15 @@ namespace Billbee.Api.Client
 
         public ICustomerEndPoint Customer => new CustomerEndPoint(_restClient);
 
+        public ICustomerAddressesEndPoint CustomerAddresses => new CustomerAddressesEndPoint(_restClient);
+
         public ISearchEndPoint Search => new SearchEndPoint(_restClient);
 
         public IOrderEndPoint Orders => new OrderEndPoint(_restClient);
 
         public ICloudStoragesEndPoint CloudStorages => new CloudStoragesEndPoint(_restClient);
+
+        public IEnumEndPoint Enums => new EnumEndPoint(_restClient);
         
         public bool TestConfiguration()
         {

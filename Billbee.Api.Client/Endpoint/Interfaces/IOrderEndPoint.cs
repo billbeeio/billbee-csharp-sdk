@@ -30,7 +30,7 @@ namespace Billbee.Api.Client.Endpoint.Interfaces
         /// <param name="id">The id of the order to patch.</param>
         /// <param name="fieldsToPatch">Name-Value pairs of fields, to be patched.</param>
         /// <returns></returns>
-        ApiResult<object> PatchOrder(long id, Dictionary<string, object> fieldsToPatch);
+        ApiResult<Order> PatchOrder(long id, Dictionary<string, object> fieldsToPatch);
 
         /// <summary>
         /// Selects an order by it's external id
@@ -110,6 +110,13 @@ namespace Billbee.Api.Client.Endpoint.Interfaces
         ApiResult<OrderResult> PostNewOrder(Order order, long shopId);
 
         /// <summary>
+        /// Creates a new order
+        /// </summary>
+        /// <param name="order">An order object, to create in billbee</param>
+        /// <returns></returns>
+        ApiResult<Order> PostNewOrder(Order order);
+
+        /// <summary>
         /// Reset the tags on an order and add the given ones.
         /// All previuosly added tags will be deleted.
         /// </summary>
@@ -173,5 +180,19 @@ namespace Billbee.Api.Client.Endpoint.Interfaces
         /// <param name="eventName">Name of the event to trigger</param>
         /// <param name="delayInMinutes">If set, the trigger will by delayed for the given number of minutes</param>
         void CreateEventAtOrder(long orderId, string eventName, uint delayInMinutes = 0);
+
+        /// <summary>
+        /// Gets a list of layout templates
+        /// </summary>
+        /// <returns>The list of layout templates</returns>
+        ApiResult<List<LayoutTemplate>> GetLayouts();
+
+        /// <summary>
+        /// Parses a text and replaces all placeholders
+        /// </summary>
+        /// <param name="orderId">The id of the order to parse</param>
+        /// <param name="parsePlaceholdersQuery">The text to be parsed</param>
+        /// <returns>The parsed text</returns>
+        ParsePlaceholdersResult ParsePlaceholders(long orderId, ParsePlaceholdersQuery parsePlaceholdersQuery);
     }
 }

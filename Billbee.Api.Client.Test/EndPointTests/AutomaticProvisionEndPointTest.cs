@@ -10,7 +10,7 @@ namespace Billbee.Api.Client.Test.EndPointTests;
 public class AutomaticProvisionEndPointTest
 {
     [TestMethod]
-    public void CreateAccountTest()
+    public void AutomaticProvision_CreateAccount_Test()
     {
         var testAccount = new Account();
         var testCreateUserResult = new CreateUserResult
@@ -31,7 +31,7 @@ public class AutomaticProvisionEndPointTest
     }
 
     [TestMethod]
-    public void TermsInfoTest()
+    public void AutomaticProvision_TermsInfo_Test()
     {
         var testTermsResult = new TermsResult();
         

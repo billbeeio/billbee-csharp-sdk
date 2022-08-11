@@ -10,7 +10,7 @@ namespace Billbee.Api.Client.Test.EndPointTests;
 public class CustomerEndPointTest
 {
     [TestMethod]
-    public void GetCustomerListTest()
+    public void Customer_GetCustomerList_Test()
     {
         var testCustomer = new Customer { Id = 4711 };
         var page = 1;
@@ -32,7 +32,7 @@ public class CustomerEndPointTest
     }
     
     [TestMethod]
-    public void AddCustomerTest()
+    public void Customer_AddCustomer_Test()
     {
         var testCustomer = new Customer { Id = 4711 };
         var customerForCreation = new CustomerForCreation();
@@ -48,7 +48,7 @@ public class CustomerEndPointTest
     }
     
     [TestMethod]
-    public void GetCustomerTest()
+    public void Customer_GetCustomer_Test()
     {
         var testCustomer = new Customer { Id = 4711 };
         
@@ -63,7 +63,7 @@ public class CustomerEndPointTest
     }
 
     [TestMethod]
-    public void UpdateCustomerTest()
+    public void Customer_UpdateCustomer_Test()
     {
         var testCustomer = new Customer { Id = 4711 };
         
@@ -83,7 +83,7 @@ public class CustomerEndPointTest
     }
     
     [TestMethod]
-    public void GetOrdersForCustomerTest()
+    public void Customer_GetOrdersForCustomer_Test()
     {
         var testCustomer = new Customer { Id = 4711 };
         var testOrder = new Order();
@@ -107,7 +107,7 @@ public class CustomerEndPointTest
     }
     
     [TestMethod]
-    public void GetAddressesForCustomerTest()
+    public void Customer_GetAddressesForCustomer_Test()
     {
         var testCustomer = new Customer { Id = 4711 };
         var testCustomerAddress = new CustomerAddress();
@@ -127,6 +127,71 @@ public class CustomerEndPointTest
             var result = uut.GetAddressesForCustomer(testCustomer.Id.Value, page, pageSize);
             Assert.IsNotNull(result.Data);
             Assert.AreEqual(1, result.Data.Count);
+        });
+    }
+
+    [TestMethod]
+    public void Customer_AddAddressToCustomer_Test()
+    {
+        var testCustomer = new Customer { Id = 4711 };
+        var testCustomerAddress = new CustomerAddress { Id = 4712, CustomerId = testCustomer.Id };
+        Expression<Func<IBillbeeRestClient, object>> expression = x => x.Post<ApiResult<CustomerAddress>>($"/customers/{testCustomer.Id}/addresses", testCustomerAddress, null);
+        object mockResult = TestHelpers.GetApiResult(testCustomerAddress);
+        TestHelpers.RestClientMockTest(expression, mockResult, (restClient) =>
+        {
+            var uut = new CustomerEndPoint(restClient);
+            var result = uut.AddAddressToCustomer(testCustomerAddress);
+            Assert.IsNotNull(result.Data);
+        });
+    }
+    
+    [TestMethod]
+    public void Customer_GetCustomerAddress_Test()
+    {
+        var testCustomerAddress = new CustomerAddress { Id = 4711 };
+        
+        Expression<Func<IBillbeeRestClient, object>> expression = x => x.Get<ApiResult<CustomerAddress>>($"/customers/addresses/{testCustomerAddress.Id}", null);
+        object mockResult = TestHelpers.GetApiResult(testCustomerAddress);
+        TestHelpers.RestClientMockTest(expression, mockResult, (restClient) =>
+        {
+            var uut = new CustomerEndPoint(restClient);
+            var result = uut.GetCustomerAddress(testCustomerAddress.Id.Value);
+            Assert.IsNotNull(result.Data);
+        });
+    }
+    
+    [TestMethod]
+    public void Customer_UpdateCustomerAddress_Test()
+    {
+        var testCustomerAddress = new CustomerAddress { Id = 4711 };
+        
+        Expression<Func<IBillbeeRestClient, object>> expression = x => x.Put<ApiResult<CustomerAddress>>($"/customers/addresses/{testCustomerAddress.Id}", testCustomerAddress, null);
+        object mockResult = TestHelpers.GetApiResult(testCustomerAddress);
+        TestHelpers.RestClientMockTest(expression, mockResult, (restClient) =>
+        {
+            var uut = new CustomerEndPoint(restClient);
+            var result = uut.UpdateCustomerAddress(testCustomerAddress);
+            Assert.IsNotNull(result.Data);
+        });
+    }
+    
+    
+    [TestMethod]
+    public void Customer_PatchCustomerAddress_Test()
+    {
+        var testCustomerAddress = new CustomerAddress { Id = 4711 };
+
+        var fieldsToPatch = new Dictionary<string, string>
+        {
+            { "FirstName", "Foo" }
+        };
+        Expression<Func<IBillbeeRestClient, object>> expression = x => x.Patch<ApiResult<CustomerAddress>>($"/customers/addresses/{testCustomerAddress.Id}", null, fieldsToPatch);
+        object mockResult = TestHelpers.GetApiResult(testCustomerAddress);
+        TestHelpers.RestClientMockTest(expression, mockResult, (restClient) =>
+        {
+            var uut = new CustomerEndPoint(restClient);
+            var result = uut.PatchCustomerAddress(testCustomerAddress.Id.Value, fieldsToPatch);
+            Assert.IsNotNull(result.Data);
         });
     }
 }

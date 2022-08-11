@@ -13,7 +13,7 @@ namespace Billbee.Api.Client.Demo
     ///
     /// To use this demo, you have to enable the API in your account. Please refer to https://www.billbee.de/api/ for further information.
     /// </summary>
-    internal class Program
+    internal static class Program
     {
         private static int Main()
         {
@@ -91,7 +91,7 @@ namespace Billbee.Api.Client.Demo
             // Requesting a specific webhook
             if (webHooks.Count > 0)
             {
-                var webhook = client.Webhooks.GetWebhook(webHooks.FirstOrDefault().Id);
+                var webhook = client.Webhooks.GetWebhook(webHooks.FirstOrDefault()!.Id);
 
                 // Updating webhook
                 webhook.IsPaused = false;
@@ -117,7 +117,7 @@ namespace Billbee.Api.Client.Demo
 
             if (customFields.Data.Count > 0)
             {
-                var firstCustomField = client.Products.GetCustomField(customFields.Data.First().Id.Value);
+                var firstCustomField = client.Products.GetCustomField(customFields.Data.First()!.Id!.Value);
             }
 
             // Artificial brake to prevent throttling
@@ -177,7 +177,7 @@ namespace Billbee.Api.Client.Demo
 
             if (products.Data.Count > 0)
             {
-                var articleId = products.Data.First().Id.Value;
+                var articleId = products.Data.First()!.Id!.Value;
 
                 var articleImages = client.Products.GetArticleImages(articleId);
 
@@ -221,7 +221,7 @@ namespace Billbee.Api.Client.Demo
 
             if (customers.Data.Count > 0)
             {
-                var customer = client.Customer.GetCustomer(customers.Data.First().Id.Value);
+                var customer = client.Customer.GetCustomer(customers.Data.First()!.Id!.Value);
 
                 customer.Data.Name = "Tobias Tester";
 
@@ -230,7 +230,7 @@ namespace Billbee.Api.Client.Demo
                 // Artificial brake to prevent throttling
                 Thread.Sleep(1000);
 
-                var customerOrder = client.Customer.GetOrdersForCustomer(customer.Data.Id.Value, 1, 50);
+                var customerOrder = client.Customer.GetOrdersForCustomer(customer.Data.Id!.Value, 1, 50);
                 var customerAddresses = client.Customer.GetAddressesForCustomer(customer.Data.Id.Value, 1, 50);
             }
 

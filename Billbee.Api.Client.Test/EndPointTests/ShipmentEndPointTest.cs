@@ -12,7 +12,7 @@ namespace Billbee.Api.Client.Test.EndPointTests;
 public class ShipmentEndPointTest
 {
     [TestMethod]
-    public void GetShippingProviderTest()
+    public void Shipment_GetShippingProvider_Test()
     {
         var testShippingProvider = new ShippingProvider();
         
@@ -25,9 +25,24 @@ public class ShipmentEndPointTest
             Assert.AreEqual(1, result.Count);
         });
     }
+
+    [TestMethod]
+    public void Shipment_GetShipments_Test()
+    {
+        var testShipment = new Shipment();
+        
+        Expression<Func<IBillbeeRestClient, object>> expression = x => x.Get<ApiPagedResult<List<Shipment>>>($"/shipment/shipments", It.IsAny<NameValueCollection>());
+        object mockResult = TestHelpers.GetApiPagedResult(new List<Shipment> { testShipment });
+        TestHelpers.RestClientMockTest(expression, mockResult, (restClient) =>
+        {
+            var uut = new ShipmentEndPoint(restClient);
+            var result = uut.GetShipments(1, 20);
+            Assert.AreEqual(1, result.Data.Count);
+        });
+    }
     
     [TestMethod]
-    public void PostShipmentTest()
+    public void Shipment_PostShipment_Test()
     {
         var testShipmentResult = new ShipmentResult();
         var testPostShipment = new PostShipment();
@@ -43,12 +58,12 @@ public class ShipmentEndPointTest
     }
     
     [TestMethod]
-    public void ShipOrderWithLabelTest()
+    public void Shipment_ShipOrderWithLabel_Test()
     {
         var testShipmentWithLabel = new ShipmentWithLabel();
         var testShipmentWithLabelResult = new ShipmentWithLabelResult();
         
-        Expression<Func<IBillbeeRestClient, object>> expression = x => x.Post<ApiResult<ShipmentWithLabelResult>>($"/shipment/shipment", testShipmentWithLabel, null);
+        Expression<Func<IBillbeeRestClient, object>> expression = x => x.Post<ApiResult<ShipmentWithLabelResult>>($"/shipment/shipwithlabel", testShipmentWithLabel, null);
         object mockResult = TestHelpers.GetApiResult(testShipmentWithLabelResult);
         TestHelpers.RestClientMockTest(expression, mockResult, (restClient) =>
         {
@@ -59,7 +74,7 @@ public class ShipmentEndPointTest
     }
     
     [TestMethod]
-    public void GetShippingCarriersTest()
+    public void Shipment_GetShippingCarriers_Test()
     {
         var testShippingCarrier = new ShippingCarrier();
         
@@ -74,7 +89,7 @@ public class ShipmentEndPointTest
     }
 
     [TestMethod]
-    public void PingTest()
+    public void Shipment_Ping_Test()
     {
         var restClientMock = new Mock<IBillbeeRestClient>();
         restClientMock

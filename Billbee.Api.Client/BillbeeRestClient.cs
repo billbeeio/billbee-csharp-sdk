@@ -16,14 +16,18 @@ namespace Billbee.Api.Client
     internal class BillbeeRestClient : IBillbeeRestClient
     {
         private readonly ApiConfiguration _config;
+        private readonly bool _allowRead;
+        private readonly bool _allowWrite;
         private readonly ILogger _logger;
         private readonly DataFormat _requestFormat;
         private readonly Dictionary<string, string> _additionalHeaders;
 
-        public BillbeeRestClient(ILogger logger, ApiConfiguration config)
+        public BillbeeRestClient(ILogger logger, ApiConfiguration config, bool allowRead = true, bool allowWrite = true)
         {
             _logger = logger;
             _config = config;
+            _allowRead = allowRead;
+            _allowWrite = allowRead && allowWrite;
             _requestFormat = DataFormat.Json;
             _additionalHeaders = null;
         }
@@ -32,6 +36,8 @@ namespace Billbee.Api.Client
         
         public HttpStatusCode Get(string resource)
         {
+            _checkReadAccess();
+            
             var c = _createRestClient();
             var req = _createRestRequest(resource, null);
             return c.Get(req).StatusCode;
@@ -41,6 +47,8 @@ namespace Billbee.Api.Client
             string resource,
             NameValueCollection parameter = null) where T : new()
         {
+            _checkReadAccess();
+            
             return _requestResourceInternal<T>(resource, parameter);
         }
         
@@ -53,6 +61,11 @@ namespace Billbee.Api.Client
             int sleepTimeMs = 1000, Action<IRestResponse<T>> preDeserializeHook = null,
             NameValueCollection headerParameter = null) where T : new()
         {
+            if (!_allowRead)
+            {
+                return default(T);
+            }
+            
             var c = _createRestClient();
             var req = _createRestRequest(resource, parameter);
 
@@ -81,6 +94,8 @@ namespace Billbee.Api.Client
 
         public string Put(string resource, NameValueCollection parameter = null)
         {
+            _checkWriteAccess();
+            
             var c = _createRestClient();
             var req = _createRestRequest(resource, parameter);
             var response = c.Put(req);
@@ -91,6 +106,8 @@ namespace Billbee.Api.Client
 
         public string Put(string resource, dynamic data, NameValueCollection parameter = null)
         {
+            _checkWriteAccess();
+            
             var c = _createRestClient();
             var req = _createRestRequest(resource, parameter);
             if (data != null)
@@ -103,6 +120,8 @@ namespace Billbee.Api.Client
 
         public T Put<T>(string resource, NameValueCollection parameter = null) where T : new()
         {
+            _checkWriteAccess();
+            
             var c = _createRestClient();
             var req = _createRestRequest(resource, parameter);
             var response = c.Put<T>(req);
@@ -113,6 +132,8 @@ namespace Billbee.Api.Client
 
         public T Put<T>(string resource, dynamic data, NameValueCollection parameter = null) where T : new()
         {
+            _checkWriteAccess();
+            
             var c = _createRestClient();
             var req = _createRestRequest(resource, parameter);
             if (data != null)
@@ -124,6 +145,8 @@ namespace Billbee.Api.Client
         }
         public async Task<string> PutAsync(string resource, NameValueCollection parameter = null)
         {
+            _checkWriteAccess();
+            
             var c = _createRestClient();
             var req = _createRestRequest(resource, parameter);
             req.Method = Method.PUT;
@@ -134,6 +157,8 @@ namespace Billbee.Api.Client
 
         public async Task<string> PutAsync(string resource, dynamic data)
         {
+            _checkWriteAccess();
+            
             var c = _createRestClient();
             var req = _createRestRequest(resource, null);
             req.Method = Method.PUT;
@@ -145,6 +170,8 @@ namespace Billbee.Api.Client
 
         public async Task<T> PutAsync<T>(string resource, dynamic data) where T : new()
         {
+            _checkWriteAccess();
+            
             var c = _createRestClient();
             var req = _createRestRequest(resource, null);
             req.Method = Method.PUT;
@@ -160,6 +187,8 @@ namespace Billbee.Api.Client
         
         public string Patch(string resource, NameValueCollection parameter = null, dynamic data = null)
         {
+            _checkWriteAccess();
+            
             var c = _createRestClient();
             var req = _createRestRequest(resource, parameter);
             if (data != null)
@@ -175,6 +204,8 @@ namespace Billbee.Api.Client
 
         public T Patch<T>(string resource, NameValueCollection parameter = null, dynamic data = null) where T : new()
         {
+            _checkWriteAccess();
+            
             var c = _createRestClient();
             var req = _createRestRequest(resource, parameter);
 
@@ -192,35 +223,15 @@ namespace Billbee.Api.Client
         #endregion
 
         #region post
-        
-        public async Task<string> PostAsync(
-            string resource,
-            NameValueCollection parameter = null,
-            List<FileParam> files = null,
-            ParameterType paramType = ParameterType.QueryString,
-            string acceptHeaderValue = "application/json")
-        {
-            var c = _createRestClient();
-            var req = _createRestRequest(resource, parameter, paramType, acceptHeaderValue);
 
-            if (files != null)
-            {
-                foreach (var f in files)
-                {
-                    req.AddFile(f.Name, f.Data, f.FileName, f.ContentType);
-                }
-            }
-
-            var response = await c.ExecutePostAsync(req).ConfigureAwait(false);
-            _throwWhenErrResponse(response, resource);
-            return response.Content;
-        }
         private string Post(
             string resource,
             NameValueCollection parameter = null,
             List<FileParam> files = null,
             ParameterType paramType = ParameterType.QueryString)
         {
+            _checkWriteAccess();
+            
             var c = _createRestClient();
             var req = _createRestRequest(resource, parameter, paramType);
 
@@ -243,12 +254,68 @@ namespace Billbee.Api.Client
             List<FileParam> files = null,
             ParameterType paramType = ParameterType.QueryString)
         {
+            _checkWriteAccess();
+            
             var resStr = Post(resource, parameter, files, paramType);
             return JsonConvert.DeserializeObject<T>(resStr);
         }
+        
+        public string Post(string resource, dynamic data)
+        {
+            _checkWriteAccess();
+            
+            var c = _createRestClient();
+            var req = _createRestRequest(resource, null);
+            req.AddBody(data);
+            var response = c.Post(req);
+            _throwWhenErrResponse(response, resource);
+            return response.Content;
+        }
 
+        public T Post<T>(string resource, dynamic data, NameValueCollection parameters = null) where T : new()
+        {
+            _checkWriteAccess();
+            
+            var c = _createRestClient();
+            var req = parameters != null
+                ? _createRestRequest(resource, parameters)
+                : _createRestRequest(resource, null);
+            req.AddBody(data);
+            var response = c.Post<T>(req);
+            _throwWhenErrResponse(response, resource);
+
+            return JsonConvert.DeserializeObject<T>(response.Content);
+        }
+
+        public async Task<string> PostAsync(
+            string resource,
+            NameValueCollection parameter = null,
+            List<FileParam> files = null,
+            ParameterType paramType = ParameterType.QueryString,
+            string acceptHeaderValue = "application/json")
+        {
+            _checkWriteAccess();
+            
+            var c = _createRestClient();
+            var req = _createRestRequest(resource, parameter, paramType, acceptHeaderValue);
+
+            if (files != null)
+            {
+                foreach (var f in files)
+                {
+                    req.AddFile(f.Name, f.Data, f.FileName, f.ContentType);
+                }
+            }
+
+            var response = await c.ExecutePostAsync(req).ConfigureAwait(false);
+            _throwWhenErrResponse(response, resource);
+            return response.Content;
+        }
+        
         public async Task<string> PostAsync(string resource, dynamic data)
         {
+            _checkWriteAccess();
+            
             var c = _createRestClient();
             var req = _createRestRequest(resource, null);
             req.AddBody(data);
@@ -263,6 +330,8 @@ namespace Billbee.Api.Client
             NameValueCollection parameter = null,
             ParameterType paramType = ParameterType.QueryString) where T : new()
         {
+            _checkWriteAccess();
+            
             var c = _createRestClient();
             var req = _createRestRequest(resource, parameter);
             if (data != null)
@@ -272,29 +341,6 @@ namespace Billbee.Api.Client
             return response.Data;
         }
 
-        public string Post(string resource, dynamic data)
-        {
-            var c = _createRestClient();
-            var req = _createRestRequest(resource, null);
-            req.AddBody(data);
-            var response = c.Post(req);
-            _throwWhenErrResponse(response, resource);
-            return response.Content;
-        }
-
-        public T Post<T>(string resource, dynamic data, NameValueCollection parameters = null) where T : new()
-        {
-            var c = _createRestClient();
-            var req = parameters != null
-                ? _createRestRequest(resource, parameters)
-                : _createRestRequest(resource, null);
-            req.AddBody(data);
-            var response = c.Post<T>(req);
-            _throwWhenErrResponse(response, resource);
-
-            return JsonConvert.DeserializeObject<T>(response.Content);
-        }
-        
         #endregion
 
         #region delete
@@ -304,6 +350,8 @@ namespace Billbee.Api.Client
             NameValueCollection parameter = null,
             ParameterType paramType = ParameterType.QueryString)
         {
+            _checkWriteAccess();
+            
             var c = _createRestClient();
             var req = _createRestRequest(resource, parameter, paramType);
             var response = c.Delete(req);
@@ -313,8 +361,26 @@ namespace Billbee.Api.Client
         #endregion
 
         #region private methods
+
+        private void _checkReadAccess()
+        {
+            if (!_allowRead)
+            {
+                throw new UnauthorizedAccessException(
+                    "RestClient was configured without required read permission");
+            }
+        }
         
-         /// <summary>
+        private void _checkWriteAccess()
+        {
+            if (!_allowWrite)
+            {
+                throw new UnauthorizedAccessException(
+                    "RestClient was configured without required write permission");
+            }
+        }
+        
+        /// <summary>
         /// Retries a network request up to 4 times when throttled
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -397,6 +463,7 @@ namespace Billbee.Api.Client
             }
             catch
             {
+                // left intentionally blank
             }
 
             errMsg = errMsg ?? ($"Anfrage fehlgeschlagen: {response.StatusCode} {response.StatusDescription}");
