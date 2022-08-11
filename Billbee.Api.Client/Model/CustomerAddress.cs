@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Billbee.Api.Client.Enums;
-
-namespace Billbee.Api.Client.Model
+﻿namespace Billbee.Api.Client.Model
 {
     public class CustomerAddress
     {

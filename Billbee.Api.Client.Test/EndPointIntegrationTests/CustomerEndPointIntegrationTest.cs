@@ -70,8 +70,6 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
         {
             var customer = CrudHelpers.CreateApiResult(c => IntegrationTestHelpers.ApiClient.Customer.AddCustomer(c),
                 TestData.Customer);
-            Assert.IsNotNull(customer);
-            Assert.IsNotNull(customer.Data);
             Assert.IsNotNull(customer.Data.Id);
 
             var address = CrudHelpers.GetAll(() =>
@@ -91,8 +89,6 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
         {
             var customer = CrudHelpers.CreateApiResult(c => IntegrationTestHelpers.ApiClient.Customer.AddCustomer(c),
                 TestData.Customer);
-            Assert.IsNotNull(customer);
-            Assert.IsNotNull(customer.Data);
             Assert.IsNotNull(customer.Data.Id);
 
             var address = CrudHelpers.GetAll(() =>
@@ -116,8 +112,6 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
         {
             var customer = CrudHelpers.CreateApiResult(c => IntegrationTestHelpers.ApiClient.Customer.AddCustomer(c),
                 TestData.Customer);
-            Assert.IsNotNull(customer);
-            Assert.IsNotNull(customer.Data);
             Assert.IsNotNull(customer.Data.Id);
 
             var address = CrudHelpers.GetAll(() =>
@@ -145,8 +139,6 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
         {
             var customer = CrudHelpers.CreateApiResult(c => IntegrationTestHelpers.ApiClient.Customer.AddCustomer(c),
                 TestData.Customer);
-            Assert.IsNotNull(customer);
-            Assert.IsNotNull(customer.Data);
             Assert.IsNotNull(customer.Data.Id);
 
             CrudHelpers.GetOneApiResult<Customer>((id) => IntegrationTestHelpers.ApiClient.Customer.GetCustomer(id),
@@ -159,15 +151,11 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
         {
             var result = CrudHelpers.CreateApiResult(c => IntegrationTestHelpers.ApiClient.Customer.AddCustomer(c),
                 TestData.Customer);
-            Assert.IsNotNull(result);
-            Assert.IsNotNull(result.Data);
             Assert.IsNotNull(result.Data.Id);
             
             result = CrudHelpers.GetOneApiResult<Customer>(
                 (id) => IntegrationTestHelpers.ApiClient.Customer.GetCustomer(id), result.Data.Id.Value);
             var customer = result.Data;
-            Assert.IsNotNull(result);
-            Assert.IsNotNull(result.Data);
             Assert.IsNotNull(result.Data.Id);
 
             Assert.AreNotEqual("Modified", customer.Name);
@@ -185,13 +173,10 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
         {
             var customer = CrudHelpers.CreateApiResult(c => IntegrationTestHelpers.ApiClient.Customer.AddCustomer(c),
                 TestData.Customer);
-            Assert.IsNotNull(customer);
-            Assert.IsNotNull(customer.Data);
             Assert.IsNotNull(customer.Data.Id);
 
             CrudHelpers.GetAll(() =>
-                    IntegrationTestHelpers.ApiClient.Customer.GetOrdersForCustomer(customer.Data.Id.Value, 1, 5)).Data
-                .FirstOrDefault();
+                    IntegrationTestHelpers.ApiClient.Customer.GetOrdersForCustomer(customer.Data.Id.Value, 1, 5));
         }
 
         [TestMethod]
@@ -200,8 +185,6 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
         {
             var customer = CrudHelpers.CreateApiResult(c => IntegrationTestHelpers.ApiClient.Customer.AddCustomer(c),
                 TestData.Customer);
-            Assert.IsNotNull(customer);
-            Assert.IsNotNull(customer.Data);
             Assert.IsNotNull(customer.Data.Id);
 
             var result = CrudHelpers.GetAll(() =>

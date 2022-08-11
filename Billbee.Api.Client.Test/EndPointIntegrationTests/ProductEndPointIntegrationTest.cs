@@ -187,7 +187,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
             var createdProduct = _createProduct();
             Assert.IsNotNull(createdProduct.Id);
             
-            Assert.AreEqual(null, createdProduct.StockCurrent);
+            Assert.IsNull(createdProduct.StockCurrent);
 
             var updateStock = new UpdateStock
             {

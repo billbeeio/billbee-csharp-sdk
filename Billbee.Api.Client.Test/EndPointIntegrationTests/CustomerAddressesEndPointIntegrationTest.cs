@@ -47,9 +47,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
         [RequiresApiAccess]
         public void CustomerAddresses_GetCustomerAddresses_IntegrationTest()
         {
-            var result = CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.CustomerAddresses.GetCustomerAddresses(1, 5));
-            Assert.IsNotNull(result);
-            Assert.IsNotNull(result.Data);
+            CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.CustomerAddresses.GetCustomerAddresses(1, 5));
         }
 
         [TestMethod]
