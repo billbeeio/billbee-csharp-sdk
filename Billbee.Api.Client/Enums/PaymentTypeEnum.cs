@@ -124,5 +124,6 @@
         MollieKlarnaRatenkauf = 127,
         MollieKlarnaSliceit = 128,
         GooglePay = 129,
+        MollieKlarnaPayNow = 130
     }
 }
