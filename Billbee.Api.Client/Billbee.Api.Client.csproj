@@ -2,13 +2,13 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
-        <PackageVersion>2.3.0.0</PackageVersion>
+        <PackageVersion>2.4.0.0</PackageVersion>
         <Title>Billbee.Api.Client</Title>
         <Authors>Billbee GmbH</Authors>
         <Copyright>Copyright©, 2022 by Billbee GmbH</Copyright>
         <Company>Billbee GmbH</Company>
-        <AssemblyVersion>2.3.0.0</AssemblyVersion>
-        <FileVersion>2.3.0.0</FileVersion>
+        <AssemblyVersion>2.4.0.0</AssemblyVersion>
+        <FileVersion>2.4.0.0</FileVersion>
         <Description>Client SDK for the Billbee API</Description>
         <RepositoryUrl>https://github.com/billbeeio/billbee-csharp-sdk</RepositoryUrl>
         <RepositoryType>git</RepositoryType>

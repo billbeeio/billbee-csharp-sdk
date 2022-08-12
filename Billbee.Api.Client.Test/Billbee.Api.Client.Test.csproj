@@ -4,6 +4,12 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <Title>Billbee.Api.Client.Test</Title>
+        <Authors>Billbee GmbH</Authors>
+        <Copyright>Copyright©, 2022 by Billbee GmbH</Copyright>
+        <Company>Billbee GmbH</Company>
+        <AssemblyVersion>2.4.0.0</AssemblyVersion>
+        <FileVersion>2.4.0.0</FileVersion>
 
         <IsPackable>false</IsPackable>
     </PropertyGroup>
