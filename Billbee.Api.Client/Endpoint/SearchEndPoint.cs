@@ -19,9 +19,9 @@ namespace Billbee.Api.Client.EndPoint
         }
 
         [ApiMapping("/api/v1/search", HttpOperation.Post)]
-        public ApiResult<SearchResult> SearchTerm(Search search)
+        public SearchResult SearchTerm(Search search)
         {
-            return _restClient.Post<ApiResult<SearchResult>>($"/search", search );
+            return _restClient.Post<SearchResult>($"/search", search );
         }
     }
 }
