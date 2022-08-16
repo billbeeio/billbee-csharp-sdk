@@ -21,14 +21,13 @@ public class SearchEndPointTest
             Type = new List<string> { "customer", "order" }
         };
         
-        Expression<Func<IBillbeeRestClient, object>> expression = x => x.Post<ApiResult<SearchResult>>($"/search", search, null);
-        object mockResult = TestHelpers.GetApiResult(testSearchResult);
+        Expression<Func<IBillbeeRestClient, object>> expression = x => x.Post<SearchResult>($"/search", search, null);
+        object mockResult = testSearchResult;
         TestHelpers.RestClientMockTest(expression, mockResult, (restClient) =>
         {
             var uut = new SearchEndPoint(restClient);
             var result = uut.SearchTerm(search);
             Assert.IsNotNull(result);
-            Assert.IsNotNull(result.Data);
         });
     }
 

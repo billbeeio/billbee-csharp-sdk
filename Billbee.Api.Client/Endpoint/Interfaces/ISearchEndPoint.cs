@@ -12,6 +12,6 @@ namespace Billbee.Api.Client.Endpoint.Interfaces
         /// </summary>
         /// <param name="search">search parameters</param>
         /// <returns>The result of the search</returns>
-        ApiResult<SearchResult> SearchTerm(Search search);
+        SearchResult SearchTerm(Search search);
     }
 }

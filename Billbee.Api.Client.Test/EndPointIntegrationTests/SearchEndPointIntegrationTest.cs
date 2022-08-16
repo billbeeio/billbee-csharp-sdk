@@ -33,8 +33,7 @@ public class SearchEndPointIntegrationTest
         };
         var result = IntegrationTestHelpers.ApiClient.Search.SearchTerm(search);
         Assert.IsNotNull(result);
-        Assert.IsNotNull(result.Data);
-        Assert.IsNotNull(result.Data.Customers);
-        Assert.IsTrue(result.Data.Customers.Count > 0);
+        Assert.IsNotNull(result.Customers);
+        Assert.IsTrue(result.Customers.Count > 0);
     }
 }
