@@ -91,12 +91,12 @@ namespace Billbee.Api.Client.Model
         /// <summary>
         /// Addressee of the invoice
         /// </summary>
-        public Address InvoiceAddress { get; set; }
+        public OrderAddress InvoiceAddress { get; set; }
 
         /// <summary>
         /// Addressee, where the order was/is shipped to
         /// </summary>
-        public Address ShippingAddress { get; set; }
+        public OrderAddress ShippingAddress { get; set; }
 
         /// <summary>
         /// The payment method, used to pay this order
