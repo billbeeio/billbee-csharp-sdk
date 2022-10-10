@@ -119,8 +119,6 @@ namespace Billbee.Api.Client.Model
         public List<OrderItem> OrderItems { get; set; }
 
         public string Currency { get; set; }
-        public bool IsCanceled { get; set; }
-        public string RestfulPath { get; set; }
         public OrderUser Seller { get; set; }
         public OrderUser Buyer { get; set; }
         public DateTime? UpdatedAt { get; set; }
@@ -225,5 +223,52 @@ namespace Billbee.Api.Client.Model
         /// List of payments, associated with this order
         /// </summary>
         public List<OrderPayment> Payments { get; set; }
+        
+        public decimal AdjustmentCost { get; set; }
+        public string AdjustmentReason { get; set; }
+        
+        /// <summary>
+        /// If set, the order was already archived at the given date. Further modification is disabled.
+        /// </summary>
+        public DateTime? ArchivedAt { get; }
+        
+        /// <summary>
+        /// The vat-id, that was given by the customer to fulfill this order
+        /// </summary>
+        public string CustomerVatId { get; set; }
+
+        /// <summary>An optional code for the distribution center delivering this order</summary>
+        public string DistributionCenter { get; set; }
+        
+        /// <summary>
+        /// Date of the last update, the order got
+        /// </summary>
+        public DateTime? LastModifiedAt { get; }
+        
+        /// <summary>
+        /// The vat-id, that should be displayed on the invoice and other order documents
+        /// </summary>
+        public string MerchantVatId { get; set; }
+        
+        ///// <summary>
+        ///// List of history events of this order
+        ///// </summary>
+        public List<HistoryEntry> History { get; }
+        
+        public decimal RebateDifference { get; }
+        
+        /// <summary>
+        /// If set, the order was restored from the archive at the given date.
+        /// </summary>
+        public DateTime? RestoredAt { get; }
+    }
+    
+    public class HistoryEntry
+    {
+        public DateTime Created { get; set; }
+        public string EventTypeName { get; set; }
+        public string Text { get; set; }
+        public string EmployeeName { get; set; }
+        public int? TypeId { get; set; }
     }
 }

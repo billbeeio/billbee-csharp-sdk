@@ -8,13 +8,12 @@
         /// <summary>
         /// Internal id of this address
         /// </summary>
-        public string Id { get; set; }
+        public string BillbeeId { get; set; }
 
         public string City { get; set; }
         public string Street { get; set; }
         public string Company { get; set; }
         public string Line2 { get; set; }
-        public string Line3 { get; set; }
         public string Zip { get; set; }
         public string State { get; set; }
 
@@ -42,11 +41,6 @@
         public string Email { get; set; }
 
         public string HouseNumber { get; set; }
-
-        /// <summary>
-        /// A comment about the address for better differentiation
-        /// </summary>
-        public string Comment { get; set; }
 
         public string NameAddition { get; set; }
     }
