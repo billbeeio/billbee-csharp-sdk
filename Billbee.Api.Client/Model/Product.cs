@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Billbee.Api.Client.Model
 {
@@ -138,11 +139,30 @@ namespace Billbee.Api.Client.Model
         public byte? Recipient { get; set; }
         public byte? Occasion { get; set; }
         public string CountryOfOrigin { get; set; }
+        
+        [Obsolete("Use ExportDescriptionMultiLanguage instead.")]
         public string ExportDescription { get; set; }
+        public List<MultiLanguageString> ExportDescriptionMultiLanguage { get; set; } = new List<MultiLanguageString>();
+        
         public string TaricNumber { get; set; }
 
         public List<AtticleCustomFieldValue> CustomFields { get; set; } = new List<AtticleCustomFieldValue>();
         
         public bool? IsDeactivated { get; set; }
+        
+        public List<BomSubArticleApiModel> BillOfMaterial { get; set; }
+        public byte? Condition { get; set; }
+        public decimal? WidthCm { get; set; }
+        public decimal? LengthCm { get; set; }
+        public decimal? HeightCm { get; set; }
+
+        public bool LowStock { get; }
+    }
+
+    public class BomSubArticleApiModel
+    {
+        public decimal Amount { get; set; }
+        public long? ArticleId { get; set; }
+        public string SKU { get; set; }
     }
 }
