@@ -124,6 +124,10 @@
         MollieKlarnaRatenkauf = 127,
         MollieKlarnaSliceit = 128,
         GooglePay = 129,
-        MollieKlarnaPayNow = 130
+        MollieKlarnaPayNow = 130,
+        MultiSafepay = 131,
+        Ratepay_Rechnung = 132,
+        HoodPay = 133,
+        Quickpay = 134,
     }
 }
