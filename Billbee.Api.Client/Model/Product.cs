@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Billbee.Api.Client.Model
 {
@@ -156,7 +157,8 @@ namespace Billbee.Api.Client.Model
         public decimal? LengthCm { get; set; }
         public decimal? HeightCm { get; set; }
 
-        public bool LowStock { get; }
+        [JsonProperty("LowStock")]
+        public bool IsLowStock { get; set; }
     }
 
     public class BomSubArticleApiModel
