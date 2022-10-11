@@ -230,7 +230,7 @@ namespace Billbee.Api.Client.Model
         /// <summary>
         /// If set, the order was already archived at the given date. Further modification is disabled.
         /// </summary>
-        public DateTime? ArchivedAt { get; }
+        public DateTime? ArchivedAt { get; set; }
         
         /// <summary>
         /// The vat-id, that was given by the customer to fulfill this order
@@ -243,24 +243,24 @@ namespace Billbee.Api.Client.Model
         /// <summary>
         /// Date of the last update, the order got
         /// </summary>
-        public DateTime? LastModifiedAt { get; }
+        public DateTime? LastModifiedAt { get; set; }
         
         /// <summary>
         /// The vat-id, that should be displayed on the invoice and other order documents
         /// </summary>
         public string MerchantVatId { get; set; }
         
-        ///// <summary>
-        ///// List of history events of this order
-        ///// </summary>
-        public List<HistoryEntry> History { get; }
+        /// <summary>
+        /// List of history events of this order
+        /// </summary>
+        public List<HistoryEntry> History { get; set; }
         
-        public decimal RebateDifference { get; }
+        public decimal RebateDifference { get; set; }
         
         /// <summary>
         /// If set, the order was restored from the archive at the given date.
         /// </summary>
-        public DateTime? RestoredAt { get; }
+        public DateTime? RestoredAt { get; set; }
     }
     
     public class HistoryEntry
