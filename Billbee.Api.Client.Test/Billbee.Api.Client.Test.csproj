@@ -8,8 +8,8 @@
         <Authors>Billbee GmbH</Authors>
         <Copyright>Copyright©, 2022 by Billbee GmbH</Copyright>
         <Company>Billbee GmbH</Company>
-        <AssemblyVersion>2.4.0.0</AssemblyVersion>
-        <FileVersion>2.4.0.0</FileVersion>
+        <AssemblyVersion>2.4.1.0</AssemblyVersion>
+        <FileVersion>2.4.1.0</FileVersion>
 
         <IsPackable>false</IsPackable>
     </PropertyGroup>
