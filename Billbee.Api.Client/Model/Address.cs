@@ -8,7 +8,7 @@
         /// <summary>
         /// Internal id of this address
         /// </summary>
-        public string BillbeeId { get; set; }
+        public long BillbeeId { get; set; }
 
         public string City { get; set; }
         public string Street { get; set; }
