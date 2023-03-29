@@ -12,7 +12,7 @@ To get an API key, send a mail to [support@billbee.de](mailto:support@billbee.de
 Download this package and decompress the solution to a place of your choice.
 If you don't want to compile by yourself, feel free, to use our NuGet package.
 ```Bash
-PM> Install-Package Billbee.Api.Client -Version 1.0.1
+PM> Install-Package Billbee.Api.Client -Version 2.4.1
 ```
 
 ## Official API Documentation
