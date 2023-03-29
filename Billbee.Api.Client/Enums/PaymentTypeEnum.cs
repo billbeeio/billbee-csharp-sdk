@@ -129,5 +129,8 @@
         Ratepay_Rechnung = 132,
         HoodPay = 133,
         Quickpay = 134,
+        PayPal_PayLater = 135,
+        Kaufland = 136,
+        MollieBankUeberweisung = 137
     }
 }
