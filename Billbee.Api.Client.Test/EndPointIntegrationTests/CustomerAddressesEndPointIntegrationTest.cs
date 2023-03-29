@@ -23,6 +23,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests.Helpers
         {
             var address = CustomerAddress;
             address.CustomerId = customerId;
+            address.Street = Guid.NewGuid().ToString();
             return address;
         }
     }
