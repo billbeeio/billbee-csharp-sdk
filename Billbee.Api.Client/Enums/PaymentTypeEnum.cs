@@ -131,6 +131,7 @@
         Quickpay = 134,
         PayPal_PayLater = 135,
         Kaufland = 136,
-        MollieBankUeberweisung = 137
+        MollieBankUeberweisung = 137,
+        Lena = 138
     }
 }
