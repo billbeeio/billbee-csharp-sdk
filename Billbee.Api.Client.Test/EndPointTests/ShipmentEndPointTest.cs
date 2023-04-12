@@ -9,6 +9,7 @@ using Moq;
 namespace Billbee.Api.Client.Test.EndPointTests;
 
 [TestClass]
+[TestCategory(TestCategories.EndpointTests)]
 public class ShipmentEndPointTest
 {
     [TestMethod]

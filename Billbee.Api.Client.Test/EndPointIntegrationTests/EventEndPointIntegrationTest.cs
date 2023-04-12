@@ -3,6 +3,7 @@
 namespace Billbee.Api.Client.Test.EndPointIntegrationTests;
 
 [TestClass]
+[TestCategory(TestCategories.IntegrationTests)]
 public class EventEndPointIntegrationTest
 {
 #pragma warning disable CS8618

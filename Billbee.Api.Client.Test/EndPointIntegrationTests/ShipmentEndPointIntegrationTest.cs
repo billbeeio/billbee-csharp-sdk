@@ -6,7 +6,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests.Helpers
 {
     public static partial class TestData
     {
-        public static ShipmentWithLabel GetShipmentWithLabel(long orderId, string printerName, long productId, long providerId) => new ShipmentWithLabel
+        public static ShipmentWithLabel GetShipmentWithLabel(long orderId, string? printerName, long productId, long providerId) => new ShipmentWithLabel
         {
             OrderId = orderId,
             Dimension = new ShipmentDimensions
@@ -24,7 +24,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests.Helpers
             ChangeStateToSend = true,
         };
 
-        public static PostShipment GetPostShipment(string printerName, string providerName, byte shippingCarrier, string productCode) =>
+        public static PostShipment GetPostShipment(string? printerName, string providerName, byte shippingCarrier, string productCode) =>
             new PostShipment
             {
                 Dimension = new ShipmentDimensions
@@ -63,6 +63,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests.Helpers
 namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 {
     [TestClass]
+    [TestCategory(TestCategories.IntegrationTests)]
     public class ShipmentEndPointIntegrationTest
     {
 #pragma warning disable CS8618
@@ -95,17 +96,29 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
         {
             var provider = CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.Shipment.GetShippingProvider())
                 .First();
-            var printer = CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.CloudStorages.GetCloudStorageList())
-                .Data
-                .First(x => x.UsedAsPrinter);
 
-            var orderId = CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.Orders.GetOrderList()).Data.First()
-                .BillBeeOrderId;
+            var customer =
+                CrudHelpers.CreateApiResult(c => IntegrationTestHelpers.ApiClient.Customer.AddCustomer(c),
+                    TestData.Customer).Data;
+            var customerAddress =
+                CrudHelpers.CreateApiResult(
+                    a => IntegrationTestHelpers.ApiClient.CustomerAddresses.AddCustomerAddress(a),
+                    TestData.GetCustomerAddress(customer.Id)).Data;
+            var extRef = Guid.NewGuid().ToString();
+            var testOrder = TestData.Order;
+            testOrder.Customer = customer;
+            Assert.IsNotNull(customerAddress.Id);
+            var address = new Address{ BillbeeId = customerAddress.Id.Value.ToString() };
+            testOrder.InvoiceAddress = address;
+            testOrder.ShippingAddress = address;
+            
+            var order = new OrderEndPointIntegrationTest().CreateOrder(testOrder, extRef);
+            var orderId = order.BillBeeOrderId;
             Assert.IsNotNull(orderId);
             var providerId = provider.id;
             var productId = provider.products.First().id;
 
-            var shipmentWithLabel = TestData.GetShipmentWithLabel(orderId.Value, printer.Name, productId, providerId);
+            var shipmentWithLabel = TestData.GetShipmentWithLabel(orderId.Value, null, productId, providerId);
             var result = CrudHelpers.CreateApiResult(
                 s => IntegrationTestHelpers.ApiClient.Shipment.ShipOrderWithLabel(s), shipmentWithLabel, false);
             Assert.AreEqual(shipmentWithLabel.OrderId, result.Data.OrderId);
@@ -117,15 +130,12 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
         {
             var provider = CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.Shipment.GetShippingProvider())
                 .First();
-            var printer = CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.CloudStorages.GetCloudStorageList())
-                .Data
-                .First(x => x.UsedAsPrinter);
-            var carrier = CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.Shipment.GetShippingCarriers())
-                .First();
+            var carrier = CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.Shipment.GetShippingCarriers()).FirstOrDefault(x => x.Name == "dhl");
             var carriers = IntegrationTestHelpers.ApiClient.Shipment.GetShippingCarriers().Select(x => $"{x.Id}:{x.Name}");
             Console.WriteLine(carriers);
 
-            var postShipment = TestData.GetPostShipment(printer.Name, provider.name, carrier.Id, provider.products.First().productName);
+            Assert.IsNotNull(carrier);
+            var postShipment = TestData.GetPostShipment(null, provider.name, carrier.Id, provider.products.First().productName);
             var shipment = CrudHelpers.CreateApiResult(x => IntegrationTestHelpers.ApiClient.Shipment.PostShipment(x),
                 postShipment, false);
             Console.WriteLine($"Shipment created, ShippingId={shipment.Data.ShippingId}");

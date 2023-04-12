@@ -7,6 +7,7 @@ using JsonSerializer = System.Text.Json.JsonSerializer;
 namespace Billbee.Api.Client.Test.EndPointIntegrationTests;
 
 [TestClass]
+[TestCategory(TestCategories.IntegrationTests)]
 public class SearchEndPointIntegrationTest
 {
 #pragma warning disable CS8618

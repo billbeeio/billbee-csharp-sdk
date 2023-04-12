@@ -36,11 +36,11 @@ public static class IntegrationTestHelpers
                 var fiDll = new FileInfo(Assembly.GetExecutingAssembly().Location);
                 Assert.IsNotNull(fiDll.Directory);
                 var di = new DirectoryInfo(Path.Combine(fiDll.Directory.FullName, "../../../"));
-                var path = Path.Combine(di.FullName, "config.prod");
-                if (!File.Exists(path + ".json"))
+                var path = Path.Combine(di.FullName, "config.integration-tests.json");
+                if (!File.Exists(path))
                 {
                     Assert.Fail(
-                        $"This test requires api-access, but the required config-file could not be found: '{path}.json'");
+                        $"This test requires api-access, but the required config-file could not be found: '{path}'");
                 }
 
                 _apiClient = new ApiClient(path, null, IntegrationTestSettings.AllowReadWriteAccessToBillbeeApi);
