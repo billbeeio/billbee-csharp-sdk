@@ -6,6 +6,7 @@ using Billbee.Api.Client.Model;
 namespace Billbee.Api.Client.Test.EndPointTests;
 
 [TestClass]
+[TestCategory(TestCategories.EndpointTests)]
 public class CustomerAddressesEndPointTest
 {
     [TestMethod]

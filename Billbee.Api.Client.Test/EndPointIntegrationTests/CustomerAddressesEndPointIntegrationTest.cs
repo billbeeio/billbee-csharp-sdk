@@ -23,6 +23,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests.Helpers
         {
             var address = CustomerAddress;
             address.CustomerId = customerId;
+            address.Street = Guid.NewGuid().ToString().Replace("-", "");
             return address;
         }
     }
@@ -31,6 +32,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests.Helpers
 namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 {
     [TestClass]
+    [TestCategory(TestCategories.IntegrationTests)]
     public class CustomerAddressesEndPointIntegrationTest
     {
 #pragma warning disable CS8618

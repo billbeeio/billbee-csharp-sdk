@@ -23,6 +23,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests.Helpers
 namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 {
     [TestClass]
+    [TestCategory(TestCategories.IntegrationTests)]
     public class WebhookEndPointIntegrationTest
     {
 #pragma warning disable CS8618

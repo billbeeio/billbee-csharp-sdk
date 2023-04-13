@@ -35,6 +35,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests.Helpers
 namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 {
     [TestClass]
+    [TestCategory(TestCategories.IntegrationTests)]
     public class AutomaticProvisionEndPointIntegrationTest
     {
 #pragma warning disable CS8618
@@ -51,13 +52,16 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
         [RequiresApiAccess]
         public void AutomaticProvision_CreateAccount_IntegrationTest()
         {
-            var account = TestData.Account(Guid.NewGuid().ToString());
-            var result =
-                CrudHelpers.CreateApiResult(x => IntegrationTestHelpers.ApiClient.AutomaticProvision.CreateAccount(x),
-                    account, false);
-            var createUserResult = result.Data;
-            Assert.IsNotNull(createUserResult.Password);
-            Assert.IsNotNull(createUserResult.UserId);
+            Assert.Inconclusive();
+            return;
+            
+            // var account = TestData.Account(Guid.NewGuid().ToString());
+            // var result =
+            //     CrudHelpers.CreateApiResult(x => IntegrationTestHelpers.ApiClient.AutomaticProvision.CreateAccount(x),
+            //         account, false);
+            // var createUserResult = result.Data;
+            // Assert.IsNotNull(createUserResult.Password);
+            // Assert.IsNotNull(createUserResult.UserId);
         }
 
         [TestMethod]

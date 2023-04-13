@@ -6,36 +6,39 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests.Helpers
 {
     public static partial class TestData
     {
-        public static Product Product => new Product
+        public static Product GetProduct()
         {
-            Title = new List<MultiLanguageString>
+            return new Product
             {
-                new MultiLanguageString()
+                Title = new List<MultiLanguageString>
                 {
-                    Text = "the Title",
-                    LanguageCode = "de"
-                }
-            },
-            Type = 0,
-            Images = new List<ArticleImage>(),
-            InvoiceText = new List<MultiLanguageString>
-            {
-                new MultiLanguageString()
+                    new MultiLanguageString()
+                    {
+                        Text = "the Title",
+                        LanguageCode = "de"
+                    }
+                },
+                Type = 0,
+                Images = new List<ArticleImage>(),
+                InvoiceText = new List<MultiLanguageString>
                 {
-                    Text = "invoice text",
-                    LanguageCode = "de"
-                }
-            },
-            SKU = "4711",
-            Description = new List<MultiLanguageString>
-            {
-                new MultiLanguageString
+                    new MultiLanguageString()
+                    {
+                        Text = "invoice text",
+                        LanguageCode = "de"
+                    }
+                },
+                SKU = Guid.NewGuid().ToString(),
+                Description = new List<MultiLanguageString>
                 {
-                    Text = "desc",
-                    LanguageCode = "de"
+                    new MultiLanguageString
+                    {
+                        Text = "desc",
+                        LanguageCode = "de"
+                    }
                 }
-            }
-        };
+            };
+        }
 
         public static ArticleImage ArticleImage => new ArticleImage
         {
@@ -54,6 +57,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests.Helpers
 namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 {
     [TestClass]
+    [TestCategory(TestCategories.IntegrationTests)]
     public class ProductEndPointIntegrationTest
     {
 #pragma warning disable CS8618
@@ -92,13 +96,14 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
         [RequiresApiAccess]
         public void Product_AddProduct_IntegrationTest()
         {
+            var testProduct = TestData.GetProduct();
             var result = CrudHelpers.CreateApiResult(w => IntegrationTestHelpers.ApiClient.Products.AddProduct(w),
-                TestData.Product);
+                testProduct);
             var product = result.Data;
             Assert.IsNotNull(product);
             Assert.IsNotNull(product.Id);
-            Assert.AreEqual(TestData.Product.SKU, product.SKU);
-            Assert.AreEqual(TestData.Product.Title.First().Text, product.Title.First().Text);
+            Assert.AreEqual(testProduct.SKU, product.SKU);
+            Assert.AreEqual(testProduct.Title.First().Text, product.Title.First().Text);
 
             // cleanup
             CrudHelpers.DeleteOne<Product>((id) => IntegrationTestHelpers.ApiClient.Products.DeleteProduct(id),
@@ -131,27 +136,28 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
         [RequiresApiAccess]
         public void Product_UpdateStockMultiple_IntegrationTest()
         {
-            var product1 = _createProduct("4711");
+            var product1 = _createProduct();
             Assert.IsNotNull(product1.Id);
-            var product2 = _createProduct("4712");
+            var product2 = _createProduct();
             Assert.IsNotNull(product2.Id);
             
             Assert.AreEqual(null, product1.StockCurrent);
             Assert.AreEqual(null, product2.StockCurrent);
 
+            const int newQuantity = 1;
             var updateStocks = new List<UpdateStock>
             {
                 new UpdateStock
                 {
                     Reason = "Wareneingang",
                     Sku = product1.SKU,
-                    NewQuantity = 1
+                    NewQuantity = newQuantity
                 },
                 new UpdateStock
                 {
                     Reason = "Wareneingang",
                     Sku = product2.SKU,
-                    NewQuantity = 1
+                    NewQuantity = newQuantity
                 }
             };
 
@@ -165,13 +171,15 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
                 product1.Id.ToString()!);
             var updatedProduct1 = updatedProduct1Result.Data;
             Assert.IsNotNull(updatedProduct1);
-            Assert.AreEqual(1, updatedProduct1.StockCurrent);
+            Assert.AreEqual(1, updatedProduct1.Stocks.Count);
+            Assert.AreEqual(newQuantity, updatedProduct1.Stocks.Single().StockCurrent);
             
             var updatedProduct2Result = CrudHelpers.GetOneApiResult<Product>((id) => IntegrationTestHelpers.ApiClient.Products.GetProduct(id),
                 product2.Id.ToString()!);
             var updatedProduct2 = updatedProduct2Result.Data;
             Assert.IsNotNull(updatedProduct2);
-            Assert.AreEqual(1, updatedProduct2.StockCurrent);
+            Assert.AreEqual(1, updatedProduct2.Stocks.Count);
+            Assert.AreEqual(newQuantity, updatedProduct2.Stocks.Single().StockCurrent);
             
             // cleanup
             CrudHelpers.DeleteOne<Product>((id) => IntegrationTestHelpers.ApiClient.Products.DeleteProduct(id),
@@ -189,11 +197,12 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
             
             Assert.IsNull(createdProduct.StockCurrent);
 
+            const int newQuantity = 10;
             var updateStock = new UpdateStock
             {
-                OldQuantity = 0,
-                NewQuantity = 1,
-                Sku = TestData.Product.SKU,
+                OldQuantity = null,
+                NewQuantity = newQuantity,
+                Sku = createdProduct.SKU,
                 Reason = "Wareneingang"
             };
             var updateStockResult = CrudHelpers.CreateApiResult(x => IntegrationTestHelpers.ApiClient.Products.UpdateStock(x), updateStock, false);
@@ -203,7 +212,8 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
                 createdProduct.Id.ToString()!);
             var updatedProduct = updatedProductResult.Data;
             Assert.IsNotNull(updatedProduct);
-            Assert.AreEqual(1, updatedProduct.StockCurrent);
+            Assert.AreEqual(1, updatedProduct.Stocks.Count);
+            Assert.AreEqual(newQuantity, updatedProduct.Stocks.Single().StockCurrent);
             
             // cleanup
             CrudHelpers.DeleteOne<Product>((id) => IntegrationTestHelpers.ApiClient.Products.DeleteProduct(id),
@@ -234,11 +244,12 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
             var createdProduct = _createProduct();
             Assert.IsNotNull(createdProduct.Id);
             Assert.IsTrue(string.IsNullOrEmpty(createdProduct.StockCode));
-            
+
+            var newStockCode = "bar";
             var updateStockCode = new UpdateStockCode
             {
-                Sku = "4711",
-                StockCode = "bar"
+                Sku = createdProduct.SKU,
+                StockCode = newStockCode
             };
             var updateResult = IntegrationTestHelpers.ApiClient.Products.UpdateStockCode(updateStockCode);
             Assert.IsNotNull(updateResult);
@@ -246,7 +257,10 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
             
             var getResult = CrudHelpers.GetOneApiResult<Product>((id) => IntegrationTestHelpers.ApiClient.Products.GetProduct(id),
                 createdProduct.Id.ToString()!);
-            Assert.AreEqual("bar", getResult.Data.StockCode);
+            Assert.IsNotNull(getResult);
+            Assert.IsNotNull(getResult.Data);
+            Assert.AreEqual(1, getResult.Data.Stocks.Count);
+            Assert.AreEqual(newStockCode, getResult.Data.Stocks.Single().StockCode);
             
             // cleanup
             CrudHelpers.DeleteOne<Product>((id) => IntegrationTestHelpers.ApiClient.Products.DeleteProduct(id),
@@ -312,7 +326,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
         {
             var createdProduct = _createProduct();
             Assert.IsNotNull(createdProduct.Id);
-            Assert.AreEqual(TestData.Product.Description.First().Text, createdProduct.Description.First().Text);
+            Assert.AreEqual(TestData.GetProduct().Description.First().Text, createdProduct.Description.First().Text);
             
             var fieldsToPatch = new Dictionary<string, string>
             {
@@ -498,13 +512,9 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
                 createdProduct.Id.Value);
         }
 
-        private Product _createProduct(string sku = null!)
+        private Product _createProduct()
         {
-            var product = TestData.Product;
-            if (!string.IsNullOrWhiteSpace(sku))
-            {
-                product.SKU = sku;
-            }
+            var product = TestData.GetProduct();
             var result = CrudHelpers.CreateApiResult(w => IntegrationTestHelpers.ApiClient.Products.AddProduct(w),
                 product);
             var createdProduct = result.Data;

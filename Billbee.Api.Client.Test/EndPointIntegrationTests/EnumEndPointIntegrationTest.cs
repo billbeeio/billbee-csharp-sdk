@@ -6,6 +6,7 @@ using Billbee.Api.Client.Test.EndPointIntegrationTests.Helpers;
 namespace Billbee.Api.Client.Test.EndPointIntegrationTests;
 
 [TestClass]
+[TestCategory(TestCategories.IntegrationTests)]
 public class EnumEndPointIntegrationTest
 {
 #pragma warning disable CS8618
@@ -20,7 +21,6 @@ public class EnumEndPointIntegrationTest
     
     [TestMethod]
     [RequiresApiAccess]
-    [TestCategory("EnumEndPoint")]
     public void Enum_GetPaymentTypes_IntegrationTest()
     {
         _executeEnumSyncTest<PaymentTypeEnum>(x => x.GetPaymentTypes());

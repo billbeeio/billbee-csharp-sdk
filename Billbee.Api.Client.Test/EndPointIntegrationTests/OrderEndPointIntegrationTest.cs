@@ -34,6 +34,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests.Helpers
 namespace Billbee.Api.Client.Test.EndPointIntegrationTests
 {
     [TestClass]
+    [TestCategory(TestCategories.IntegrationTests)]
     public class OrderEndPointIntegrationTest
     {
 #pragma warning disable CS8618
@@ -296,13 +297,24 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
             Assert.AreEqual($"This is my text for Order {order.OrderNumber}", result.Result);
         }
 
+        public Order CreateOrder(Order testOrder, string? extRef = null)
+        {
+            return _createOrder(testOrder, extRef);
+        }
+
         private Order _createOrder(string? extRef = null)
         {
             var testOrder = TestData.Order;
+            return _createOrder(testOrder, extRef);
+        }
+
+        private Order _createOrder(Order testOrder, string? extRef)
+        {
             if (!string.IsNullOrWhiteSpace(extRef))
             {
                 testOrder.OrderNumber = extRef;
             }
+
             var result = CrudHelpers.CreateApiResult(w => IntegrationTestHelpers.ApiClient.Orders.PostNewOrder(w),
                 testOrder);
             var order = result.Data;
