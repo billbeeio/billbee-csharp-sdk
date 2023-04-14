@@ -108,7 +108,7 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
             var testOrder = TestData.Order;
             testOrder.Customer = customer;
             Assert.IsNotNull(customerAddress.Id);
-            var address = new Address{ BillbeeId = customerAddress.Id.Value.ToString() };
+            var address = new Address{ BillbeeId = customerAddress.Id.Value };
             testOrder.InvoiceAddress = address;
             testOrder.ShippingAddress = address;
             
