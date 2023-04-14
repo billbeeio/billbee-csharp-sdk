@@ -6,8 +6,10 @@ public static class IntegrationTestHelpers
 {
     private static ApiClient? _apiClient;
     
-    public static void CheckAccess(string testContextManagedType, string testContextManagedMethod)
+    public static void CheckAccess(string? testContextManagedType, string? testContextManagedMethod)
     {
+        Assert.IsNotNull(testContextManagedType);
+        Assert.IsNotNull(testContextManagedMethod);
         if (!IntegrationTestSettings.RunIntegrationTests)
         {
             Assert.Inconclusive(

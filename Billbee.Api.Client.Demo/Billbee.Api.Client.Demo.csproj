@@ -3,13 +3,13 @@
     <PropertyGroup>
         <OutputType>Exe</OutputType>
         <TargetFramework>net6.0</TargetFramework>
-        <PackageVersion>2.4.1.0</PackageVersion>
+        <PackageVersion>2.4.2.0</PackageVersion>
         <Title>Billbee.Api.Client.Demo</Title>
         <Authors>Billbee GmbH</Authors>
-        <Copyright>Copyright©, 2022 by Billbee GmbH</Copyright>
+        <Copyright>Copyright©, 2023 by Billbee GmbH</Copyright>
         <Company>Billbee GmbH</Company>
-        <AssemblyVersion>2.4.1.0</AssemblyVersion>
-        <FileVersion>2.4.1.0</FileVersion>
+        <AssemblyVersion>2.4.2.0</AssemblyVersion>
+        <FileVersion>2.4.2.0</FileVersion>
         <Description>The Billbee API SDK for .Net</Description>
         <RepositoryUrl>https://github.com/billbeeio/billbee-csharp-sdk</RepositoryUrl>
         <RepositoryType>git</RepositoryType>

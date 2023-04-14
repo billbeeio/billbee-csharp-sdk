@@ -2,13 +2,13 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
-        <PackageVersion>2.4.1.0</PackageVersion>
+        <PackageVersion>2.4.2.0</PackageVersion>
         <Title>Billbee.Api.Client</Title>
         <Authors>Billbee GmbH</Authors>
-        <Copyright>Copyright©, 2022 by Billbee GmbH</Copyright>
+        <Copyright>Copyright©, 2023 by Billbee GmbH</Copyright>
         <Company>Billbee GmbH</Company>
-        <AssemblyVersion>2.4.1.0</AssemblyVersion>
-        <FileVersion>2.4.1.0</FileVersion>
+        <AssemblyVersion>2.4.2.0</AssemblyVersion>
+        <FileVersion>2.4.2.0</FileVersion>
         <Description>Client SDK for the Billbee API</Description>
         <RepositoryUrl>https://github.com/billbeeio/billbee-csharp-sdk</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
@@ -21,8 +21,8 @@
 
     <ItemGroup>
       <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-      <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
-      <PackageReference Include="RestSharp" Version="106.12.0" />
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+      <PackageReference Include="RestSharp" Version="106.15.0" />
     </ItemGroup>
 
 </Project>
