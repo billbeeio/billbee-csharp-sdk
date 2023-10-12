@@ -1,8 +1,5 @@
 ﻿using Billbee.Api.Client.Model;
 using Billbee.Api.Client.Test.EndPointIntegrationTests.Helpers;
-using Newtonsoft.Json;
-using RestSharp.Serialization.Json;
-using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Billbee.Api.Client.Test.EndPointIntegrationTests;
 
