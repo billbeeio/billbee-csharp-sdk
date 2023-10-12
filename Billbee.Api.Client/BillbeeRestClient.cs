@@ -58,7 +58,7 @@ namespace Billbee.Api.Client
 #pragma warning disable 618
             Action<IList<HeaderParameter>> headerProcessor = null,
 #pragma warning restore 618
-            int sleepTimeMs = 1000, Action<RestResponse<T>> preDeserializeHook = null,
+            int sleepTimeMs = 1000, Action<RestResponse> preDeserializeHook = null,
             NameValueCollection headerParameter = null) where T : new()
         {
             if (!_allowRead)
@@ -81,7 +81,7 @@ namespace Billbee.Api.Client
 
             _log($"Requesting {resource} with params {pStr}", LogSeverity.Info);
 
-            RestResponse<T> response = _retry<>(resource, () => c.Get<T>(req), sleepTimeMs);
+            var response = _retry(resource, () => c.Get(req), sleepTimeMs);
             headerProcessor?.Invoke(response.Headers?.ToArray());
             preDeserializeHook?.Invoke(response);
             var data = response.Content != null ? JsonConvert.DeserializeObject<T>(response.Content) : default;
@@ -383,14 +383,13 @@ namespace Billbee.Api.Client
         /// <summary>
         /// Retries a network request up to 4 times when throttled
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="resource"></param>
         /// <param name="action"></param>
         /// <param name="sleepTimeMs"></param>
         /// <returns></returns>
-        private RestResponse<T> _retry<T>(string resource, Func<RestResponse<T>> action, int sleepTimeMs)
+        private RestResponse _retry(string resource, Func<RestResponse> action, int sleepTimeMs)
         {
-            RestResponse<T> response = null;
+            RestResponse response = null;
             for (byte retryCounter = 5; retryCounter > 0; retryCounter--)
             {
                 response = action();
