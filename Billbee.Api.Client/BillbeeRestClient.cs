@@ -417,17 +417,19 @@ namespace Billbee.Api.Client
             ParameterType paramType = ParameterType.QueryString,
             string acceptHeaderValue = "application/json")
         {
-            RestRequest restRequest = new RestRequest(resource);
+            var restRequest = new RestRequest(resource);
             restRequest.AddHeader("X-Billbee-Api-Key", _config.ApiKey);
             restRequest.AddHeader("Accept", acceptHeaderValue);
             restRequest.RequestFormat = _requestFormat;
 
-            if (parameter != null && parameter.Count > 0)
+            if (parameter == null || parameter.Count <= 0)
             {
-                foreach (string key in parameter)
-                {
-                    restRequest.AddParameter(key, parameter[key], paramType);
-                }
+                return restRequest;
+            }
+
+            foreach (string key in parameter)
+            {
+                restRequest.AddParameter(key, parameter[key], paramType);
             }
 
             return restRequest;
