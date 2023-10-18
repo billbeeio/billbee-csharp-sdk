@@ -40,7 +40,7 @@ namespace Billbee.Api.Client
             
             var c = _createRestClient();
             var req = _createRestRequest(resource, null);
-            return c.Get(req).StatusCode;
+            return c.ExecuteGet(req).StatusCode;
         }
 
         public T Get<T>(
@@ -81,7 +81,7 @@ namespace Billbee.Api.Client
 
             _log($"Requesting {resource} with params {pStr}", LogSeverity.Info);
 
-            var response = _retry(resource, () => c.Get(req), sleepTimeMs);
+            var response = _retry(resource, () => c.ExecuteGet(req), sleepTimeMs);
             headerProcessor?.Invoke(response.Headers?.ToArray());
             preDeserializeHook?.Invoke(response);
             var data = response.Content != null ? JsonConvert.DeserializeObject<T>(response.Content) : default;
@@ -98,7 +98,7 @@ namespace Billbee.Api.Client
             
             var c = _createRestClient();
             var req = _createRestRequest(resource, parameter);
-            var response = c.Put(req);
+            var response = c.ExecutePut(req);
 
             _throwWhenErrResponse(response, resource);
             return response.Content;
@@ -112,7 +112,7 @@ namespace Billbee.Api.Client
             var req = _createRestRequest(resource, parameter);
             if (data != null)
                 RestRequestExtensions.AddBody(req, data);
-            var response = c.Put(req);
+            var response = c.ExecutePut(req);
 
             _throwWhenErrResponse(response, resource);
             return response.Content;
@@ -124,7 +124,7 @@ namespace Billbee.Api.Client
             
             var c = _createRestClient();
             var req = _createRestRequest(resource, parameter);
-            var response = c.Put(req);
+            var response = c.ExecutePut(req);
 
             _throwWhenErrResponse(response, resource);
             return response.Content != null ? JsonConvert.DeserializeObject<T>(response.Content) : default;
@@ -138,7 +138,7 @@ namespace Billbee.Api.Client
             var req = _createRestRequest(resource, parameter);
             if (data != null)
                 RestRequestExtensions.AddBody(req, data);
-            var response = c.Put(req);
+            var response = c.ExecutePut(req);
 
             _throwWhenErrResponse(response, resource);
             return response.Content != null ? JsonConvert.DeserializeObject<T>(response.Content) : default;
@@ -196,7 +196,7 @@ namespace Billbee.Api.Client
                 RestRequestExtensions.AddBody(req, data);
             }
 
-            var response = c.Patch(req);
+            var response = c.Execute(req, Method.Patch);
 
             _throwWhenErrResponse(response, resource);
             return response.Content;
@@ -214,7 +214,7 @@ namespace Billbee.Api.Client
                 RestRequestExtensions.AddBody(req, data);
             }
 
-            var response = c.Patch(req);
+            var response = c.Execute(req, Method.Patch);
 
             _throwWhenErrResponse(response, resource);
             return response.Content != null ? JsonConvert.DeserializeObject<T>(response.Content) : default;
@@ -243,7 +243,7 @@ namespace Billbee.Api.Client
                 }
             }
 
-            var response = c.Post(req);
+            var response = c.ExecutePost(req);
             _throwWhenErrResponse(response, resource);
             return response.Content;
         }
@@ -267,7 +267,7 @@ namespace Billbee.Api.Client
             var c = _createRestClient();
             var req = _createRestRequest(resource, null);
             RestRequestExtensions.AddBody(req, data);
-            var response = c.Post(req);
+            var response = c.ExecutePost(req);
             _throwWhenErrResponse(response, resource);
             return response.Content;
         }
@@ -281,7 +281,7 @@ namespace Billbee.Api.Client
                 ? _createRestRequest(resource, parameters)
                 : _createRestRequest(resource, null);
             RestRequestExtensions.AddBody(req, data);
-            var response = c.Post(req);
+            var response = c.ExecutePost(req);
             _throwWhenErrResponse(response, resource);
 
             return response.Content != null ? JsonConvert.DeserializeObject<T>(response.Content) : default;
@@ -354,7 +354,7 @@ namespace Billbee.Api.Client
             
             var c = _createRestClient();
             var req = _createRestRequest(resource, parameter, paramType);
-            var response = c.Delete(req);
+            var response = c.Execute(req, Method.Delete);
             _throwWhenErrResponse(response, resource);
         }
         
