@@ -194,5 +194,14 @@ namespace Billbee.Api.Client.Endpoint.Interfaces
         /// <param name="parsePlaceholdersQuery">The text to be parsed</param>
         /// <returns>The parsed text</returns>
         ParsePlaceholdersResult ParsePlaceholders(long orderId, ParsePlaceholdersQuery parsePlaceholdersQuery);
+
+
+        /// <summary>
+        /// Adds a message to the specified order
+        /// </summary>
+        /// <param name="orderId">The id of the order to add the message</param>
+        /// <param name="orderMessage">The content of the Order-Message</param>
+        void AddMessage(long orderId, OrderMessage orderMessage);
+
     }
 }
