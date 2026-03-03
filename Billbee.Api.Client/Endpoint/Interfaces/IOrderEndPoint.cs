@@ -16,7 +16,7 @@ namespace Billbee.Api.Client.Endpoint.Interfaces
         /// <param name="id">id to search for</param>
         /// <param name="articleTitleSource">The source field for the article title. 0 = Order Position (default), 1 = Article Title, 2 = Article Invoice Text</param>
         /// <returns>Details of the order</returns>
-        ApiResult<Order> GetOrder(string id, int articleTitleSource = 0);
+        ApiResult<Order> GetOrder(long id, int articleTitleSource = 0);
 
         /// <summary>
         /// Gets a list of all fileds, that can be patched at an order.

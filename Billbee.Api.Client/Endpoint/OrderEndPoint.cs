@@ -19,7 +19,7 @@ namespace Billbee.Api.Client.EndPoint
         }
 
         [ApiMapping("/api/v1/orders/{id}", HttpOperation.Get)]
-        public ApiResult<Order> GetOrder(string id, int articleTitleSource = 0)
+        public ApiResult<Order> GetOrder(long id, int articleTitleSource = 0)
         {
             return _restClient.Get<ApiResult<Order>>($"/orders/{id}?articleTitleSource={articleTitleSource}");
         }
