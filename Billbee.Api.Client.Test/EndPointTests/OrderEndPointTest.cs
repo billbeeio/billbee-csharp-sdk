@@ -16,7 +16,7 @@ public class OrderEndPointTest
     public void Order_GetOrder_Test()
     {
         var testOrder = new Order();
-        var id = "4711";
+        var id = 4711;
         var articleTitleSource = 0;
         
         Expression<Func<IBillbeeRestClient, object>> expression = x => x.Get<ApiResult<Order>>($"/orders/{id}?articleTitleSource={articleTitleSource}", null);
