@@ -220,9 +220,9 @@ namespace Billbee.Api.Client.EndPoint
         }
         
         [ApiMapping("/api/v1/orders/{id}/shipment", HttpOperation.Post)]
-        public void AddShipment(OrderShipment shipment)
+        public void AddShipment(long orderId, OrderShipment shipment)
         {
-            _restClient.Post($"/orders/{shipment.OrderId}/shipment", shipment);
+            _restClient.Post($"/orders/{orderId}/shipment", shipment);
         }
 
         [ApiMapping("/api/v1/orders/CreateDeliveryNote/{id}", HttpOperation.Post)]

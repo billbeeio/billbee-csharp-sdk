@@ -254,14 +254,15 @@ public class OrderEndPointTest
     [TestMethod]
     public void Order_AddShipment_Test()
     {
+        var orderId = 4711;
         var testOrderShipment = new OrderShipment();
         
-        Expression<Func<IBillbeeRestClient, object>> expression = x => x.Post($"/orders/{testOrderShipment.OrderId}/shipment", testOrderShipment);
+        Expression<Func<IBillbeeRestClient, object>> expression = x => x.Post($"/orders/{orderId}/shipment", testOrderShipment);
         object mockResult = null!;
         TestHelpers.RestClientMockTest(expression, mockResult, (restClient) =>
         {
             var uut = new OrderEndPoint(restClient);
-            uut.AddShipment(testOrderShipment);
+            uut.AddShipment(orderId, testOrderShipment);
         });
     }
     

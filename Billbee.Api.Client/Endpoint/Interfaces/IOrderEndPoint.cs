@@ -137,8 +137,9 @@ namespace Billbee.Api.Client.Endpoint.Interfaces
         /// <summary>
         /// Add a shipment, that was created in an external system to an order.
         /// </summary>
+        /// <param name="orderId">Id of the order</param>
         /// <param name="shipment"></param>
-        void AddShipment(OrderShipment shipment);
+        void AddShipment(long orderId, OrderShipment shipment);
 
         /// <summary>
         /// Requests the delivery note information for the given order.
