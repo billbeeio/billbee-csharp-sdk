@@ -185,18 +185,18 @@ namespace Billbee.Api.Client.Test.EndPointIntegrationTests
             var carrier = CrudHelpers.GetAll(() => IntegrationTestHelpers.ApiClient.Shipment.GetShippingCarriers())
                 .First();
             
-            var order = _createOrder();            
+            var order = _createOrder();
             Assert.IsNotNull(order.BillBeeOrderId);
             var orderShipment = new OrderShipment
             {
                 Comment = "comment",
                 CarrierId = carrier.Id,
-                OrderId = order.BillBeeOrderId.Value,
+                OrderId = order.BillBeeOrderId.Value.ToString(),
                 ShippingId = "123",
                 ShippingProviderId = provider.id,
                 ShippingProviderProductId = productId
             };
-            IntegrationTestHelpers.ApiClient.Orders.AddShipment(orderShipment);
+            IntegrationTestHelpers.ApiClient.Orders.AddShipment(order.BillBeeOrderId.Value, orderShipment);
         }
 
         [TestMethod]

@@ -1,15 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <Title>Billbee.Api.Client.Test</Title>
         <Authors>Billbee GmbH</Authors>
         <Copyright>Copyright©, 2026 by Billbee GmbH</Copyright>
         <Company>Billbee GmbH</Company>
-        <AssemblyVersion>2.4.3.0</AssemblyVersion>
-        <FileVersion>2.4.3.0</FileVersion>
+        <AssemblyVersion>2.5.1.0</AssemblyVersion>
+        <FileVersion>2.5.1.0</FileVersion>
 
         <IsPackable>false</IsPackable>
     </PropertyGroup>

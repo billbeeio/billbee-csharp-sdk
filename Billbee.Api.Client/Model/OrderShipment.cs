@@ -11,9 +11,9 @@
         public string ShippingId { get; set; }
 
         /// <summary>
-        /// The id of the order, this shipment should be attached to
+        /// If applicable, the order id assigned by the shipping provider
         /// </summary>
-        public long OrderId { get; set; }
+        public string OrderId { get; set; }
 
         /// <summary>
         /// A note, that should be attached to the shipment
