@@ -287,5 +287,13 @@ namespace Billbee.Api.Client.EndPoint
         {
             return _restClient.Post<ParsePlaceholdersResult>($"/orders/{orderId}/parse-placeholders", parsePlaceholdersQuery);
         }
+
+
+        [ApiMapping("/api/v1/orders/{id}/message", HttpOperation.Post)]
+        public void AddMessage(long orderId, OrderMessage orderMessage)
+        {
+            _restClient.Post($"/orders/{orderId}/message", orderMessage);
+        }
+
     }
 }
